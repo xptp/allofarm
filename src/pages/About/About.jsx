@@ -109,7 +109,7 @@ function About({ language }) {
       <section className="about-hero" aria-labelledby="about-title">
         <div className="about-hero-dots" aria-hidden="true" />
         <div className="about-container about-hero-content">
-          <h1 id="about-title">{content.title}</h1>
+          <h1 id="about-title" tabIndex={-1}>{content.title}</h1>
           <span className="about-eyebrow"><i />{content.eyebrow}</span>
         </div>
       </section>

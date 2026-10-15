@@ -1,0 +1,5 @@
+.not-found-page { padding: 80px 24px; min-height: 50vh; background: var(--surface-light); color: var(--ink-body); text-align: center; }
+.not-found-code { margin: 0 0 12px; color: var(--accent-readable); font-size: 48px; font-weight: 750; }
+.not-found-page h1 { margin: 0 0 18px; color: var(--ink-heading); font-size: clamp(28px, 5vw, 44px); overflow-wrap: anywhere; }
+.not-found-page > p { line-height: 1.6; }
+.not-found-link { display: inline-block; margin-top: 12px; padding: 12px 20px; border-radius: 8px; background: var(--accent-readable); color: #fff; }

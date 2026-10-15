@@ -13,6 +13,7 @@ import expertPressPdf from '../assets/press-expert.pdf';
 import spbuPressPdf from '../assets/press-spu.pdf';
 import '../styles/Home.css';
 import '../styles/SectionThemes.css';
+import { developmentPath } from './developments/navigation';
 
 const directionsCopy = {
   ru: {
@@ -229,7 +230,7 @@ function Home({ language, t, links }) {
         <div className="hero-container">
           <div className="hero-copy">
             <div className="eyebrow"><span className="eyebrow-mark" /> {t.eyebrow}</div>
-            <h1 id="hero-title">{t.title}</h1>
+            <h1 id="hero-title" tabIndex={-1}>{t.title}</h1>
             <p className="hero-description" key={`${language}-${currentSlide}`}>{t.slides[currentSlide]}</p>
             <div className="hero-metrics">
               {t.metrics.map(([value, label]) => <article className="metric-card" key={value} tabIndex={0} aria-label={`${value}: ${label}`}><strong>{value}</strong><span>{label}</span></article>)}
@@ -344,7 +345,8 @@ function Home({ language, t, links }) {
           </header>
           <div className="developments-grid">
             {developments.cards.map((card, index) => (
-              <article id={`development-${['allostatin', 'flip7', 'inova', 'cultivation', 'allomedin', 'entomix'][index]}`} className={`development-card development-card-${card.tone}`} key={card.title} tabIndex={0}>
+              <article id={`development-${['allostatin', 'flip7', 'inova', 'cultivation', 'allomedin', 'entomix'][index]}`} className={`development-card development-card-${card.tone}`} key={card.title}>
+                <a className="development-card-link" href={developmentPath(['allostatins', 'flip7', 'inova-c', 'calliphoridae', 'allomedin', 'entomix'][index], language)}>
                 {card.image && <div className={`development-visual${card.imageFit === 'contain' ? ' development-visual-contain' : ''}`}><img src={card.image} alt={card.imageAlt} loading="lazy" /></div>}
                 <div className="development-copy">
                   <div className="development-labels">
@@ -356,6 +358,7 @@ function Home({ language, t, links }) {
                   <p>{card.text}</p>
                   <footer>{card.footer}</footer>
                 </div>
+                </a>
               </article>
             ))}
           </div>

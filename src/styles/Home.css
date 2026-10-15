@@ -91,6 +91,9 @@
 .development-card-green { --card-accent: #42dba8; --card-glow: rgba(27, 207, 143, .14); }
 .development-card:hover, .development-card:focus-visible { transform: translateY(-4px); border-color: color-mix(in srgb, var(--card-accent) 66%, transparent); background: linear-gradient(145deg, rgba(15, 35, 57, .98), rgba(8, 21, 37, .99)); box-shadow: 0 15px 38px rgba(0, 0, 0, .27), 0 0 30px var(--card-glow); }
 .development-card:focus-visible { outline: 2px solid color-mix(in srgb, var(--card-accent) 72%, transparent); outline-offset: 3px; }
+.development-card-link { flex: 1; display: flex; min-width: 0; flex-direction: column; color: inherit; text-decoration: none; }
+.development-card:has(.development-card-link:focus-visible) { transform: translateY(-4px); border-color: color-mix(in srgb, var(--card-accent) 66%, transparent); box-shadow: 0 15px 38px rgba(0, 0, 0, .27), 0 0 30px var(--card-glow); }
+.development-card:has(.development-card-link:focus-visible) .development-visual::after { opacity: .62; }
 .development-visual { position: relative; height: 155px; flex: 0 0 auto; overflow: hidden; border: 1px solid rgba(75, 171, 198, .22); border-radius: 9px; background: #071120; }
 .development-visual::after { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4, 9, 22, .03) 45%, rgba(4, 9, 22, .42)); content: ""; pointer-events: none; transition: opacity .25s ease; }
 .development-card:hover .development-visual::after, .development-card:focus-visible .development-visual::after { opacity: .62; }

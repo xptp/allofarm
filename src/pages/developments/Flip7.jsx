@@ -148,7 +148,7 @@ export const content = {
         "href": "http://en.allopharm.ru/our-publications/"
       },
       {
-        "title": "Drag",
+        "title": "ENTOMIX®",
         "paragraphs": [
           "ENTOMIX®️ — MD hydrogel coating for inhibiting the growth of bacterial biofilms"
         ],

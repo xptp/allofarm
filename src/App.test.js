@@ -7,6 +7,7 @@ let reportVisibility;
 beforeEach(() => {
   window.history.replaceState({}, '', '/');
   localStorage.clear();
+  window.scrollTo = jest.fn();
   document.head.innerHTML = '<title>Аллофарм</title><meta name="description" content="Initial description">';
   window.matchMedia = jest.fn(() => ({ matches: false }));
   window.IntersectionObserver = jest.fn(function (callback) {
@@ -19,6 +20,38 @@ beforeEach(() => {
 afterEach(() => {
   jest.useRealTimers();
   jest.restoreAllMocks();
+});
+
+test.each([
+  ['/missing-page/', 'Страница не найдена', 'На главную'],
+  ['/en/missing-page/', 'Page not found', 'Back to home'],
+])('unknown route %s shows an error and allows returning home', (path, title, action) => {
+  window.history.replaceState({}, '', path);
+  render(<App />);
+  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(title);
+  expect(document.title).toContain(title);
+  expect(document.querySelector('.hero')).toBeNull();
+  expect(document.querySelector('.primary-nav .current')).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: path.startsWith('/en/') ? 'RU' : 'EN', exact: true }));
+  expect(window.location.pathname).toBe(path);
+  expect(document.querySelector('.not-found-page')).not.toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: path.startsWith('/en/') ? 'EN' : 'RU', exact: true }));
+  fireEvent.click(screen.getByRole('link', { name: action, exact: true }));
+  expect(window.location.pathname).toBe('/');
+  expect(document.querySelector('.not-found-page')).toBeNull();
+  expect(screen.getByRole('heading', { level: 1 })).toHaveFocus();
+});
+
+test.each(['ru', 'en'])('company pages receive keyboard focus after navigation in %s', language => {
+  localStorage.setItem('allopharm-language', language);
+  render(<App />);
+  const header = screen.getByRole('navigation', { name: language === 'ru' ? 'Основная навигация' : 'Main navigation' });
+  const section = language === 'ru' ? 'О компании' : 'About us';
+  for (const page of language === 'ru' ? ['О нас', 'Интеллектуальная собственность'] : ['About us', 'Intellectual property']) {
+    fireEvent.click(within(header).getByRole('button', { name: new RegExp(section) }));
+    fireEvent.click(within(header).getByRole('link', { name: page, exact: true }));
+    expect(screen.getByRole('heading', { level: 1 })).toHaveFocus();
+  }
 });
 
 test('language survives a remount and updates one set of document metadata', () => {

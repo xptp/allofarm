@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 import About from './pages/About/About';
 import IntellectualProperty from './pages/About/IntellectualProperty';
 import DevelopmentsLayout from './components/DevelopmentsLayout';
@@ -39,6 +40,7 @@ function App() {
     const path = normalizePath(window.location.pathname);
     const initialRoute = getRoute(path);
     if (initialRoute) return initialRoute.language;
+    if (path.startsWith('/en/')) return 'en';
     try {
       return window.localStorage.getItem('allopharm-language') === 'en' ? 'en' : 'ru';
     } catch {
@@ -49,19 +51,24 @@ function App() {
   const isIntellectualPropertyPage = currentPath === '/intellectual-property' || currentPath === '/en/intellectual-property';
   const isResearchBasePage = currentPath === '/base' || currentPath === '/en/base';
   const route = getRoute(currentPath);
+  const isNotFound = currentPath !== '/' && !route;
   const developmentPage = route?.development ? developmentPages[route.slug] : null;
   const developmentContent = developmentPage && (developmentPage.content[language] || developmentPage.content.ru);
   const DevelopmentPage = developmentPage?.Component;
   const isSecondaryPage = isAboutPage || isIntellectualPropertyPage || Boolean(developmentPage);
   const t = copy[language];
-  const pageTitle = developmentPage
+  const pageTitle = isNotFound
+    ? (language === 'ru' ? 'Страница не найдена — Аллофарм' : 'Page not found — Allopharm')
+    : developmentPage
     ? `${developmentContent.title} — ${language === 'ru' ? 'Аллофарм' : 'Allopharm'}`
     : isIntellectualPropertyPage
     ? (language === 'ru' ? 'Интеллектуальная собственность — Аллофарм' : 'Intellectual property — Allopharm')
     : isAboutPage
       ? (language === 'ru' ? 'О компании — Аллофарм' : 'About Allopharm')
       : t.pageTitle;
-  const pageDescription = developmentPage && !isResearchBasePage
+  const pageDescription = isNotFound
+    ? (language === 'ru' ? 'Запрошенная страница не найдена.' : 'The requested page could not be found.')
+    : developmentPage && !isResearchBasePage
     ? developmentContent.title
     : isResearchBasePage
     ? (language === 'ru' ? 'Исследовательская база Аллофарм: изучение иммунной системы насекомых и создание новых разработок.' : 'Allopharm research base: studying the insect immune system and developing new technologies.')
@@ -132,15 +139,15 @@ function App() {
   }, []);
 
   const pageLinks = language === 'ru'
-    ? ['/', '/about/', isSecondaryPage ? '/#developments-title' : '#developments-title', 'https://allopharm.ru/our-publications/', isSecondaryPage ? '/#media-title' : '#media-title', 'https://allopharm.ru/contact/']
-    : ['/', '/en/about/', isSecondaryPage ? '/#developments-title' : '#developments-title', 'https://en.allopharm.ru/our-publications/', isSecondaryPage ? '/#media-title' : '#media-title', 'https://en.allopharm.ru/contact/'];
+    ? ['/', '/about/', currentPath !== '/' ? '/#developments-title' : '#developments-title', 'https://allopharm.ru/our-publications/', currentPath !== '/' ? '/#media-title' : '#media-title', 'https://allopharm.ru/contact/']
+    : ['/', '/en/about/', currentPath !== '/' ? '/#developments-title' : '#developments-title', 'https://en.allopharm.ru/our-publications/', currentPath !== '/' ? '/#media-title' : '#media-title', 'https://en.allopharm.ru/contact/'];
 
   const developmentLinks = developmentMenuSlugs.map(slug => developmentPath(slug, language));
 
   return (
     <div className="site-shell" onClick={handleInternalNavigation}>
-      <Header language={language} onLanguageChange={handleLanguageChange} t={t} links={pageLinks} aboutLinks={language === 'ru' ? ['/about/', '/intellectual-property/'] : ['/en/about/', '/en/intellectual-property/']} developmentLinks={developmentLinks} activeNavIndex={developmentPage ? 2 : isAboutPage || isIntellectualPropertyPage ? 1 : 0} />
-      {developmentPage ? <DevelopmentsLayout language={language} slug={route.slug} title={developmentContent.title} contentLanguage={developmentPage.content[language] ? language : 'ru'}><DevelopmentPage language={language} /></DevelopmentsLayout> : isIntellectualPropertyPage
+      <Header language={language} onLanguageChange={handleLanguageChange} t={t} links={pageLinks} aboutLinks={language === 'ru' ? ['/about/', '/intellectual-property/'] : ['/en/about/', '/en/intellectual-property/']} developmentLinks={developmentLinks} activeNavIndex={isNotFound ? -1 : developmentPage ? 2 : isAboutPage || isIntellectualPropertyPage ? 1 : 0} />
+      {isNotFound ? <NotFound language={language} /> : developmentPage ? <DevelopmentsLayout language={language} slug={route.slug} title={developmentContent.title} contentLanguage={developmentPage.content[language] ? language : 'ru'}><DevelopmentPage language={language} /></DevelopmentsLayout> : isIntellectualPropertyPage
         ? <IntellectualProperty language={language} />
         : isAboutPage ? <About language={language} /> : <Home language={language} t={t} links={pageLinks} />}
       <Footer
