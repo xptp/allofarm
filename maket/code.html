@@ -1,0 +1,809 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="ru" style=""><svg class="inline-defs-container" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"></svg><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>АЛЛОФАРМ — Биотехнологическая компания | Природная пептидная биофармакология</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script data-purpose="tailwind-config">
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#050a14',
+              surface: '#091322',
+              card: '#0e1b30',
+              border: 'rgba(56, 189, 248, 0.15)',
+              cyan: '#00e5ff',
+              sky: '#38bdf8',
+              accent: '#e11d48'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          boxShadow: {
+            'glow-cyan': '0 0 35px -5px rgba(0, 229, 255, 0.3)',
+            'glow-card': '0 8px 32px 0 rgba(0, 0, 0, 0.45)',
+          }
+        }
+      }
+    }
+  </script>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style data-purpose="custom-layout">
+    body {
+      background-color: #050a14;
+      color: #e2e8f0;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+    
+    .glass-panel {
+      background: rgba(11, 22, 42, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(56, 189, 248, 0.14);
+    }
+    
+    .glass-card {
+      background: linear-gradient(135deg, rgba(14, 27, 48, 0.8) 0%, rgba(9, 19, 34, 0.9) 100%);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.12);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .glass-card:hover {
+      border-color: rgba(0, 229, 255, 0.45);
+      box-shadow: 0 10px 40px -10px rgba(0, 229, 255, 0.25);
+      transform: translateY(-3px);
+    }
+
+    .radial-bg {
+      background: radial-gradient(circle at 50% 20%, rgba(0, 229, 255, 0.08) 0%, rgba(5, 10, 20, 0) 70%);
+    }
+
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #050a14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #38bdf8;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased text-slate-300 selection:bg-cyan-500 selection:text-black">
+<!-- BEGIN: MainHeader -->
+<header class="sticky top-0 z-50 glass-panel border-b border-brand-border transition-all">
+<!-- Top Utility Bar: Contacts, Address, Language -->
+<div class="border-b border-slate-800/60 bg-black/30">
+<div class="max-w-7xl mx-auto px-6 py-2 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-4">
+<div class="flex items-center gap-6 flex-wrap">
+<span class="flex items-center gap-1.5 hover:text-cyan-400 transition-colors">
+<svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            Санкт-Петербург, пр-т Малый В.О., д.57, корп.4/Ж., пом.8-Н
+          </span>
+<span class="hidden md:flex items-center gap-3">
+<a class="hover:text-cyan-400 transition-colors" href="tel:+78123205542">+7 (812) 320-55-42</a>
+<span class="text-slate-600">|</span>
+<a class="hover:text-cyan-400 transition-colors" href="tel:+79315923375">+7 (931) 592-33-75</a>
+</span>
+<a class="flex items-center gap-1.5 hover:text-cyan-400 transition-colors" href="mailto:allofarm.spb@yandex.ru">
+<svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            allofarm.spb@yandex.ru
+          </a>
+</div>
+<!-- Language Switcher -->
+<div class="flex items-center space-x-1.5 font-medium" data-purpose="lang-switcher">
+<button class="px-2 py-0.5 rounded text-cyan-400 bg-cyan-950/60 border border-cyan-500/40" id="lang-ru">RU</button>
+<span class="text-slate-600">/</span>
+<button class="px-2 py-0.5 rounded text-slate-400 hover:text-white transition-colors" id="lang-en">EN</button>
+</div>
+</div>
+</div>
+<!-- Main Navigation Bar -->
+<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+<!-- Logo Branding -->
+<a class="flex items-center gap-3 group" href="#">
+<div class="relative w-10 h-10 rounded-lg bg-gradient-to-tr from-cyan-600 via-sky-500 to-rose-500 p-0.5 flex items-center justify-center shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-400/40 transition-shadow">
+<div class="w-full h-full bg-brand-surface rounded-[7px] flex items-center justify-center">
+<!-- Stylized Bio Hexagon / Wings Icon -->
+<svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-xl font-bold tracking-wider text-white uppercase group-hover:text-cyan-300 transition-colors">АЛЛОФАРМ</span>
+<span class="text-[10px] tracking-widest uppercase font-semibold text-sky-400/90">Биотехнологическая компания</span>
+</div>
+</a>
+<!-- Primary Nav Menu -->
+<nav class="hidden lg:flex items-center gap-8 text-sm font-medium">
+<a class="text-cyan-400 border-b-2 border-cyan-400 pb-0.5 font-semibold" href="#hero">Главная</a>
+<a class="hover:text-cyan-400 transition-colors pb-0.5 border-b-2 border-transparent" href="#company">О Компании</a>
+<a class="hover:text-cyan-400 transition-colors pb-0.5 border-b-2 border-transparent" href="#developments">Наши разработки</a>
+<a class="hover:text-cyan-400 transition-colors pb-0.5 border-b-2 border-transparent" href="#publications">Публикации</a>
+<a class="hover:text-cyan-400 transition-colors pb-0.5 border-b-2 border-transparent" href="#media">Пресс-центр</a>
+<a class="hover:text-cyan-400 transition-colors pb-0.5 border-b-2 border-transparent" href="#footer">Контакты &amp; Сотрудничество</a>
+</nav>
+<!-- Status Indicator / Portal Access -->
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          R&amp;D Лаборатория активна
+        </span>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<main class="flex-grow">
+<!-- BEGIN: HeroSection -->
+<section class="relative overflow-hidden pt-12 pb-24 md:py-28 border-b border-brand-border radial-bg" id="hero">
+<!-- Background Ambient Grid & Particles -->
+<div class="absolute inset-0 -z-10 opacity-30 pointer-events-none" style="background-image: radial-gradient(#38bdf8 0.75px, transparent 0.75px); background-size: 32px 32px;"></div>
+<div class="max-w-7xl mx-auto px-6 relative">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left Column: Hero Text Content -->
+<div class="lg:col-span-7 space-y-8 text-left">
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase bg-cyan-950/70 border border-cyan-500/30 text-cyan-300">
+<span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+              Биомиметика иммунной системы насекомых
+            </div>
+<div class="space-y-4">
+<h1 class="text-4xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+                АЛЛОФАРМ <br>
+<span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
+                  Биотехнологическая компания
+                </span>
+</h1>
+<!-- Dynamic Slider Headline Subtext -->
+<p class="text-lg sm:text-xl text-slate-300 font-light leading-relaxed min-h-[56px] transition-opacity duration-300" id="slider-caption" style="opacity: 1;">Настоящие биотехнологии: химический пептидный синтез и замкнутый цикл культивирования биомассы.</p>
+</div>
+<!-- Hero Action & Bullet Points -->
+<div class="space-y-5">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+<div class="p-3.5 rounded-xl glass-card border-brand-border">
+<div class="text-cyan-400 font-bold text-sm">20+ лет</div>
+<div class="text-xs text-slate-400 mt-1">Фундаментальных исследований</div>
+</div>
+<div class="p-3.5 rounded-xl glass-card border-brand-border">
+<div class="text-cyan-400 font-bold text-sm">Web of Science</div>
+<div class="text-xs text-slate-400 mt-1">Публикации PNAS &amp; PLOS</div>
+</div>
+<div class="p-3.5 rounded-xl glass-card border-brand-border">
+<div class="text-cyan-400 font-bold text-sm">Патентная база</div>
+<div class="text-xs text-slate-400 mt-1">Защита в РФ, ЕС и США</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-4 pt-4">
+<a class="px-8 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 shadow-lg shadow-rose-900/40 hover:shadow-rose-600/30 transition-all duration-300 flex items-center gap-2" href="#company">
+<span class="">О нашей компании</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+<a class="px-7 py-3.5 rounded-xl font-medium text-slate-200 glass-card hover:border-cyan-400 hover:text-white transition-all" href="#developments">
+                  Научные платформы
+                </a>
+</div>
+</div>
+</div>
+<!-- Right Column: Interactive 3D/Biomimetic Visual Stage -->
+<div class="lg:col-span-5 relative flex items-center justify-center">
+<!-- Bio Glowing Orb & Radial Ring Background -->
+<div class="w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-cyan-500/20 to-indigo-600/10 blur-3xl absolute -z-10 animate-pulse"></div>
+<div class="w-full max-w-md p-6 glass-panel rounded-2xl border border-cyan-500/30 relative shadow-2xl shadow-cyan-950/80">
+<!-- Insect Bio Illustration Card (Stylized Vector Dragonfly / Peptide Model) -->
+<div class="relative h-64 sm:h-72 w-full rounded-xl overflow-hidden bg-slate-950 flex items-center justify-center border border-cyan-500/20">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-950/20 to-brand-dark opacity-90"></div>
+<!-- Stylized Biomimetic Dragonfly / Molecular Graphic -->
+<svg class="w-full h-full p-2 filter drop-shadow-[0_0_18px_rgba(0,229,255,0.45)]" viewBox="0 0 520 380" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><filter id="bio-glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur><feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter><filter id="strong-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" result="blur"></feGaussianBlur><feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter><linearGradient id="wingGradLeft" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00e5ff" stop-opacity="0.4"></stop><stop offset="50%" stop-color="#0284c7" stop-opacity="0.15"></stop><stop offset="100%" stop-color="#082f49" stop-opacity="0.02"></stop></linearGradient><linearGradient id="wingGradRight" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#00e5ff" stop-opacity="0.4"></stop><stop offset="50%" stop-color="#0284c7" stop-opacity="0.15"></stop><stop offset="100%" stop-color="#082f49" stop-opacity="0.02"></stop></linearGradient><linearGradient id="bodyGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#38bdf8"></stop><stop offset="30%" stop-color="#00e5ff"></stop><stop offset="70%" stop-color="#0369a1"></stop><stop offset="100%" stop-color="#e11d48"></stop></linearGradient><radialGradient id="corePulse" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff"></stop><stop offset="40%" stop-color="#00e5ff"></stop><stop offset="100%" stop-color="transparent"></stop></radialGradient></defs><g opacity="0.2" stroke="#0284c7" stroke-width="0.5"><line x1="260" y1="10" x2="260" y2="370" stroke-dasharray="3 3"></line><circle cx="260" cy="150" r="110" stroke-dasharray="2 4"></circle><circle cx="260" cy="150" r="170" stroke-dasharray="1 5"></circle><line x1="40" y1="150" x2="480" y2="150" stroke-dasharray="4 4"></line></g><g stroke="#38bdf8" stroke-width="0.75" opacity="0.6" font-family="monospace" font-size="8"><text x="16" y="45" fill="#38bdf8">λ : 410nm [BIO-SCAN]</text><line x1="120" y1="42" x2="160" y2="42" stroke="#38bdf8"></line><line x1="160" y1="42" x2="190" y2="70" stroke="#38bdf8"></line><text x="380" y="45" fill="#00e5ff">CHITIN MATRIX v4.2</text><line x1="375" y1="42" x2="340" y2="42" stroke="#00e5ff"></line><line x1="340" y1="42" x2="305" y2="75" stroke="#00e5ff"></line><text x="395" y="335" fill="#fb7185">HEX-CORE // α-HELIX</text><line x1="390" y1="332" x2="310" y2="332" stroke="#fb7185"></line><line x1="310" y1="332" x2="275" y2="290" stroke="#fb7185"></line></g><g id="forewing-left"><path d="M255 125 C210 110, 80 40, 25 72 C5 84, 15 118, 75 130 C145 142, 225 136, 255 132 Z" fill="url(#wingGradLeft)" stroke="#00e5ff" stroke-width="1.4"></path><path d="M25 72 C70 65, 160 95, 255 125" stroke="#38bdf8" stroke-width="1.2"></path><path d="M75 130 C125 110, 195 105, 255 125" stroke="#0284c7" stroke-width="0.7"></path><g stroke="#00e5ff" stroke-width="0.6" opacity="0.55"><path d="M60 85 L85 75 L115 88 L90 102 Z"></path><path d="M115 88 L148 80 L172 96 L140 106 Z"></path><path d="M172 96 L210 94 L228 112 L192 118 Z"></path><path d="M90 102 L118 116 L150 120 L140 106 Z"></path><path d="M150 120 L188 124 L225 122 L192 118 Z"></path><path d="M38 78 L60 85 L50 100 L28 92 Z"></path><path d="M50 100 L90 102 L75 122 L45 114 Z"></path></g><circle cx="25" cy="72" r="2.5" fill="#00e5ff" filter="url(#bio-glow)"></circle><circle cx="115" cy="88" r="1.8" fill="#38bdf8"></circle><circle cx="172" cy="96" r="1.8" fill="#00e5ff"></circle></g><g id="forewing-right"><path d="M265 125 C310 110, 440 40, 495 72 C515 84, 505 118, 445 130 C375 142, 295 136, 265 132 Z" fill="url(#wingGradRight)" stroke="#00e5ff" stroke-width="1.4"></path><path d="M495 72 C450 65, 360 95, 265 125" stroke="#38bdf8" stroke-width="1.2"></path><path d="M445 130 C395 110, 325 105, 265 125" stroke="#0284c7" stroke-width="0.7"></path><g stroke="#00e5ff" stroke-width="0.6" opacity="0.55"><path d="M460 85 L435 75 L405 88 L430 102 Z"></path><path d="M405 88 L372 80 L348 96 L380 106 Z"></path><path d="M348 96 L310 94 L292 112 L328 118 Z"></path><path d="M430 102 L402 116 L370 120 L380 106 Z"></path><path d="M370 120 L332 124 L295 122 L328 118 Z"></path><path d="M482 78 L460 85 L470 100 L492 92 Z"></path><path d="M470 100 L430 102 L445 122 L475 114 Z"></path></g><circle cx="495" cy="72" r="2.5" fill="#00e5ff" filter="url(#bio-glow)"></circle><circle cx="405" cy="88" r="1.8" fill="#38bdf8"></circle><circle cx="348" cy="96" r="1.8" fill="#00e5ff"></circle></g><g id="hindwing-left"><path d="M255 142 C215 140, 105 130, 65 170 C45 190, 70 215, 125 210 C185 204, 235 168, 255 148 Z" fill="url(#wingGradLeft)" stroke="#38bdf8" stroke-width="1.2"></path><path d="M65 170 C120 162, 195 152, 255 142" stroke="#00e5ff" stroke-width="0.9"></path><g stroke="#38bdf8" stroke-width="0.5" opacity="0.45"><path d="M95 178 L128 170 L152 184 L120 196 Z"></path><path d="M152 184 L192 174 L216 182 L180 194 Z"></path><path d="M78 188 L105 198 L138 202 L120 196 Z"></path><path d="M138 202 L178 198 L212 188 L180 194 Z"></path></g><circle cx="65" cy="170" r="2" fill="#38bdf8" filter="url(#bio-glow)"></circle></g><g id="hindwing-right"><path d="M265 142 C305 140, 415 130, 455 170 C475 190, 450 215, 395 210 C335 204, 285 168, 265 148 Z" fill="url(#wingGradRight)" stroke="#38bdf8" stroke-width="1.2"></path><path d="M455 170 C400 162, 325 152, 265 142" stroke="#00e5ff" stroke-width="0.9"></path><g stroke="#38bdf8" stroke-width="0.5" opacity="0.45"><path d="M425 178 L392 170 L368 184 L400 196 Z"></path><path d="M368 184 L328 174 L304 182 L340 194 Z"></path><path d="M442 188 L415 198 L382 202 L400 196 Z"></path><path d="M382 202 L342 198 L308 188 L340 194 Z"></path></g><circle cx="455" cy="170" r="2" fill="#38bdf8" filter="url(#bio-glow)"></circle></g><g id="bionic-body"><path d="M252 76 Q240 45 228 35 M268 76 Q280 45 292 35" stroke="#00e5ff" stroke-width="1.2" stroke-dasharray="2 2"></path><circle cx="228" cy="35" r="2.5" fill="#00e5ff" filter="url(#strong-glow)"></circle><circle cx="292" cy="35" r="2.5" fill="#00e5ff" filter="url(#strong-glow)"></circle><ellipse cx="246" cy="82" rx="7" ry="11" fill="#082f49" stroke="#00e5ff" stroke-width="1.5"></ellipse><ellipse cx="274" cy="82" rx="7" ry="11" fill="#082f49" stroke="#00e5ff" stroke-width="1.5"></ellipse><circle cx="246" cy="82" r="3.5" fill="#00e5ff" filter="url(#bio-glow)"></circle><circle cx="274" cy="82" r="3.5" fill="#00e5ff" filter="url(#bio-glow)"></circle><path d="M252 74 L268 74 L264 92 L256 92 Z" fill="#0284c7" stroke="#38bdf8" stroke-width="1"></path><path d="M250 94 C244 98, 240 114, 246 130 C250 138, 254 144, 260 145 C266 144, 270 138, 274 130 C280 114, 276 98, 270 94 Z" fill="#0c192e" stroke="#00e5ff" stroke-width="1.6"></path><path d="M248 106 L272 106 M247 118 L273 118 M250 130 L270 130" stroke="#38bdf8" stroke-width="1" opacity="0.7"></path><circle cx="260" cy="118" r="4.5" fill="url(#corePulse)" filter="url(#strong-glow)"></circle><circle cx="260" cy="118" r="2" fill="#ffffff"></circle><g stroke="#00e5ff" stroke-width="1.2" opacity="0.8"><path d="M252 148 L248 162 L272 162 L268 148 Z" fill="#082f49"></path><path d="M250 164 L249 180 L271 180 L270 164 Z" fill="#082f49"></path><path d="M250 182 L251 200 L269 200 L270 182 Z" fill="#082f49"></path><path d="M252 202 L253 222 L267 222 L268 202 Z" fill="#082f49"></path><path d="M253 224 L254 246 L266 246 L267 224 Z" fill="#082f49"></path><path d="M254 248 L255 272 L265 272 L266 248 Z" fill="#082f49"></path><path d="M255 274 L257 300 L263 300 L265 274 Z" fill="#082f49"></path><path d="M257 302 L260 326 L263 302 Z" fill="#082f49"></path></g><line x1="260" y1="148" x2="260" y2="320" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4 2" filter="url(#bio-glow)"></line><circle cx="260" cy="172" r="2" fill="#00e5ff"></circle><circle cx="260" cy="211" r="2" fill="#00e5ff"></circle><circle cx="260" cy="258" r="2" fill="#38bdf8"></circle><circle cx="260" cy="296" r="2" fill="#fb7185"></circle><circle cx="260" cy="326" r="3.5" fill="#fb7185" filter="url(#strong-glow)"></circle></g></svg>
+<div class="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs text-slate-400 bg-brand-surface/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/50">
+<span class="text-cyan-300 font-mono text-[11px]">Биомиметика Calliphoridae</span>
+<span class="text-rose-400 font-mono text-[11px]">In vitro &amp; In vivo</span>
+</div>
+</div>
+<!-- Slider Navigation Controls -->
+<div class="mt-4 flex items-center justify-between pt-2">
+<div class="flex items-center space-x-2" data-purpose="slider-dots">
+<button aria-label="Слайд 1" class="w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all" onclick="changeSlide(0)"></button>
+<button aria-label="Слайд 2" class="w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all" onclick="changeSlide(1)"></button>
+<button aria-label="Слайд 3" class="w-3 h-3 rounded-full bg-cyan-400 ring-2 ring-cyan-400/40 transition-all" onclick="changeSlide(2)"></button>
+</div>
+<div class="flex items-center space-x-2">
+<button aria-label="Предыдущий слайд" class="p-2 rounded-lg bg-slate-800/80 hover:bg-cyan-950 hover:text-cyan-400 border border-slate-700 transition-colors" onclick="prevSlide()">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<button aria-label="Следующий слайд" class="p-2 rounded-lg bg-slate-800/80 hover:bg-cyan-950 hover:text-cyan-400 border border-slate-700 transition-colors" onclick="nextSlide()">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: HeroSection -->
+<!-- BEGIN: CoreDirections -->
+<section class="py-24 border-b border-brand-border relative" id="company">
+<div class="max-w-7xl mx-auto px-6">
+<!-- Section Header -->
+<div class="text-center max-w-4xl mx-auto mb-16 space-y-4">
+<span class="text-xs font-bold tracking-widest text-cyan-400 uppercase">Научно-прикладная платформа</span>
+<h2 class="text-3xl sm:text-4xl font-extrabold text-white">
+            Основные направления работы компании Аллофарм
+          </h2>
+<div class="w-24 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto"></div>
+<p class="text-slate-300 leading-relaxed text-base sm:text-lg pt-2 font-light">
+            Компания «Аллофарм» занимается поиском, разработкой и коммерциализацией новых лекарственных веществ, 
+            прототипами которых служат активные компоненты иммунной системы насекомых с противовирусным, 
+            противоопухолевым и антибактериальным действием. Некоторые из разработанных компанией препаратов, 
+            получаемых путем полного химического синтеза или биосинтеза культурами насекомых, уже нашли применение в 
+            медицине и дерматокосметологии.
+          </p>
+</div>
+<!-- 3 Core Strategic Pillars (Pillar Cards) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+<!-- Pillar 1 -->
+<div class="glass-card rounded-2xl p-8 text-center flex flex-col items-center group relative overflow-hidden">
+<div class="absolute -top-12 -right-12 w-28 h-28 bg-rose-500/10 rounded-full blur-2xl group-hover:bg-rose-500/20 transition-colors"></div>
+<div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-rose-950/60 to-slate-900 border border-rose-500/30 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-lg shadow-rose-950/40">
+<!-- Insect Immunity Icon -->
+<svg class="w-10 h-10 text-rose-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M12 4v1m6 11h2m-6 0a2 2 0 100-4 2 2 0 000 4zm-8-4a2 2 0 100-4 2 2 0 000 4zm2 8a2 2 0 100-4 2 2 0 000 4zm10 0a2 2 0 100-4 2 2 0 000 4m-8-2h4m-8-6h12M9 5a3 3 0 016 0v2H9V5z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<h3 class="text-lg font-bold text-white mb-3 leading-snug">
+              Изучение иммунной системы насекомых как основа научных открытий
+            </h3>
+<p class="text-sm text-slate-400 leading-relaxed font-light mt-auto">
+              Исследование уникальных механизмов резистентности насекомых, вырабатывавших устойчивость к бактериям и вирусам на протяжении 400 млн лет эволюции.
+            </p>
+</div>
+<!-- Pillar 2 -->
+<div class="glass-card rounded-2xl p-8 text-center flex flex-col items-center group relative overflow-hidden">
+<div class="absolute -top-12 -right-12 w-28 h-28 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-colors"></div>
+<div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-950/60 to-slate-900 border border-cyan-500/30 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-lg shadow-cyan-950/40">
+<!-- Technology & Medicine Icon -->
+<svg class="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M12 9v6m-3-3h6" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<h3 class="text-lg font-bold text-white mb-3 leading-snug">
+              Создание технологий для внедрения полученных знаний в современную медицину
+            </h3>
+<p class="text-sm text-slate-400 leading-relaxed font-light mt-auto">
+              Трансляция биохимических молекул в стабильные синтетические пептидные соединения и готовые терапевтические формы с доказанной фармакодинамикой.
+            </p>
+</div>
+<!-- Pillar 3 -->
+<div class="glass-card rounded-2xl p-8 text-center flex flex-col items-center group relative overflow-hidden">
+<div class="absolute -top-12 -right-12 w-28 h-28 bg-sky-500/10 rounded-full blur-2xl group-hover:bg-sky-500/20 transition-colors"></div>
+<div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-sky-950/60 to-slate-900 border border-sky-500/30 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform shadow-lg shadow-sky-950/40">
+<!-- Academic Institution Icon -->
+<svg class="w-10 h-10 text-sky-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<h3 class="text-lg font-bold text-white mb-3 leading-snug">
+              Сотрудничество с российскими и зарубежными институтами
+            </h3>
+<p class="text-sm text-slate-400 leading-relaxed font-light mt-auto">
+              Партнерство с ведущими академическими центрами в области разработки инновационных способов лечения, противодействия полирезистентности микроорганизмов.
+            </p>
+</div>
+</div>
+<!-- 3 Visual Proof Cards (Patents, Laboratory, Publications) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="publications">
+<!-- Card 1: Intellectual Property -->
+<div class="glass-card rounded-2xl overflow-hidden flex flex-col border border-brand-border">
+<div class="h-48 bg-slate-950 relative p-4 flex items-center justify-center border-b border-brand-border">
+<!-- Grid of Simulated Patent Certificates -->
+<div class="grid grid-cols-3 gap-2 w-full max-w-xs opacity-90">
+<div class="bg-slate-900 border border-amber-500/30 rounded p-2 text-center transform -rotate-3 shadow">
+<div class="w-5 h-5 mx-auto rounded-full bg-amber-500/20 mb-1 flex items-center justify-center text-[10px] text-amber-400">★</div>
+<div class="text-[8px] font-mono text-slate-300">ПАТЕНТ РФ</div>
+<div class="h-1 bg-slate-800 rounded mt-1"></div>
+</div>
+<div class="bg-slate-900 border border-cyan-500/30 rounded p-2 text-center z-10 shadow-lg scale-105">
+<div class="w-5 h-5 mx-auto rounded-full bg-cyan-500/20 mb-1 flex items-center justify-center text-[10px] text-cyan-400">§</div>
+<div class="text-[8px] font-mono text-cyan-200">US PATENT</div>
+<div class="h-1 bg-slate-800 rounded mt-1"></div>
+</div>
+<div class="bg-slate-900 border border-emerald-500/30 rounded p-2 text-center transform rotate-3 shadow">
+<div class="w-5 h-5 mx-auto rounded-full bg-emerald-500/20 mb-1 flex items-center justify-center text-[10px] text-emerald-400">✓</div>
+<div class="text-[8px] font-mono text-slate-300">EPO EUR</div>
+<div class="h-1 bg-slate-800 rounded mt-1"></div>
+</div>
+</div>
+<div class="absolute bottom-2 right-3 text-[10px] font-mono text-cyan-400 bg-brand-surface/90 px-2 py-0.5 rounded border border-cyan-500/20">
+                25+ патентов
+              </div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<h4 class="text-lg font-bold text-white mb-2">Интеллектуальная собственность</h4>
+<p class="text-sm text-slate-400 font-light leading-relaxed mb-4">
+                Разработки компании защищены надежным портфелем патентов на изобретения в России, Евразии, Европейском Союзе и США.
+              </p>
+<div class="mt-auto pt-3 border-t border-slate-800/80 flex items-center text-xs font-semibold text-cyan-400">
+<span class="">Международный патентный приоритет</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Research Base -->
+<div class="glass-card rounded-2xl overflow-hidden flex flex-col border border-brand-border">
+<div class="h-48 bg-slate-950 relative flex items-center justify-center border-b border-brand-border overflow-hidden">
+<!-- High-tech Lab Equipment Motif -->
+<div class="absolute inset-0 bg-gradient-to-tr from-cyan-950/40 via-transparent to-blue-900/20"></div>
+<svg class="w-24 h-24 text-cyan-500/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+<div class="absolute bottom-2 right-3 text-[10px] font-mono text-cyan-400 bg-brand-surface/90 px-2 py-0.5 rounded border border-cyan-500/20">
+                Опыт &gt; 20 лет
+              </div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<h4 class="text-lg font-bold text-white mb-2">Исследовательская база</h4>
+<p class="text-sm text-slate-400 font-light leading-relaxed mb-4">
+                Исследования, лежащие в основе внедряемых нами биотехнологических разработок, мы ведем непрерывно уже больше 20 лет в специализированных лабораториях.
+              </p>
+<div class="mt-auto pt-3 border-t border-slate-800/80 flex items-center text-xs font-semibold text-cyan-400">
+<span class="">Инсектарий &amp; Синтез пептидов</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Publications -->
+<div class="glass-card rounded-2xl overflow-hidden flex flex-col border border-brand-border">
+<div class="h-48 bg-slate-950 relative p-4 flex items-center justify-center border-b border-brand-border">
+<!-- Journal Badges Visual -->
+<div class="flex flex-wrap gap-2 justify-center items-center max-w-xs">
+<span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-700 text-cyan-400 text-xs font-bold font-serif">PLOS ONE</span>
+<span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-700 text-rose-400 text-xs font-bold font-serif">PNAS</span>
+<span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-700 text-sky-300 text-xs font-semibold">Web of Science</span>
+<span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-700 text-amber-300 text-[11px] font-mono">Immunopharmacology</span>
+<span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-700 text-slate-300 text-[11px]">Журнал эволюционной биохимии</span>
+</div>
+<div class="absolute bottom-2 right-3 text-[10px] font-mono text-cyan-400 bg-brand-surface/90 px-2 py-0.5 rounded border border-cyan-500/20">
+                Scopus &amp; Q1
+              </div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<h4 class="text-lg font-bold text-white mb-2">Наши публикации</h4>
+<p class="text-sm text-slate-400 font-light leading-relaxed mb-4">
+                Наши находки проходят серьезную научную международную экспертизу — мы регулярно публикуемся в рейтинговых рецензируемых журналах Web of Science и Scopus.
+              </p>
+<div class="mt-auto pt-3 border-t border-slate-800/80 flex items-center text-xs font-semibold text-cyan-400">
+<span class="">Международное признание</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: CoreDirections -->
+<!-- BEGIN: ScientificDevelopments -->
+<section class="py-24 border-b border-brand-border bg-slate-950/60 relative" id="developments">
+<div class="max-w-7xl mx-auto px-6">
+<!-- Header -->
+<div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+<div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 mb-2">
+<!-- Flask / Molecule Icon -->
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<h2 class="text-3xl sm:text-4xl font-extrabold text-white">Научные разработки</h2>
+<div class="w-24 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto"></div>
+<p class="text-slate-300 text-base sm:text-lg font-light leading-relaxed">
+            В основу наиболее перспективных разработок компании «Аллофарм» легли фундаментальные исследования, 
+            выполненные ее научными сотрудниками в области биофармакологии и иммунологии насекомых.
+          </p>
+</div>
+<!-- Catalogue of Substance & Technology Platforms -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Development Card 1: АЛЛОСТАТИН -->
+<div class="glass-card rounded-2xl p-6 border-l-4 border-l-cyan-400 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/30">Синтетический пептид</span>
+<span class="text-xs font-medium text-emerald-400">Клинически апробирован</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-2">АЛЛОСТАТИН®</h3>
+<p class="text-sm font-semibold text-cyan-300 mb-3">Пептид с противовирусным и противоопухолевым действием</p>
+<p class="text-sm text-slate-400 leading-relaxed font-light">
+                Модулирует распознавание трансформированных и инфицированных вирусом клеток эффекторами иммунной системы (NK-клетки, цитотоксические лимфоциты). Подавляет репликацию герпесвирусов, папилломавирусов и новообразований кожи.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+<span class="">Специфика: Онковирусология</span>
+<span class="text-cyan-400 font-mono">Патент RU/US</span>
+</div>
+</div>
+<!-- Development Card 2: FLIP®7 -->
+<div class="glass-card rounded-2xl p-6 border-l-4 border-l-rose-500 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-mono px-2 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-500/30">Биокомплекс АМП</span>
+<span class="text-xs font-medium text-rose-400">Против супербактерий</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-2">FLIP®7</h3>
+<p class="text-sm font-semibold text-rose-300 mb-3">Комплекс антимикробных пептидов насекомых</p>
+<p class="text-sm text-slate-400 leading-relaxed font-light">
+                Натуральный сбалансированный ансамбль дефензинов, цекропинов, диптерицинов и пролин-богатых пептидов. Эффективно разрушает бактериальные биопленки и мембраны антибиотикорезистентных штаммов без формирования привыкания.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+<span class="">Специфика: Антибиотикорезистентность</span>
+<span class="text-rose-400 font-mono">Естественный синтез</span>
+</div>
+</div>
+<!-- Development Card 3: InOVA-C -->
+<div class="glass-card rounded-2xl p-6 border-l-4 border-l-sky-400 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-mono px-2 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-500/30">Вакцинный адъювант</span>
+<span class="text-xs font-medium text-sky-300">Суперантиген</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-2">InOVA-C</h3>
+<p class="text-sm font-semibold text-sky-300 mb-3">Иммунологически активный адъювант для вакцин</p>
+<p class="text-sm text-slate-400 leading-relaxed font-light">
+                Высокомолекулярный биоактивный компонент иммунитета насекомых, способный стимулировать клеточный и гуморальный иммунный ответ на слабоиммуногенные антигены. Перспективная платформа для разработки противоопухолевых вакцин.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+<span class="">Специфика: Вакцинология &amp; Иммунотерапия</span>
+<span class="text-sky-400 font-mono">R&amp;D стадия</span>
+</div>
+</div>
+<!-- Development Card 4: Технологии культивирования -->
+<div class="glass-card rounded-2xl p-6 border-l-4 border-l-amber-500 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-mono px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30">Промышленный биотех</span>
+<span class="text-xs font-medium text-amber-400">Масштабируемо</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-2">Культивирование насекомых</h3>
+<p class="text-sm font-semibold text-amber-300 mb-3">Биотехнология культивирования личинок Calliphoridae</p>
+<p class="text-sm text-slate-400 leading-relaxed font-light">
+                Замкнутый промышленный цикл получения стандартизированного биоматериала в условиях строго контролируемого инсектария. Обеспечивает высокий выход пептидных субстанций с воспроизводимыми фармакологическими параметрами.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+<span class="">Специфика: Биофабрикация сырья</span>
+<span class="text-amber-400 font-mono">Стандарт GMP/ISO</span>
+</div>
+</div>
+<!-- Development Card 5: АЛЛОМЕДИН® ПРО & ЭНТОМИКС® -->
+<div class="glass-card rounded-2xl p-6 border-l-4 border-l-emerald-500 flex flex-col justify-between lg:col-span-2">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30">Дерматология &amp; Космецевтика</span>
+<span class="text-xs font-medium text-emerald-400">Применение на практике</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-2">АЛЛОМЕДИН® ПРО &amp; ЭНТОМИКС®</h3>
+<p class="text-sm font-semibold text-emerald-300 mb-3">Биоактивные дерматологические пептидные гидрогели</p>
+<p class="text-sm text-slate-400 leading-relaxed font-light">
+                Применение открытых пептидов насекомых (аллофероны, аллостатины) в составе наружных формуляций. Способствуют ускоренной регенерации эпителиальных покровов, снижению воспаления, локальной элиминации вирусных агентов и восстановлению кожного барьера при хронических дерматозах.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-slate-800 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2">
+<span class="">Фармацевтические гидрогели и защитные матрицы</span>
+<span class="text-emerald-400 font-mono">Зарегистрированные торговые марки</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: ScientificDevelopments -->
+<!-- BEGIN: NewsletterSubscription -->
+
+<!-- END: NewsletterSubscription -->
+<!-- BEGIN: MediaAndPress -->
+<section class="py-24 border-b border-brand-border relative" id="media">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+<div class="w-12 h-12 rounded-xl bg-slate-900 border border-slate-700 text-cyan-400 flex items-center justify-center mx-auto mb-2">
+<!-- Newspaper Icon -->
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<h2 class="text-3xl sm:text-4xl font-extrabold text-white">СМИ о нас</h2>
+<div class="w-24 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto"></div>
+<p class="text-slate-400 text-base font-light">
+            Научные обозреватели, деловые издания и академические журналы об открытиях компании «Аллофарм»
+          </p>
+</div>
+<!-- Media Carousel / Grid of Publications -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+<!-- Media Item 1: СПбГУ -->
+<div class="glass-card rounded-2xl p-6 border border-brand-border flex flex-col justify-between">
+<div>
+<div class="h-16 flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+<span class="text-base font-bold text-rose-300 tracking-wide font-serif">Санкт-Петербургский Государственный Университет</span>
+<span class="text-[11px] font-mono text-slate-400">Журнал СПбГУ</span>
+</div>
+<h3 class="text-base font-semibold text-white mb-2 leading-snug">
+                «Как лечить то, что не лечится»
+              </h3>
+<p class="text-xs text-slate-400 font-light leading-relaxed">
+                Материал о фундаментальных биофармакологических исследованиях природных пептидов насекомых и создании принципиально нового класса иммуномодуляторов.
+              </p>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-xs text-cyan-400 font-medium">
+<span class="">Читать публикацию</span>
+<span class="">→</span>
+</div>
+</div>
+<!-- Media Item 2: Новости GMP -->
+<div class="glass-card rounded-2xl p-6 border border-brand-border flex flex-col justify-between">
+<div>
+<div class="h-16 flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+<span class="text-base font-bold text-cyan-400 tracking-wider font-mono">НОВОСТИ GMP</span>
+<span class="text-[11px] font-mono text-slate-400">Фарма-отрасль</span>
+</div>
+<h3 class="text-base font-semibold text-white mb-2 leading-snug">
+                «Зарегистрировано медизделие для борьбы с бактериальными биопленками»
+              </h3>
+<p class="text-xs text-slate-400 font-light leading-relaxed">
+                Официальный отчет о регистрации инновационного состава на основе комплекса FLIP-7, разрушающего биопленки патогенов.
+              </p>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-xs text-cyan-400 font-medium">
+<span class="">Пресс-релиз GMP</span>
+<span class="">→</span>
+</div>
+</div>
+<!-- Media Item 3: Naked Science -->
+<div class="glass-card rounded-2xl p-6 border border-brand-border flex flex-col justify-between">
+<div>
+<div class="h-16 flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+<span class="text-base font-extrabold text-white tracking-widest font-sans">NAKED SCIENCE</span>
+<span class="text-[11px] font-mono text-slate-400">Научпоп портал</span>
+</div>
+<h3 class="text-base font-semibold text-white mb-2 leading-snug">
+                «Апокалипсис отменяется: нас спасут насекомые»
+              </h3>
+<p class="text-xs text-slate-400 font-light leading-relaxed">
+                Обширный научно-популярный лонгрид о том, почему иммунитет мух и жуков является главным оружием человечества против супербактерий XXI века.
+              </p>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-xs text-cyan-400 font-medium">
+<span class="">Спецпроект Naked Science</span>
+<span class="">→</span>
+</div>
+</div>
+<!-- Media Item 4: Forbes -->
+<div class="glass-card rounded-2xl p-6 border border-brand-border flex flex-col justify-between">
+<div>
+<div class="h-16 flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+<span class="text-lg font-serif font-black text-slate-200">Forbes</span>
+<span class="text-[11px] font-mono text-slate-400">Биотех инвестиции</span>
+</div>
+<h3 class="text-base font-semibold text-white mb-2 leading-snug">
+                «Борьба за выживание. Погибнет ли человечество из-за устойчивости к антибиотикам»
+              </h3>
+<p class="text-xs text-slate-400 font-light leading-relaxed">
+                Анализ рынка перспективных субстанций, замещающих классические антибиотики, и коммерческий потенциал платформы Аллофарм.
+              </p>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-xs text-cyan-400 font-medium">
+<span class="">Аналитика Forbes</span>
+<span class="">→</span>
+</div>
+</div>
+<!-- Media Item 5: Эксперт -->
+<div class="glass-card rounded-2xl p-6 border border-brand-border flex flex-col justify-between">
+<div>
+<div class="h-16 flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+<span class="text-base font-bold text-amber-400 font-sans tracking-wide">ЖУРНАЛ «ЭКСПЕРТ»</span>
+<span class="text-[11px] font-mono text-slate-400">Инновации</span>
+</div>
+<h3 class="text-base font-semibold text-white mb-2 leading-snug">
+                «Убийцы вирусов: как пептиды меняют правила фармакотерапии»
+              </h3>
+<p class="text-xs text-slate-400 font-light leading-relaxed">
+                Экспертный разбор механизма действия цитокиноподобных молекул и их способности активировать интерфероногенез без токсичности.
+              </p>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-xs text-cyan-400 font-medium">
+<span class="">Архив журнала</span>
+<span class="">→</span>
+</div>
+</div>
+<!-- Media Item 6: YouTube Channel -->
+<div class="glass-card rounded-2xl p-6 border border-rose-900/40 bg-gradient-to-br from-slate-900 to-rose-950/20 flex flex-col justify-between">
+<div>
+<div class="h-16 flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+<span class="text-base font-bold text-rose-500 flex items-center gap-2">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                  YouTube Канал
+                </span>
+<span class="text-[11px] font-mono text-rose-300">Видео-лекции</span>
+</div>
+<h3 class="text-base font-semibold text-white mb-2 leading-snug">
+                Научно-образовательный видеоархив
+              </h3>
+<p class="text-xs text-slate-400 font-light leading-relaxed">
+                Доклады на международных конгрессах, демонстрация биологических испытаний in vitro и визуализация клеточных ответов.
+              </p>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-xs text-rose-400 font-medium">
+<span class="">Смотреть материалы</span>
+<span class="">→</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: MediaAndPress -->
+</main>
+<!-- BEGIN: MainFooter -->
+<footer class="bg-brand-dark border-t border-brand-border text-slate-400 text-sm" id="footer">
+<div class="max-w-7xl mx-auto px-6 py-16">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
+<!-- Col 1: Branding & Legal Data (4 cols) -->
+<div class="lg:col-span-4 space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-600 to-rose-500 p-0.5 flex items-center justify-center">
+<div class="w-full h-full bg-brand-surface rounded-[6px] flex items-center justify-center">
+<svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-lg font-bold tracking-wider text-white uppercase">АЛЛОФАРМ</span>
+<span class="text-[9px] tracking-widest uppercase font-semibold text-sky-400">Биотехнологическая компания</span>
+</div>
+</div>
+<p class="text-xs text-slate-400 font-light leading-relaxed">
+            Разработка и внедрение оригинальных фармацевтических субстанций на основе молекулярных факторов иммунной системы насекомых.
+          </p>
+<div class="pt-2 text-xs text-slate-400 space-y-1 font-mono">
+<div class="">ООО «Аллофарм»</div>
+<div class="">ОГРН: 1047800031663</div>
+<div class="">ИНН: 7801265876</div>
+<div class="pt-1">
+<a class="text-cyan-400 hover:underline" href="#">Политика конфиденциальности</a>
+</div>
+</div>
+</div>
+<!-- Col 2: Navigation Links (3 cols) -->
+<div class="lg:col-span-3 space-y-3">
+<h4 class="text-xs font-bold uppercase tracking-wider text-white">Навигация</h4>
+<ul class="space-y-2 text-xs">
+<li class=""><a class="hover:text-cyan-400 transition-colors" href="#hero">Главная страница</a></li>
+<li class=""><a class="hover:text-cyan-400 transition-colors" href="#company">О Компании</a></li>
+<li class=""><a class="hover:text-cyan-400 transition-colors" href="#developments">Наши разработки</a></li>
+<li class=""><a class="hover:text-cyan-400 transition-colors" href="#publications">Интеллектуальная собственность</a></li>
+<li class=""><a class="hover:text-cyan-400 transition-colors" href="#publications">Научные публикации</a></li>
+<li class=""><a class="hover:text-cyan-400 transition-colors" href="#media">Пресс-центр и СМИ о нас</a></li>
+</ul>
+</div>
+<!-- Col 3: Research Focus (2 cols) -->
+<div class="lg:col-span-2 space-y-3">
+<h4 class="text-xs font-bold uppercase tracking-wider text-white">Платформы</h4>
+<ul class="space-y-2 text-xs">
+<li class=""><span class="text-slate-400">АЛЛОСТАТИН®</span></li>
+<li class=""><span class="text-slate-400">FLIP®7 Комплекс</span></li>
+<li class=""><span class="text-slate-400">InOVA-C Адъювант</span></li>
+<li class=""><span class="text-slate-400">Аллофероны</span></li>
+<li class=""><span class="text-slate-400">Calliphoridae Tech</span></li>
+</ul>
+</div>
+<!-- Col 4: Contacts (3 cols) -->
+<div class="lg:col-span-3 space-y-3 text-xs">
+<h4 class="text-xs font-bold uppercase tracking-wider text-white">Контакты</h4>
+<p class="leading-relaxed">
+<strong class="text-slate-300">Адрес офиса и лабораторий:</strong><br>
+            Россия, г. Санкт-Петербург, пр-т Малый В.О., д. 57, корп. 4/Ж, пом. 8-Н
+          </p>
+<div class="space-y-1 pt-1 font-mono">
+<div class="">Тел: <a class="text-slate-300 hover:text-cyan-400" href="tel:+79315923375">+7 (931) 592-33-75</a></div>
+<div class="">Тел: <a class="text-slate-300 hover:text-cyan-400" href="tel:+78123205542">+7 (812) 320-55-42</a></div>
+<div class="">Email: <a class="text-cyan-400 hover:underline" href="mailto:allofarm.spb@yandex.ru">allofarm.spb@yandex.ru</a></div>
+</div>
+<div class="pt-2">
+<span class="inline-block px-2.5 py-1 rounded bg-slate-900 border border-slate-700 text-[11px] text-cyan-300">
+              Научное сотрудничество: открыты к диалогу
+            </span>
+</div>
+</div>
+</div>
+<!-- Copyright Bottom Bar -->
+<div class="mt-12 pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
+<div class="">
+          © 2003–2025 Аллофарм. Все права защищены. Инновационная пептидная биотехнология.
+        </div>
+<div class="flex items-center space-x-6 text-slate-400">
+<span class="">Санкт-Петербург, Россия</span>
+<span class="">•</span>
+<span class="">Biotechnology R&amp;D</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+<!-- BEGIN: InteractiveScripts -->
+<script data-purpose="hero-slider">
+    // Hero Slides content definitions
+    const slides = [
+      "Антимикробные и противоопухолевые средства нового поколения на основе природных пептидов врожденного иммунитета.",
+      "Миллионы лет эволюции в Вашей аптечке: биомиметика эффективных защитных механизмов насекомых.",
+      "Настоящие биотехнологии: химический пептидный синтез и замкнутый цикл культивирования биомассы."
+    ];
+
+    let currentSlide = 0;
+    const captionEl = document.getElementById("slider-caption");
+
+    function renderSlide(index) {
+      currentSlide = (index + slides.length) % slides.length;
+      if (captionEl) {
+        captionEl.style.opacity = '0';
+        setTimeout(() => {
+          captionEl.textContent = slides[currentSlide];
+          captionEl.style.opacity = '1';
+        }, 200);
+      }
+
+      // Update dot styles
+      const dotsContainer = document.querySelector('[data-purpose="slider-dots"]');
+      if (dotsContainer) {
+        const dots = dotsContainer.querySelectorAll('button');
+        dots.forEach((dot, idx) => {
+          if (idx === currentSlide) {
+            dot.className = "w-3 h-3 rounded-full bg-cyan-400 ring-2 ring-cyan-400/40 transition-all";
+          } else {
+            dot.className = "w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all";
+          }
+        });
+      }
+    }
+
+    function nextSlide() {
+      renderSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      renderSlide(currentSlide - 1);
+    }
+
+    function changeSlide(idx) {
+      renderSlide(idx);
+    }
+
+    // Auto rotate every 7 seconds
+    setInterval(() => {
+      nextSlide();
+    }, 7000);
+  </script>
+<script data-purpose="language-toggle">
+    // Simple state toggle for language switcher preview
+    const ruBtn = document.getElementById('lang-ru');
+    const enBtn = document.getElementById('lang-en');
+
+    if (ruBtn && enBtn) {
+      ruBtn.addEventListener('click', () => {
+        ruBtn.className = "px-2 py-0.5 rounded text-cyan-400 bg-cyan-950/60 border border-cyan-500/40";
+        enBtn.className = "px-2 py-0.5 rounded text-slate-400 hover:text-white transition-colors";
+      });
+
+      enBtn.addEventListener('click', () => {
+        enBtn.className = "px-2 py-0.5 rounded text-cyan-400 bg-cyan-950/60 border border-cyan-500/40";
+        ruBtn.className = "px-2 py-0.5 rounded text-slate-400 hover:text-white transition-colors";
+      });
+    }
+  </script>
+<!-- END: InteractiveScripts -->
+
+
+</body></html>

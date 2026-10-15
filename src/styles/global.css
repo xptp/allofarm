@@ -1,0 +1,21 @@
+:root { --color-background: #060a17;
+  --color-primary: #e2e9f3;
+  --font-main: Inter, "Segoe UI", Arial, sans-serif;
+  --surface-light: #f3f6f8;
+  --surface-catalog: #e5edf2;
+  --surface-white: #fff;
+  --ink-heading: #172d40;
+  --ink-body: #465b6c;
+  --ink-muted: #556978;
+  --light-border: #cdd9e1;
+  --accent-readable: #087386;
+}
+* { box-sizing: border-box; }
+html { background: var(--color-background); scroll-behavior: smooth; }
+body { margin: 0; background: var(--color-background); color: var(--color-primary); font-family: var(--font-main); -webkit-font-smoothing: antialiased; }
+button, a { font: inherit; }
+a { color: inherit; text-decoration: none; }
+button:focus-visible, a:focus-visible { outline: 2px solid #49d5e8; outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) {
+* { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
