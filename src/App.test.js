@@ -44,12 +44,12 @@ test('blocked storage does not break rendering or language switching', () => {
   expect(document.documentElement.lang).toBe('en');
 });
 
-test('platform links target distinct existing cards and privacy is a real link', () => {
+test('platform links open distinct development pages and privacy is a real link', () => {
   render(<App />);
   const platforms = screen.getByRole('navigation', { name: 'Платформы' });
   const links = within(platforms).getAllByRole('link');
   expect(new Set(links.map(link => link.getAttribute('href'))).size).toBe(4);
-  links.forEach(link => expect(document.querySelector(link.getAttribute('href'))).not.toBeNull());
+  expect(links.map(link => link.getAttribute('href'))).toEqual(['/allostatins/', '/flip7/', '/inova-c/', '/calliphoridae/']);
   expect(screen.getByRole('link', { name: 'Политика конфиденциальности' })).toHaveAttribute('href', 'https://allopharm.ru/privacy-policy');
 });
 

@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import headerLogo from '../assets/logo-header.png';
+import englishLogo from '../assets/logo-header-en.svg';
 import '../styles/Header.css';
 
-function Header({ language, onLanguageChange, t, links, aboutLinks, activeNavIndex = 0 }) {
+function Header({ language, onLanguageChange, t, links, aboutLinks, developmentLinks, activeNavIndex = 0 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [aboutMenuOpen, setAboutMenuOpen] = useState(false);
+  const [developmentsMenuOpen, setDevelopmentsMenuOpen] = useState(false);
   const changeLanguage = (nextLanguage) => {
     onLanguageChange(nextLanguage);
     setMenuOpen(false);
     setAboutMenuOpen(false);
+    setDevelopmentsMenuOpen(false);
   };
 
   return (
@@ -28,20 +31,28 @@ function Header({ language, onLanguageChange, t, links, aboutLinks, activeNavInd
       </div>
       <div className="header-container main-header">
         <a className="brand" href="/" aria-label={language === 'ru' ? 'Аллофарм — главная' : 'Allopharm — home'}>
-          <img src={headerLogo} alt="АЛЛОФАРМ" />
+          <img src={language === 'en' ? englishLogo : headerLogo} alt={language === 'en' ? 'ALLOPHARM — biotechnology company' : 'АЛЛОФАРМ — биотехнологическая компания'} />
         </a>
         <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-label={menuOpen ? t.close : t.menu} onClick={() => setMenuOpen((open) => !open)}>
           <span /><span /><span />
         </button>
         <nav className={menuOpen ? 'primary-nav open' : 'primary-nav'} aria-label={language === 'ru' ? 'Основная навигация' : 'Main navigation'}>
-          {t.nav.map((label, i) => i === 1 ? <div className={`header-about-menu${i === activeNavIndex ? ' current' : ''}`} key={label}>
-            <button type="button" className="header-about-toggle" aria-expanded={aboutMenuOpen} aria-controls="header-about-submenu" onClick={() => setAboutMenuOpen((open) => !open)}>
-              {label}<span className="header-about-indicator" aria-hidden="true">{aboutMenuOpen ? '−' : '+'}</span>
+          {t.nav.map((label, i) => i === 1 || i === 2 ? <div className={`header-dropdown${i === activeNavIndex ? ' current' : ''}`} key={label}>
+            <button type="button" className="header-dropdown-toggle" aria-expanded={i === 1 ? aboutMenuOpen : developmentsMenuOpen} aria-controls={i === 1 ? 'header-about-submenu' : 'header-developments-submenu'} onClick={() => {
+              if (i === 1) {
+                setAboutMenuOpen((open) => !open);
+                setDevelopmentsMenuOpen(false);
+              } else {
+                setDevelopmentsMenuOpen((open) => !open);
+                setAboutMenuOpen(false);
+              }
+            }}>
+              {label}<span className="header-dropdown-indicator" aria-hidden="true">{(i === 1 ? aboutMenuOpen : developmentsMenuOpen) ? '−' : '+'}</span>
             </button>
-            {aboutMenuOpen && <div className="header-about-submenu" id="header-about-submenu">
-              {t.aboutPages.map((page, pageIndex) => <a key={page} href={aboutLinks[pageIndex]} onClick={() => { setAboutMenuOpen(false); setMenuOpen(false); }}>{page}</a>)}
+            {(i === 1 ? aboutMenuOpen : developmentsMenuOpen) && <div className="header-dropdown-submenu" id={i === 1 ? 'header-about-submenu' : 'header-developments-submenu'}>
+              {(i === 1 ? t.aboutPages : t.developmentPages).map((page, pageIndex) => <a key={page} href={(i === 1 ? aboutLinks : developmentLinks)[pageIndex]} onClick={() => { setAboutMenuOpen(false); setDevelopmentsMenuOpen(false); setMenuOpen(false); }}>{page}</a>)}
             </div>}
-          </div> : <a key={label} className={i === activeNavIndex ? 'current' : ''} href={links[i]} onClick={() => { setMenuOpen(false); setAboutMenuOpen(false); }}>{label}<span className="nav-arrow" aria-hidden="true">↗</span></a>)}
+          </div> : <a key={label} className={i === activeNavIndex ? 'current' : ''} href={links[i]} onClick={() => { setMenuOpen(false); setAboutMenuOpen(false); setDevelopmentsMenuOpen(false); }}>{label}<span className="nav-arrow" aria-hidden="true">↗</span></a>)}
         </nav>
       </div>
     </header>

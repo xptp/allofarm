@@ -1,4 +1,5 @@
 import footerLogo from '../assets/logo-header.png';
+import englishLogo from '../assets/logo-header-en.svg';
 import { useState } from 'react';
 import '../styles/Footer.css';
 
@@ -11,6 +12,10 @@ const footerCopy = {
     aboutPages: ['О нас', 'Интеллектуальная собственность'],
     expandAbout: 'Раскрыть раздел «О компании»',
     collapseAbout: 'Свернуть раздел «О компании»',
+    developments: 'Наши разработки',
+    developmentPages: ['Исследовательская база', 'АЛЛОСТАТИН®', 'FLIP®7', 'InOVA-C', 'АЛЛОМЕДИН® ПРО', 'ЭНТОМИКС®', 'Технология культивирования насекомых'],
+    expandDevelopments: 'Раскрыть раздел «Наши разработки»',
+    collapseDevelopments: 'Свернуть раздел «Наши разработки»',
     contacts: 'Контакты',
     office: 'Адрес офиса и лабораторий:',
     phone: 'Телефон:',
@@ -30,6 +35,10 @@ const footerCopy = {
     aboutPages: ['About us', 'Intellectual property'],
     expandAbout: 'Expand About the company menu',
     collapseAbout: 'Collapse About the company menu',
+    developments: 'Our developments',
+    developmentPages: ['Research base', 'ALLOSTATIN®', 'FLIP®7', 'InOVA-C', 'ALLOMEDIN® PRO', 'ENTOMIX®', 'Insect cultivation technology'],
+    expandDevelopments: 'Expand Our developments menu',
+    collapseDevelopments: 'Collapse Our developments menu',
     contacts: 'Contacts',
     office: 'Office and laboratory address:',
     phone: 'Phone:',
@@ -43,14 +52,12 @@ const footerCopy = {
   },
 };
 
-function Footer({ language, t, links, aboutLinks }) {
+function Footer({ language, t, links, aboutLinks, developmentLinks }) {
   const copy = footerCopy[language];
   const platformNames = copy.platformsList;
   const [aboutMenuOpen, setAboutMenuOpen] = useState(false);
-  const platformAnchors = ['allostatin', 'flip7', 'inova', null, 'cultivation'];
-  const platformLinks = platformNames.map((_, index) => platformAnchors[index]
-    ? links[2].replace('developments-title', `development-${platformAnchors[index]}`)
-    : null);
+  const [developmentsMenuOpen, setDevelopmentsMenuOpen] = useState(false);
+  const platformLinks = [developmentLinks[1], developmentLinks[2], developmentLinks[3], null, developmentLinks[6]];
 
   return (
     <footer className="site-footer">
@@ -58,7 +65,7 @@ function Footer({ language, t, links, aboutLinks }) {
         <div className="footer-main">
           <section className="footer-company" aria-label={language === 'ru' ? 'О компании' : 'About the company'}>
             <a className="footer-brand" href="/" aria-label={language === 'ru' ? 'Аллофарм — главная' : 'Allopharm — home'}>
-              <img src={footerLogo} alt="АЛЛОФАРМ — биотехнологическая компания" />
+              <img src={language === 'en' ? englishLogo : footerLogo} alt={language === 'en' ? 'ALLOPHARM — biotechnology company' : 'АЛЛОФАРМ — биотехнологическая компания'} />
             </a>
             <p>{copy.description}</p>
             <p className="footer-legal">{language === 'ru' ? 'ООО «Аллофарм»' : 'Allopharm LLC'}<br />{language === 'ru' ? 'ОГРН' : 'Registration No.'}: 1047800031663<br />{language === 'ru' ? 'ИНН' : 'Tax ID'}: 7801265876</p>
@@ -83,6 +90,22 @@ function Footer({ language, t, links, aboutLinks }) {
                     {copy.aboutPages.map((page, pageIndex) => <a href={aboutLinks[pageIndex]} key={page}>{page}</a>)}
                   </div>}
                 </div>
+              : index === 2
+                ? <div className="footer-about-menu" key={label}>
+                    <button
+                      className="footer-about-toggle"
+                      type="button"
+                      aria-expanded={developmentsMenuOpen}
+                      aria-controls="footer-developments-submenu"
+                      aria-label={developmentsMenuOpen ? copy.collapseDevelopments : copy.expandDevelopments}
+                      onClick={() => setDevelopmentsMenuOpen((open) => !open)}
+                    >
+                      {copy.developments}<span aria-hidden="true">{developmentsMenuOpen ? '−' : '+'}</span>
+                    </button>
+                    {developmentsMenuOpen && <div className="footer-about-submenu" id="footer-developments-submenu">
+                      {copy.developmentPages.map((page, pageIndex) => <a href={developmentLinks[pageIndex]} key={page}>{page}</a>)}
+                    </div>}
+                  </div>
               : <a href={links[index]} key={label}>{label}</a>)}
           </nav>
 
