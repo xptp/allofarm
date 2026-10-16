@@ -4,6 +4,42 @@ import App from './App';
 
 let reportVisibility;
 
+test.each(['archive-link', 'browser-back'])('news archive preserves pagination and search after %s', (returnMethod) => {
+  window.history.replaceState({}, '', '/articles/');
+  render(<App />);
+  const returnToArchive = () => {
+    if (returnMethod === 'archive-link') {
+      fireEvent.click(screen.getByRole('link', { name: 'Все новости', exact: true }));
+    } else {
+      act(() => {
+        window.history.replaceState({}, '', '/articles/');
+        window.dispatchEvent(new PopStateEvent('popstate'));
+      });
+    }
+  };
+  fireEvent.click(screen.getByRole('button', { name: 'Дальше' }));
+  const heading = document.querySelector('.news-card h2').textContent;
+  fireEvent.click(document.querySelector('.news-card h2 a'));
+  returnToArchive();
+  expect(screen.getByRole('button', { name: '2', exact: true })).toHaveAttribute('aria-current', 'page');
+  expect(document.querySelector('.news-card h2')).toHaveTextContent(heading);
+  fireEvent.change(screen.getByRole('searchbox'), { target: { value: '№2751837' } });
+  fireEvent.click(document.querySelector('.news-card h2 a'));
+  returnToArchive();
+  expect(screen.getByRole('searchbox')).toHaveValue('№2751837');
+  expect(document.querySelectorAll('.news-card')).toHaveLength(1);
+});
+
+test('article source links preserve query strings and exclude sentence punctuation', () => {
+  window.history.replaceState({}, '', '/en/articles/virus-jepshtejn-barr/');
+  render(<App />);
+  const source = screen.getByRole('link', { name: 'http://www.cbio.ru/modules/news/article.php?storyid=3336' });
+  expect(source).toHaveAttribute('href', 'http://www.cbio.ru/modules/news/article.php?storyid=3336');
+  expect(source).toHaveAttribute('target', '_blank');
+  expect(source).toHaveAttribute('rel', 'noopener noreferrer');
+  expect(source.parentElement.textContent).toBe('http://www.cbio.ru/modules/news/article.php?storyid=3336.');
+});
+
 beforeEach(() => {
   window.history.replaceState({}, '', '/');
   localStorage.clear();
@@ -169,4 +205,104 @@ test.each([
   expect(documentation).toHaveAttribute('target', '_blank');
   fireEvent.click(screen.getByRole('button', { name: 'EN', exact: true }));
   expect(window.location.pathname).toBe('/en/intellectual-property/');
+});
+
+test('news archive replaces Publications in the header and footer and paginates ten entries', () => {
+  window.history.replaceState({}, '', '/articles/');
+  render(<App />);
+  expect(screen.getByRole('heading', { name: 'Новости', level: 1 })).toBeInTheDocument();
+  expect(screen.getAllByRole('link', { name: 'Новости' }).every((link) => link.getAttribute('href') === '/articles/')).toBe(true);
+  expect(document.querySelectorAll('.news-card')).toHaveLength(10);
+  fireEvent.click(screen.getByRole('button', { name: 'Дальше' }));
+  expect(document.querySelectorAll('.news-card')).toHaveLength(10);
+  expect(screen.getByRole('heading', { name: /Американский научный журнал «PLOS one»/ })).toBeInTheDocument();
+});
+
+test('news search matches full article text and resets pagination when the query changes', () => {
+  window.history.replaceState({}, '', '/articles/');
+  render(<App />);
+  fireEvent.click(screen.getByRole('button', { name: 'Дальше' }));
+  fireEvent.change(screen.getByRole('searchbox', { name: 'Поиск по новостям' }), { target: { value: '№2751837' } });
+  expect(document.querySelectorAll('.news-card')).toHaveLength(1);
+  expect(screen.getByRole('heading', { name: 'Компания «Аллофарм» получила новый патент' })).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Дальше' })).not.toBeInTheDocument();
+});
+
+test('news article routes localize the same article between English and Russian', () => {
+  window.history.replaceState({}, '', '/en/articles/virus-jepshtejn-barr/');
+  render(<App />);
+  expect(screen.getByRole('heading', { name: 'Epstein–Barr Virus May Be Associated with the Development of Multiple Sclerosis', level: 1 })).toBeInTheDocument();
+  expect(document.documentElement.lang).toBe('en');
+  fireEvent.click(screen.getByRole('button', { name: 'RU', exact: true }));
+  expect(window.location.pathname).toBe('/articles/virus-jepshtejn-barr/');
+  expect(screen.getByRole('heading', { name: 'Вирус Эпштейн-Барр может быть ассоциирован с развитием рассеянного склероза', level: 1 })).toBeInTheDocument();
+});
+
+test('Press centre dropdown links to media coverage and publications', () => {
+  window.history.replaceState({}, '', '/articles/');
+  render(<App />);
+  const header = screen.getByRole('navigation', { name: 'Основная навигация' });
+  fireEvent.click(within(header).getByRole('button', { name: /Пресс-центр/ }));
+  expect(within(header).getByRole('link', { name: 'СМИ о нас' })).toHaveAttribute('href', '/#media-title');
+  expect(within(header).getByRole('link', { name: 'Наши публикации' })).toHaveAttribute('href', '/publications/');
+  const footer = screen.getByRole('navigation', { name: 'Навигация' });
+  const footerToggle = within(footer).getByRole('button', { name: 'Раскрыть раздел «Пресс-центр»' });
+  fireEvent.click(footerToggle);
+  expect(within(footer).getByRole('link', { name: 'СМИ о нас' })).toHaveAttribute('href', '/#media-title');
+  expect(within(footer).getByRole('link', { name: 'Наши публикации' })).toHaveAttribute('href', '/publications/');
+});
+
+test.each([
+  ['/publications/', 'Наши публикации', 14, 'clinical-flip7-burns-2022.pdf'],
+  ['/en/publications/', 'Our publications', 12, 'clinical-flip7-burns-2022.pdf'],
+])('publications route %s lists localized records and downloadable PDFs', (path, title, count, pdfName) => {
+  window.history.replaceState({}, '', path);
+  render(<App />);
+  expect(screen.getByRole('heading', { name: title, level: 1 })).toBeInTheDocument();
+  expect(document.title).toContain(title);
+  expect(document.querySelectorAll('.publication-item')).toHaveLength(count);
+  const download = document.querySelector('.publication-download');
+  expect(download).toHaveAttribute('download');
+  expect(download.getAttribute('href')).toContain(pdfName);
+  const titleLink = document.querySelector('.publication-title-link');
+  expect(titleLink).toHaveAttribute('target', '_blank');
+  expect(titleLink.getAttribute('href')).toContain(pdfName);
+  fireEvent.click(screen.getByRole('button', { name: path.startsWith('/en/') ? 'RU' : 'EN', exact: true }));
+  expect(window.location.pathname).toBe(path.startsWith('/en/') ? '/publications/' : '/en/publications/');
+});
+
+test.each([
+  ['/contact/', 'Контакты', 'Наш адрес', '199178'],
+  ['/en/contact/', 'Contacts', 'Our address', 'Saint Petersburg'],
+])('contact route %s shows localized details and localizes the header link', (path, title, addressTitle, addressText) => {
+  window.history.replaceState({}, '', path);
+  render(<App />);
+  expect(screen.getByRole('heading', { name: title, level: 1 })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: addressTitle, level: 2 })).toBeInTheDocument();
+  expect(document.querySelector('.contact-address-card')).toHaveTextContent(addressText);
+  expect(document.querySelector('.contact-direct a[href^="mailto:"]')).toHaveAttribute('href', 'mailto:allofarm.spb@yandex.ru');
+  const nav = screen.getByRole('navigation', { name: path.startsWith('/en/') ? 'Main navigation' : 'Основная навигация' });
+  expect(within(nav).getByRole('link', { name: title })).toHaveAttribute('href', path);
+  fireEvent.click(screen.getByRole('button', { name: path.startsWith('/en/') ? 'RU' : 'EN', exact: true }));
+  expect(window.location.pathname).toBe(path.startsWith('/en/') ? '/contact/' : '/en/contact/');
+});
+
+test.each([
+  ['/cooperation/', 'Сотрудничество', 'Продвижение разработок компании Аллофарм на территории РФ и за рубежом.'],
+  ['/en/cooperation/', 'Cooperation', 'Promoting Allopharm developments in Russia and internationally.'],
+])('cooperation route %s links the partnership areas to local pages', (path, navLabel, firstItem) => {
+  window.history.replaceState({}, '', path);
+  render(<App />);
+  expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
+  expect(document.querySelectorAll('.cooperation-item')).toHaveLength(4);
+  const nav = screen.getByRole('navigation', { name: path.startsWith('/en/') ? 'Main navigation' : 'Основная навигация' });
+  expect(within(nav).getByRole('link', { name: navLabel })).toHaveAttribute('href', path);
+  const items = document.querySelectorAll('.cooperation-item-text');
+  expect(items[0]).toHaveAttribute('href', path.startsWith('/en/') ? '/en/about/' : '/about/');
+  expect(items[0]).toHaveTextContent(firstItem);
+  expect(items[1].tagName).toBe('P');
+  expect(items[2]).toHaveAttribute('href', path.startsWith('/en/') ? '/en/intellectual-property/' : '/intellectual-property/');
+  expect(items[3]).toHaveAttribute('href', path.startsWith('/en/') ? '/en/about/' : '/about/');
+  fireEvent.click(items[0]);
+  expect(window.location.pathname).toBe(path.startsWith('/en/') ? '/en/about/' : '/about/');
 });

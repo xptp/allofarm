@@ -3,15 +3,17 @@ import headerLogo from '../assets/logo-header.png';
 import englishLogo from '../assets/logo-header-en.svg';
 import '../styles/Header.css';
 
-function Header({ language, onLanguageChange, t, links, aboutLinks, developmentLinks, activeNavIndex = 0 }) {
+function Header({ language, onLanguageChange, t, links, aboutLinks, developmentLinks, pressLinks, activeNavIndex = 0 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [aboutMenuOpen, setAboutMenuOpen] = useState(false);
   const [developmentsMenuOpen, setDevelopmentsMenuOpen] = useState(false);
+  const [pressMenuOpen, setPressMenuOpen] = useState(false);
   const changeLanguage = (nextLanguage) => {
     onLanguageChange(nextLanguage);
     setMenuOpen(false);
     setAboutMenuOpen(false);
     setDevelopmentsMenuOpen(false);
+    setPressMenuOpen(false);
   };
 
   return (
@@ -37,22 +39,33 @@ function Header({ language, onLanguageChange, t, links, aboutLinks, developmentL
           <span /><span /><span />
         </button>
         <nav className={menuOpen ? 'primary-nav open' : 'primary-nav'} aria-label={language === 'ru' ? 'Основная навигация' : 'Main navigation'}>
-          {t.nav.map((label, i) => i === 1 || i === 2 ? <div className={`header-dropdown${i === activeNavIndex ? ' current' : ''}`} key={label}>
-            <button type="button" className="header-dropdown-toggle" aria-expanded={i === 1 ? aboutMenuOpen : developmentsMenuOpen} aria-controls={i === 1 ? 'header-about-submenu' : 'header-developments-submenu'} onClick={() => {
-              if (i === 1) {
-                setAboutMenuOpen((open) => !open);
-                setDevelopmentsMenuOpen(false);
-              } else {
-                setDevelopmentsMenuOpen((open) => !open);
-                setAboutMenuOpen(false);
-              }
-            }}>
-              {label}<span className="header-dropdown-indicator" aria-hidden="true">{(i === 1 ? aboutMenuOpen : developmentsMenuOpen) ? '−' : '+'}</span>
-            </button>
-            {(i === 1 ? aboutMenuOpen : developmentsMenuOpen) && <div className="header-dropdown-submenu" id={i === 1 ? 'header-about-submenu' : 'header-developments-submenu'}>
-              {(i === 1 ? t.aboutPages : t.developmentPages).map((page, pageIndex) => <a key={page} href={(i === 1 ? aboutLinks : developmentLinks)[pageIndex]} onClick={() => { setAboutMenuOpen(false); setDevelopmentsMenuOpen(false); setMenuOpen(false); }}>{page}</a>)}
-            </div>}
-          </div> : <a key={label} className={i === activeNavIndex ? 'current' : ''} href={links[i]} onClick={() => { setMenuOpen(false); setAboutMenuOpen(false); setDevelopmentsMenuOpen(false); }}>{label}<span className="nav-arrow" aria-hidden="true">↗</span></a>)}
+          {t.nav.map((label, i) => {
+            const isAbout = i === 1;
+            const isDevelopments = i === 2;
+            const isPress = i === 4;
+            if (isAbout || isDevelopments || isPress) {
+              const isOpen = isAbout ? aboutMenuOpen : isDevelopments ? developmentsMenuOpen : pressMenuOpen;
+              const submenuId = isAbout ? 'header-about-submenu' : isDevelopments ? 'header-developments-submenu' : 'header-press-submenu';
+              const pages = isAbout ? t.aboutPages : isDevelopments ? t.developmentPages : t.pressPages;
+              const submenuLinks = isAbout ? aboutLinks : isDevelopments ? developmentLinks : pressLinks;
+              const toggle = () => {
+                setAboutMenuOpen(isAbout ? !aboutMenuOpen : false);
+                setDevelopmentsMenuOpen(isDevelopments ? !developmentsMenuOpen : false);
+                setPressMenuOpen(isPress ? !pressMenuOpen : false);
+              };
+              return <div className={`header-dropdown${i === activeNavIndex ? ' current' : ''}`} key={label}>
+                <button type="button" className="header-dropdown-toggle" aria-expanded={isOpen} aria-controls={submenuId} onClick={toggle}>
+                  {label}<span className="header-dropdown-indicator" aria-hidden="true">{isOpen ? '−' : '+'}</span>
+                </button>
+                {isOpen && <div className="header-dropdown-submenu" id={submenuId}>
+                  {pages.map((page, pageIndex) => submenuLinks[pageIndex]
+                    ? <a key={page} href={submenuLinks[pageIndex]} onClick={() => { setAboutMenuOpen(false); setDevelopmentsMenuOpen(false); setPressMenuOpen(false); setMenuOpen(false); }}>{page}</a>
+                    : <span className="header-dropdown-disabled" aria-disabled="true" key={page}>{page}</span>)}
+                </div>}
+              </div>;
+            }
+            return <a key={label} className={i === activeNavIndex ? 'current' : ''} href={links[i]} onClick={() => { setMenuOpen(false); setAboutMenuOpen(false); setDevelopmentsMenuOpen(false); setPressMenuOpen(false); }}>{label}<span className="nav-arrow" aria-hidden="true">↗</span></a>;
+          })}
         </nav>
       </div>
     </header>

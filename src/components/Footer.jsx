@@ -16,6 +16,9 @@ const footerCopy = {
     developmentPages: ['Исследовательская база', 'АЛЛОСТАТИН®', 'FLIP®7', 'InOVA-C', 'АЛЛОМЕДИН® ПРО', 'ЭНТОМИКС®', 'Технология культивирования насекомых'],
     expandDevelopments: 'Раскрыть раздел «Наши разработки»',
     collapseDevelopments: 'Свернуть раздел «Наши разработки»',
+    pressPages: ['СМИ о нас', 'Наши публикации'],
+    expandPress: 'Раскрыть раздел «Пресс-центр»',
+    collapsePress: 'Свернуть раздел «Пресс-центр»',
     contacts: 'Контакты',
     office: 'Адрес офиса и лабораторий:',
     phone: 'Телефон:',
@@ -39,6 +42,9 @@ const footerCopy = {
     developmentPages: ['Research base', 'ALLOSTATIN®', 'FLIP®7', 'InOVA-C', 'ALLOMEDIN® PRO', 'ENTOMIX®', 'Insect cultivation technology'],
     expandDevelopments: 'Expand Our developments menu',
     collapseDevelopments: 'Collapse Our developments menu',
+    pressPages: ['Media about us', 'Our publications'],
+    expandPress: 'Expand Press centre menu',
+    collapsePress: 'Collapse Press centre menu',
     contacts: 'Contacts',
     office: 'Office and laboratory address:',
     phone: 'Phone:',
@@ -52,11 +58,12 @@ const footerCopy = {
   },
 };
 
-function Footer({ language, t, links, aboutLinks, developmentLinks }) {
+function Footer({ language, t, links, aboutLinks, developmentLinks, pressLinks }) {
   const copy = footerCopy[language];
   const platformNames = copy.platformsList;
   const [aboutMenuOpen, setAboutMenuOpen] = useState(false);
   const [developmentsMenuOpen, setDevelopmentsMenuOpen] = useState(false);
+  const [pressMenuOpen, setPressMenuOpen] = useState(false);
   const platformLinks = [developmentLinks[1], developmentLinks[2], developmentLinks[3], null, developmentLinks[6]];
 
   return (
@@ -106,7 +113,25 @@ function Footer({ language, t, links, aboutLinks, developmentLinks }) {
                       {copy.developmentPages.map((page, pageIndex) => <a href={developmentLinks[pageIndex]} key={page}>{page}</a>)}
                     </div>}
                   </div>
-              : <a href={links[index]} key={label}>{label}</a>)}
+              : index === 4
+                ? <div className="footer-about-menu" key={label}>
+                    <button
+                      className="footer-about-toggle"
+                      type="button"
+                      aria-expanded={pressMenuOpen}
+                      aria-controls="footer-press-submenu"
+                      aria-label={pressMenuOpen ? copy.collapsePress : copy.expandPress}
+                      onClick={() => setPressMenuOpen((open) => !open)}
+                    >
+                      {label}<span aria-hidden="true">{pressMenuOpen ? '−' : '+'}</span>
+                    </button>
+                    {pressMenuOpen && <div className="footer-about-submenu" id="footer-press-submenu">
+                      {copy.pressPages.map((page, pageIndex) => pressLinks[pageIndex]
+                        ? <a href={pressLinks[pageIndex]} key={page}>{page}</a>
+                        : <span className="footer-platform-label" aria-disabled="true" key={page}>{page}</span>)}
+                    </div>}
+                  </div>
+                : <a href={links[index]} key={label}>{label}</a>)}
           </nav>
 
           <nav className="footer-column" aria-label={copy.platforms}>
