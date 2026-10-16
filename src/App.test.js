@@ -134,6 +134,20 @@ test('visible carousel copies retain the original destinations without extra tab
   });
 });
 
+test.each([
+  ['ru', ['/intellectual-property/', '/base/', '/publications/']],
+  ['en', ['/en/intellectual-property/', '/en/base/', '/en/publications/']],
+])('home information cards navigate to their pages in %s', (language, destinations) => {
+  if (language === 'en') localStorage.setItem('allopharm-language', 'en');
+  render(<App />);
+  const cards = [...document.querySelectorAll('.directions-grid .direction-card-detail')];
+  expect(cards).toHaveLength(3);
+  expect(cards.map((card) => card.getAttribute('href'))).toEqual(destinations);
+  fireEvent.click(cards[0]);
+  expect(window.location.pathname).toBe(destinations[0]);
+  expect(screen.getByRole('heading', { level: 1, name: language === 'ru' ? 'Интеллектуальная собственность' : 'Intellectual property' })).toBeInTheDocument();
+});
+
 test('carousel pauses offscreen and on hover without rerendering the page every tick', () => {
   jest.useFakeTimers();
   const onRender = jest.fn();
@@ -205,6 +219,18 @@ test.each([
   expect(documentation).toHaveAttribute('target', '_blank');
   fireEvent.click(screen.getByRole('button', { name: 'EN', exact: true }));
   expect(window.location.pathname).toBe('/en/intellectual-property/');
+});
+
+test.each([
+  ['/allomedin/', 'Больше информации'],
+  ['/en/allomedin/', 'More information'],
+])('Allomedin route %s provides a button to open the product PDF', (path, label) => {
+  window.history.replaceState({}, '', path);
+  render(<App />);
+  const link = screen.getByRole('link', { name: label });
+  expect(link).toHaveAttribute('target', '_blank');
+  expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  expect(link.getAttribute('href')).toContain('allomedin-pro-information.pdf');
 });
 
 test('news archive replaces Publications in the header and footer and paginates ten entries', () => {

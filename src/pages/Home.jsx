@@ -14,6 +14,7 @@ import spbuPressPdf from '../assets/press-spu.pdf';
 import '../styles/Home.css';
 import '../styles/SectionThemes.css';
 import { developmentPath } from './developments/navigation';
+import { publicationsPath } from './press/Publications';
 
 const directionsCopy = {
   ru: {
@@ -296,8 +297,16 @@ function Home({ language, t, links }) {
             <p className="directions-description">{directions.introduction}</p>
           </header>
           <div className="directions-grid">
-            {directions.cards.map((card) => (
-              <article className={`direction-card direction-card-${card.type}`} key={card.icon} tabIndex={0}>
+            {directions.cards.map((card) => {
+              const cardPath = card.icon === 'patents'
+                ? (language === 'ru' ? '/intellectual-property/' : '/en/intellectual-property/')
+                : card.icon === 'research'
+                ? developmentPath('base', language)
+                : card.icon === 'publications'
+                ? publicationsPath(language)
+                : null;
+              const Card = cardPath ? 'a' : 'article';
+              return <Card className={`direction-card direction-card-${card.type}`} key={card.icon} tabIndex={cardPath ? undefined : 0} {...(cardPath ? { href: cardPath } : {})}>
                 {card.type === 'feature' ? (
                   <>
                     <div className={`direction-icon direction-icon-${card.icon}`} aria-hidden="true">
@@ -328,8 +337,8 @@ function Home({ language, t, links }) {
                     </div>
                   </>
                 )}
-              </article>
-            ))}
+              </Card>;
+            })}
           </div>
         </div>
       </section>

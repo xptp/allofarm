@@ -1,5 +1,6 @@
 import DevelopmentContent from '../../components/DevelopmentContent';
 import image0 from '../../assets/development-site-image-1.png';
+import productInformation from '../../assets/allomedin-pro-information.pdf';
 
 // Content from https://allopharm.ru/allomedin/ and its English counterpart.
 export const content = {
@@ -105,5 +106,12 @@ content.ru.images = [{ src: image0, alt: "АЛЛОМЕДИН® ПРО" }];
 content.en.images = [{ src: image0, alt: "ALLOMEDIN® PRO" }];
 
 export default function Allomedin({ language }) {
-  return <DevelopmentContent content={content[language] || content.ru} language={language} />;
+  return <>
+    <DevelopmentContent content={content[language] || content.ru} language={language} />
+    <div className="allomedin-document-action">
+      <a className="allomedin-document-link" href={productInformation} target="_blank" rel="noopener noreferrer">
+        {language === 'ru' ? 'Больше информации' : 'More information'}<span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </>;
 }

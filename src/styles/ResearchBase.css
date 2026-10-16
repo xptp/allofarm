@@ -56,6 +56,10 @@
 .development-figure { margin: 26px 0 0; padding: 24px; border: 1px solid var(--light-border); border-radius: 13px; background: #fff; text-align: center; }
 .development-figure img { display: block; width: min(100%, 700px); height: auto; margin-inline: auto; }
 .development-figure figcaption { margin-top: 14px; font-size: 13px; color: var(--ink-muted); }
+.allomedin-document-action { display: flex; justify-content: center; margin-top: 30px; }
+.allomedin-document-link { display: inline-flex; align-items: center; gap: 12px; padding: 13px 20px; border: 1px solid #ce1248; border-radius: 5px; background: linear-gradient(105deg, #ce1248, #a9113b); color: #fff; font-size: 14px; font-weight: 650; box-shadow: 0 8px 24px rgba(143, 20, 40, .2); transition: transform .18s ease, background .18s ease, box-shadow .18s ease; }
+.allomedin-document-link:hover, .allomedin-document-link:focus-visible { transform: translateY(-2px); background: linear-gradient(105deg, #e11d55, #c11246); box-shadow: 0 11px 27px rgba(143, 20, 40, .28); }
+.allomedin-document-link:focus-visible { outline: 2px solid #ce1248; outline-offset: 3px; }
 @media (min-width: 1440px) {
   .research-container { width: min(1540px, calc(100% - 96px)); }
   .research-layout { grid-template-columns: minmax(0, 1fr) 300px; gap: 64px; }
