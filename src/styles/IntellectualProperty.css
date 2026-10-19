@@ -2,8 +2,8 @@
 .ip-container { width: min(1280px, calc(100% - 72px)); margin-inline: auto; }
 .ip-hero { position: relative; overflow: hidden; padding: 66px 0 70px; background: linear-gradient(180deg, #060a17, #0d162e); text-align: center; }
 .ip-hero::before { position: absolute; inset: 0; background-image: radial-gradient(rgba(24, 193, 217, .48) .8px, transparent .8px); background-size: 24px 24px; content: ""; opacity: .12; pointer-events: none; }
-.ip-hero .ip-container { position: relative; }
-.ip-eyebrow { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 16px; color: #35c9dd; font-size: 11px; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+.ip-hero .ip-container { position: relative; padding-top: 29px; }
+.ip-eyebrow { position: absolute; top: calc(100% + 34px); left: 0; display: inline-flex; align-items: center; gap: 9px; color: #35c9dd; font-size: 11px; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
 .ip-eyebrow i { width: 7px; height: 7px; border-radius: 50%; background: #35c9dd; box-shadow: 0 0 10px rgba(53, 201, 221, .55); }
 .ip-hero h1 { max-width: 920px; margin: 0 auto; color: #f6f8fb; font-size: clamp(36px, 5vw, 56px); font-weight: 780; letter-spacing: -.04em; line-height: 1.1; }
 .ip-content { padding: 58px 0 78px; background: var(--surface-catalog); }
@@ -39,7 +39,8 @@
 @media (max-width: 560px) {
   .ip-container { width: calc(100% - 32px); }
   .ip-hero { padding-block: 48px 52px; }
-  .ip-eyebrow { max-width: 100%; font-size: 9px; letter-spacing: .09em; }
+  .ip-hero .ip-container { padding-top: 23px; }
+  .ip-eyebrow { top: calc(100% + 28px); max-width: 100%; font-size: 9px; letter-spacing: .09em; }
   .ip-hero h1 { font-size: clamp(33px, 9vw, 43px); }
   .ip-content { padding-block: 34px 52px; }
   .ip-layout, .ip-side-column { grid-template-columns: 1fr; gap: 14px; }

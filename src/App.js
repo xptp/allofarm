@@ -13,6 +13,7 @@ import PublicationsPage, { getPublicationsRoute, publicationsPath } from './page
 import Contact, { contactPath, getContactRoute } from './pages/Contact';
 import Cooperation, { cooperationPath, getCooperationRoute } from './pages/Cooperation';
 import './styles/global.css';
+import { applySeo, getSeo, homePath } from './seo';
 
 const copy = {
   ru: {
@@ -37,15 +38,16 @@ const copy = {
   },
 };
 
-function App() {
+function App({ initialPath } = {}) {
   const [newsArchiveState, setNewsArchiveState] = useState({
     ru: { query: '', page: 1 },
     en: { query: '', page: 1 },
   });
   const focusAfterNavigation = useRef(false);
-  const [currentPath, setCurrentPath] = useState(() => normalizePath(window.location.pathname));
+  const pendingAnchor = useRef(null);
+  const [currentPath, setCurrentPath] = useState(() => normalizePath(initialPath || window.location.pathname));
   const [language, setLanguage] = useState(() => {
-    const path = normalizePath(window.location.pathname);
+    const path = normalizePath(initialPath || window.location.pathname);
     const initialRoute = getRoute(path);
     if (initialRoute) return initialRoute.language;
     const initialNewsRoute = getNewsRoute(path);
@@ -56,74 +58,22 @@ function App() {
     if (initialContactRoute) return initialContactRoute.language;
     const initialCooperationRoute = getCooperationRoute(path);
     if (initialCooperationRoute) return initialCooperationRoute.language;
-    if (path.startsWith('/en/')) return 'en';
-    try {
-      return window.localStorage.getItem('allopharm-language') === 'en' ? 'en' : 'ru';
-    } catch {
-      return 'ru';
-    }
+    return path === '/en' || path.startsWith('/en/') ? 'en' : 'ru';
   });
   const isAboutPage = currentPath === '/about' || currentPath === '/en/about';
   const isIntellectualPropertyPage = currentPath === '/intellectual-property' || currentPath === '/en/intellectual-property';
-  const isResearchBasePage = currentPath === '/base' || currentPath === '/en/base';
   const route = getRoute(currentPath);
   const newsRoute = getNewsRoute(currentPath);
   const publicationsRoute = getPublicationsRoute(currentPath);
   const contactRoute = getContactRoute(currentPath);
   const cooperationRoute = getCooperationRoute(currentPath);
   const newsArticle = newsRoute?.kind === 'article' ? getNewsBySlug(newsRoute.slug) : null;
-  const newsContent = newsArticle?.[language];
-  const isNotFound = currentPath !== '/' && !route && !publicationsRoute && !contactRoute && !cooperationRoute && (!newsRoute || (newsRoute.kind === 'article' && !newsArticle));
+  const isNotFound = currentPath !== '/' && currentPath !== '/en' && !route && !publicationsRoute && !contactRoute && !cooperationRoute && (!newsRoute || (newsRoute.kind === 'article' && !newsArticle));
   const developmentPage = route?.development ? developmentPages[route.slug] : null;
   const developmentContent = developmentPage && (developmentPage.content[language] || developmentPage.content.ru);
   const DevelopmentPage = developmentPage?.Component;
   const isSecondaryPage = isAboutPage || isIntellectualPropertyPage || Boolean(developmentPage) || Boolean(newsRoute) || Boolean(publicationsRoute) || Boolean(contactRoute) || Boolean(cooperationRoute);
   const t = copy[language];
-  const pageTitle = isNotFound
-    ? (language === 'ru' ? 'Страница не найдена — Аллофарм' : 'Page not found — Allopharm')
-    : newsRoute?.kind === 'article'
-    ? `${newsContent?.title || (language === 'ru' ? 'Новость' : 'News')} — ${language === 'ru' ? 'Аллофарм' : 'Allopharm'}`
-    : newsRoute?.kind === 'archive'
-    ? (language === 'ru' ? 'Новости — Аллофарм' : 'News — Allopharm')
-    : publicationsRoute
-    ? (language === 'ru' ? 'Наши публикации — Аллофарм' : 'Our publications — Allopharm')
-    : contactRoute
-    ? (language === 'ru' ? 'Контакты — Аллофарм' : 'Contacts — Allopharm')
-    : cooperationRoute
-    ? (language === 'ru' ? 'Сотрудничество — Аллофарм' : 'Cooperation — Allopharm')
-    : developmentPage
-    ? `${developmentContent.title} — ${language === 'ru' ? 'Аллофарм' : 'Allopharm'}`
-    : isIntellectualPropertyPage
-    ? (language === 'ru' ? 'Интеллектуальная собственность — Аллофарм' : 'Intellectual property — Allopharm')
-    : isAboutPage
-      ? (language === 'ru' ? 'О компании — Аллофарм' : 'About Allopharm')
-      : t.pageTitle;
-  const pageDescription = isNotFound
-    ? (language === 'ru' ? 'Запрошенная страница не найдена.' : 'The requested page could not be found.')
-    : newsRoute?.kind === 'article'
-    ? (newsContent?.excerpt || newsContent?.title || (language === 'ru' ? 'Новость компании Аллофарм.' : 'Allopharm company news.'))
-    : newsRoute?.kind === 'archive'
-    ? (language === 'ru' ? 'Новости и события компании «Аллофарм».' : 'News and updates from Allopharm.')
-    : publicationsRoute
-    ? (language === 'ru' ? 'Научные публикации компании «Аллофарм».' : 'Scientific publications by Allopharm.')
-    : contactRoute
-    ? (language === 'ru' ? 'Свяжитесь с компанией «Аллофарм»: адрес, телефоны и электронная почта.' : 'Contact Allopharm: address, phone numbers and email.')
-    : cooperationRoute
-    ? (language === 'ru' ? 'Направления сотрудничества с компанией «Аллофарм».' : 'Areas of cooperation with Allopharm.')
-    : developmentPage && !isResearchBasePage
-    ? developmentContent.title
-    : isResearchBasePage
-    ? (language === 'ru' ? 'Исследовательская база Аллофарм: изучение иммунной системы насекомых и создание новых разработок.' : 'Allopharm research base: studying the insect immune system and developing new technologies.')
-    : isIntellectualPropertyPage
-    ? (language === 'ru'
-      ? 'Патенты и товарные знаки компании «Аллофарм».'
-      : 'Allopharm patents and trademarks.')
-    : isAboutPage
-      ? (language === 'ru'
-        ? 'О компании Аллофарм: научные исследования, биотехнологические платформы и разработки.'
-        : 'About Allopharm: research, biotechnology platforms and developments.')
-      : t.pageDescription;
-
   const handleLanguageChange = (nextLanguage) => {
     if (nextLanguage === language) return;
     setLanguage(nextLanguage);
@@ -139,6 +89,10 @@ function App() {
         : developmentPath(route.slug, nextLanguage);
       window.history.pushState({}, '', nextPath);
       setCurrentPath(normalizePath(nextPath));
+    } else if (currentPath === '/' || currentPath === '/en') {
+      const nextPath = homePath(nextLanguage) + window.location.hash;
+      window.history.pushState({}, '', nextPath);
+      setCurrentPath(normalizePath(homePath(nextLanguage)));
     }
   };
 
@@ -147,19 +101,35 @@ function App() {
     const anchor = event.target.closest('a[href]');
     if (!anchor || anchor.target || anchor.hasAttribute('download')) return;
     const url = new URL(anchor.href, window.location.href);
-    if (url.origin !== window.location.origin || url.hash || url.search) return;
+    if (url.origin !== window.location.origin || url.search) return;
+    if (url.hash) {
+      const anchorId = url.hash.slice(1);
+      if (!['/', '/en/'].includes(url.pathname) || !['media-title', 'developments-title'].includes(anchorId)) return;
+      event.preventDefault();
+      window.history.pushState({}, '', `${url.pathname}${url.hash}`);
+      if (currentPath === normalizePath(url.pathname)) {
+        document.getElementById(anchorId)?.scrollIntoView({ behavior: 'instant', block: 'start' });
+      } else {
+        pendingAnchor.current = anchorId;
+        focusAfterNavigation.current = true;
+        setCurrentPath(normalizePath(url.pathname));
+        setLanguage(url.pathname === '/en/' ? 'en' : 'ru');
+      }
+      return;
+    }
     const nextRoute = getRoute(url.pathname);
     const nextNewsRoute = getNewsRoute(url.pathname);
     const nextPublicationsRoute = getPublicationsRoute(url.pathname);
     const nextContactRoute = getContactRoute(url.pathname);
     const nextCooperationRoute = getCooperationRoute(url.pathname);
-    if (!nextRoute && !nextNewsRoute && !nextPublicationsRoute && !nextContactRoute && !nextCooperationRoute && url.pathname !== '/') return;
+    if (!nextRoute && !nextNewsRoute && !nextPublicationsRoute && !nextContactRoute && !nextCooperationRoute && !['/', '/en', '/en/'].includes(url.pathname)) return;
     event.preventDefault();
     if (normalizePath(url.pathname) === currentPath) return;
     window.history.pushState({}, '', url.pathname);
     focusAfterNavigation.current = true;
     setCurrentPath(normalizePath(url.pathname));
-    if (nextRoute) setLanguage(nextRoute.language);
+    if (['/', '/en', '/en/'].includes(url.pathname)) setLanguage(url.pathname === '/' ? 'ru' : 'en');
+    else if (nextRoute) setLanguage(nextRoute.language);
     else if (nextNewsRoute) setLanguage(nextNewsRoute.language);
     else if (nextPublicationsRoute) setLanguage(nextPublicationsRoute.language);
     else if (nextContactRoute) setLanguage(nextContactRoute.language);
@@ -169,28 +139,31 @@ function App() {
   useEffect(() => {
     if (!focusAfterNavigation.current) return;
     focusAfterNavigation.current = false;
+    if (pendingAnchor.current) {
+      document.getElementById(pendingAnchor.current)?.scrollIntoView({ behavior: 'instant', block: 'start' });
+      pendingAnchor.current = null;
+      return;
+    }
     document.querySelector('main h1')?.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [currentPath]);
 
   useEffect(() => {
-    document.documentElement.lang = language;
-    document.title = pageTitle;
-    const descriptionTag = document.querySelector('meta[name="description"]');
-    if (descriptionTag) descriptionTag.content = pageDescription;
+    applySeo(getSeo(currentPath));
     try {
       window.localStorage.setItem('allopharm-language', language);
     } catch {
       // Language switching still works when browser storage is unavailable.
     }
-  }, [language, pageDescription, pageTitle, t]);
+  }, [language, currentPath]);
 
   useEffect(() => {
     const syncPath = () => {
       const path = normalizePath(window.location.pathname);
       setCurrentPath(path);
       const nextRoute = getRoute(path);
-      if (nextRoute) setLanguage(nextRoute.language);
+      if (path === '/' || path === '/en') setLanguage(path === '/en' ? 'en' : 'ru');
+      else if (nextRoute) setLanguage(nextRoute.language);
       else {
         const nextNewsRoute = getNewsRoute(path);
         if (nextNewsRoute) setLanguage(nextNewsRoute.language);
@@ -214,7 +187,7 @@ function App() {
 
   const pageLinks = language === 'ru'
     ? ['/', '/about/', currentPath !== '/' ? '/#developments-title' : '#developments-title', '/articles/', currentPath !== '/' ? '/#media-title' : '#media-title', contactPath('ru'), cooperationPath('ru')]
-    : ['/', '/en/about/', currentPath !== '/' ? '/#developments-title' : '#developments-title', '/en/articles/', currentPath !== '/' ? '/#media-title' : '#media-title', contactPath('en'), cooperationPath('en')];
+    : ['/en/', '/en/about/', currentPath !== '/en' ? '/en/#developments-title' : '#developments-title', '/en/articles/', currentPath !== '/en' ? '/en/#media-title' : '#media-title', contactPath('en'), cooperationPath('en')];
 
   const developmentLinks = developmentMenuSlugs.map(slug => developmentPath(slug, language));
   const pressLinks = [pageLinks[4], publicationsPath(language)];

@@ -51,8 +51,8 @@ function IntellectualProperty({ language }) {
     <main className="ip-page">
       <section className="ip-hero" aria-labelledby="ip-title">
         <div className="ip-container">
-          <span className="ip-eyebrow"><i />{text.eyebrow}</span>
           <h1 id="ip-title" tabIndex={-1}>{text.title}</h1>
+          <span className="ip-eyebrow"><i />{text.eyebrow}</span>
         </div>
       </section>
 

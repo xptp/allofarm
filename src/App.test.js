@@ -4,6 +4,34 @@ import App from './App';
 
 let reportVisibility;
 
+test('homepage language follows the URL and Back restores the previous language', () => {
+  localStorage.setItem('allopharm-language', 'en');
+  render(<App />);
+  expect(document.documentElement.lang).toBe('ru');
+  fireEvent.click(screen.getByRole('button', { name: 'EN', exact: true }));
+  expect(window.location.pathname).toBe('/en/');
+  expect(document.querySelector('.brand')).toHaveAttribute('href', '/en/');
+  expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute('href', 'https://allopharm.ru/en/');
+  act(() => {
+    window.history.replaceState({}, '', '/');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  });
+  expect(document.documentElement.lang).toBe('ru');
+  expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute('href', 'https://allopharm.ru/');
+});
+
+test('English media link returns to the English homepage and scrolls to its section', () => {
+  window.history.replaceState({}, '', '/en/articles/');
+  render(<App />);
+  const nav = screen.getByRole('navigation', { name: 'Main navigation' });
+  fireEvent.click(within(nav).getByRole('button', { name: /Press centre/ }));
+  fireEvent.click(within(nav).getByRole('link', { name: 'Media about us' }));
+  expect(window.location.pathname).toBe('/en/');
+  expect(window.location.hash).toBe('#media-title');
+  expect(document.documentElement.lang).toBe('en');
+  expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
+});
+
 test.each(['archive-link', 'browser-back'])('news archive preserves pagination and search after %s', (returnMethod) => {
   window.history.replaceState({}, '', '/articles/');
   render(<App />);
@@ -44,6 +72,7 @@ beforeEach(() => {
   window.history.replaceState({}, '', '/');
   localStorage.clear();
   window.scrollTo = jest.fn();
+  Element.prototype.scrollIntoView = jest.fn();
   document.head.innerHTML = '<title>Аллофарм</title><meta name="description" content="Initial description">';
   window.matchMedia = jest.fn(() => ({ matches: false }));
   window.IntersectionObserver = jest.fn(function (callback) {
@@ -73,13 +102,13 @@ test.each([
   expect(document.querySelector('.not-found-page')).not.toBeNull();
   fireEvent.click(screen.getByRole('button', { name: path.startsWith('/en/') ? 'EN' : 'RU', exact: true }));
   fireEvent.click(screen.getByRole('link', { name: action, exact: true }));
-  expect(window.location.pathname).toBe('/');
+  expect(window.location.pathname).toBe(path.startsWith('/en/') ? '/en/' : '/');
   expect(document.querySelector('.not-found-page')).toBeNull();
   expect(screen.getByRole('heading', { level: 1 })).toHaveFocus();
 });
 
 test.each(['ru', 'en'])('company pages receive keyboard focus after navigation in %s', language => {
-  localStorage.setItem('allopharm-language', language);
+  window.history.replaceState({}, '', language === 'en' ? '/en/' : '/');
   render(<App />);
   const header = screen.getByRole('navigation', { name: language === 'ru' ? 'Основная навигация' : 'Main navigation' });
   const section = language === 'ru' ? 'О компании' : 'About us';
@@ -134,11 +163,17 @@ test('visible carousel copies retain the original destinations without extra tab
   });
 });
 
+test.each(['ru', 'en'])('homepage company video card opens the requested YouTube Short in %s', (language) => {
+  if (language === 'en') localStorage.setItem('allopharm-language', 'en');
+  const { container } = render(<App />);
+  expect(container.querySelector('.media-card-video')).toHaveAttribute('href', 'https://www.youtube.com/shorts/tLq9eTrZj50');
+});
+
 test.each([
   ['ru', ['/intellectual-property/', '/base/', '/publications/']],
   ['en', ['/en/intellectual-property/', '/en/base/', '/en/publications/']],
 ])('home information cards navigate to their pages in %s', (language, destinations) => {
-  if (language === 'en') localStorage.setItem('allopharm-language', 'en');
+  if (language === 'en') window.history.replaceState({}, '', '/en/');
   render(<App />);
   const cards = [...document.querySelectorAll('.directions-grid .direction-card-detail')];
   expect(cards).toHaveLength(3);
@@ -146,6 +181,20 @@ test.each([
   fireEvent.click(cards[0]);
   expect(window.location.pathname).toBe(destinations[0]);
   expect(screen.getByRole('heading', { level: 1, name: language === 'ru' ? 'Интеллектуальная собственность' : 'Intellectual property' })).toBeInTheDocument();
+});
+
+test.each([
+  ['ru', ['/base/', '/publications/', '/intellectual-property/']],
+  ['en', ['/en/base/', '/en/publications/', '/en/intellectual-property/']],
+])('home hero metrics navigate to their pages in %s', (language, destinations) => {
+  if (language === 'en') window.history.replaceState({}, '', '/en/');
+  render(<App />);
+  const metrics = [...document.querySelectorAll('.hero-metrics a.metric-card')];
+  expect(metrics).toHaveLength(3);
+  expect(metrics.map((card) => card.getAttribute('href'))).toEqual(destinations);
+  fireEvent.click(metrics[0]);
+  expect(window.location.pathname).toBe(destinations[0]);
+  expect(screen.getByRole('heading', { level: 1, name: language === 'ru' ? 'Исследовательская база' : 'Research base' })).toBeInTheDocument();
 });
 
 test('carousel pauses offscreen and on hover without rerendering the page every tick', () => {
@@ -276,6 +325,18 @@ test('Press centre dropdown links to media coverage and publications', () => {
   fireEvent.click(footerToggle);
   expect(within(footer).getByRole('link', { name: 'СМИ о нас' })).toHaveAttribute('href', '/#media-title');
   expect(within(footer).getByRole('link', { name: 'Наши публикации' })).toHaveAttribute('href', '/publications/');
+});
+
+test.each(['/articles/', '/'])('media coverage menu link scrolls to the homepage section from %s', (path) => {
+  window.history.replaceState({}, '', path);
+  render(<App />);
+  const header = screen.getByRole('navigation', { name: 'Основная навигация' });
+  fireEvent.click(within(header).getByRole('button', { name: /Пресс-центр/ }));
+  fireEvent.click(within(header).getByRole('link', { name: 'СМИ о нас' }));
+  expect(window.location.pathname).toBe('/');
+  expect(window.location.hash).toBe('#media-title');
+  expect(document.getElementById('media-title')).toBeInTheDocument();
+  expect(Element.prototype.scrollIntoView).toHaveBeenCalledWith({ behavior: 'instant', block: 'start' });
 });
 
 test.each([

@@ -86,7 +86,7 @@ const mediaCopy = {
       { variant: 'itogi', brand: 'Итоги', title: '«Эффект мухи»', text: 'Журнал «Итоги»' },
       { variant: 'spbu-news', brand: 'САНКТ-ПЕТЕРБУРГСКИЙ УНИВЕРСИТЕТ', title: 'Учёные СПбГУ открыли новые антивирусные вещества', text: 'Новости СПбГУ' },
     ],
-    video: { variant: 'video', brand: 'YOUTUBE', category: 'Видео о компании', title: 'Аллофарм — научные видео', text: 'Видеоматериалы о компании и её исследованиях.', action: 'Смотреть видео', href: 'https://www.youtube.com/watch?v=jw6Vld-N02Y' },
+    video: { variant: 'video', brand: 'YOUTUBE', category: 'Видео о компании', title: 'Аллофарм — научные видео', text: 'Видеоматериалы о компании и её исследованиях.', action: 'Смотреть видео', href: 'https://www.youtube.com/shorts/tLq9eTrZj50' },
   },
   en: {
     kicker: 'Articles and media',
@@ -101,7 +101,7 @@ const mediaCopy = {
       { variant: 'itogi', brand: 'ITOGI', title: '“The fly effect”', text: 'Itogi magazine' },
       { variant: 'spbu-news', brand: 'ST PETERSBURG UNIVERSITY', title: 'SPbU scientists discover new antiviral substances', text: 'SPbU news' },
     ],
-    video: { variant: 'video', brand: 'YOUTUBE', category: 'Company videos', title: 'Allopharm — research videos', text: 'Videos about the company and its research.', action: 'Watch video', href: 'https://www.youtube.com/watch?v=jw6Vld-N02Y' },
+    video: { variant: 'video', brand: 'YOUTUBE', category: 'Company videos', title: 'Allopharm — research videos', text: 'Videos about the company and its research.', action: 'Watch video', href: 'https://www.youtube.com/shorts/tLq9eTrZj50' },
   },
 };
 
@@ -129,6 +129,11 @@ function Home({ language, t, links }) {
       { id: 'jw6Vld-N02Y', title: 'Allopharm — Discovery Channel', channel: 'Mikhail Feigelman' },
       { id: 'Z65FWmUvAfo', title: 'Allopharm — Channel 5', channel: 'Mikhail Feigelman' },
     ];
+  const metricLinks = [
+    developmentPath('base', language),
+    publicationsPath(language),
+    language === 'ru' ? '/intellectual-property/' : '/en/intellectual-property/',
+  ];
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const timer = window.setTimeout(() => setCurrentSlide((slide) => (slide + 1) % slideCount), 7000);
@@ -234,7 +239,7 @@ function Home({ language, t, links }) {
             <h1 id="hero-title" tabIndex={-1}>{t.title}</h1>
             <p className="hero-description" key={`${language}-${currentSlide}`}>{t.slides[currentSlide]}</p>
             <div className="hero-metrics">
-              {t.metrics.map(([value, label]) => <article className="metric-card" key={value} tabIndex={0} aria-label={`${value}: ${label}`}><strong>{value}</strong><span>{label}</span></article>)}
+              {t.metrics.map(([value, label], index) => <a className="metric-card" href={metricLinks[index]} key={value} aria-label={`${value}: ${label}`}><strong>{value}</strong><span>{label}</span></a>)}
             </div>
             <div className="hero-actions">
               <a className="button button-primary" href={links[1]}>{t.primary}<span aria-hidden="true">↗</span></a>

@@ -32,7 +32,7 @@ function Header({ language, onLanguageChange, t, links, aboutLinks, developmentL
         </div>
       </div>
       <div className="header-container main-header">
-        <a className="brand" href="/" aria-label={language === 'ru' ? 'Аллофарм — главная' : 'Allopharm — home'}>
+        <a className="brand" href={language === 'en' ? '/en/' : '/'} aria-label={language === 'ru' ? 'Аллофарм — главная' : 'Allopharm — home'}>
           <img src={language === 'en' ? englishLogo : headerLogo} alt={language === 'en' ? 'ALLOPHARM — biotechnology company' : 'АЛЛОФАРМ — биотехнологическая компания'} />
         </a>
         <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-label={menuOpen ? t.close : t.menu} onClick={() => setMenuOpen((open) => !open)}>

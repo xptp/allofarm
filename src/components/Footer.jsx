@@ -71,7 +71,7 @@ function Footer({ language, t, links, aboutLinks, developmentLinks, pressLinks }
       <div className="footer-container">
         <div className="footer-main">
           <section className="footer-company" aria-label={language === 'ru' ? 'О компании' : 'About the company'}>
-            <a className="footer-brand" href="/" aria-label={language === 'ru' ? 'Аллофарм — главная' : 'Allopharm — home'}>
+            <a className="footer-brand" href={language === 'en' ? '/en/' : '/'} aria-label={language === 'ru' ? 'Аллофарм — главная' : 'Allopharm — home'}>
               <img src={language === 'en' ? englishLogo : footerLogo} alt={language === 'en' ? 'ALLOPHARM — biotechnology company' : 'АЛЛОФАРМ — биотехнологическая компания'} />
             </a>
             <p>{copy.description}</p>
