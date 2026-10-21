@@ -12,6 +12,8 @@ import { getNewsRoute, newsPath, getNewsBySlug, NewsArchive, NewsArticle } from 
 import PublicationsPage, { getPublicationsRoute, publicationsPath } from './pages/press/Publications';
 import Contact, { contactPath, getContactRoute } from './pages/Contact';
 import Cooperation, { cooperationPath, getCooperationRoute } from './pages/Cooperation';
+import PrivacyPolicy, { getPrivacyPolicyRoute, privacyPolicyPath } from './pages/PrivacyPolicy';
+import CookieNotice from './components/CookieNotice';
 import './styles/global.css';
 import { applySeo, getSeo, homePath } from './seo';
 
@@ -58,6 +60,8 @@ function App({ initialPath } = {}) {
     if (initialContactRoute) return initialContactRoute.language;
     const initialCooperationRoute = getCooperationRoute(path);
     if (initialCooperationRoute) return initialCooperationRoute.language;
+    const initialPrivacyPolicyRoute = getPrivacyPolicyRoute(path);
+    if (initialPrivacyPolicyRoute) return initialPrivacyPolicyRoute;
     return path === '/en' || path.startsWith('/en/') ? 'en' : 'ru';
   });
   const isAboutPage = currentPath === '/about' || currentPath === '/en/about';
@@ -67,12 +71,13 @@ function App({ initialPath } = {}) {
   const publicationsRoute = getPublicationsRoute(currentPath);
   const contactRoute = getContactRoute(currentPath);
   const cooperationRoute = getCooperationRoute(currentPath);
+  const privacyPolicyRoute = getPrivacyPolicyRoute(currentPath);
   const newsArticle = newsRoute?.kind === 'article' ? getNewsBySlug(newsRoute.slug) : null;
-  const isNotFound = currentPath !== '/' && currentPath !== '/en' && !route && !publicationsRoute && !contactRoute && !cooperationRoute && (!newsRoute || (newsRoute.kind === 'article' && !newsArticle));
+  const isNotFound = currentPath !== '/' && currentPath !== '/en' && !route && !publicationsRoute && !contactRoute && !cooperationRoute && !privacyPolicyRoute && (!newsRoute || (newsRoute.kind === 'article' && !newsArticle));
   const developmentPage = route?.development ? developmentPages[route.slug] : null;
   const developmentContent = developmentPage && (developmentPage.content[language] || developmentPage.content.ru);
   const DevelopmentPage = developmentPage?.Component;
-  const isSecondaryPage = isAboutPage || isIntellectualPropertyPage || Boolean(developmentPage) || Boolean(newsRoute) || Boolean(publicationsRoute) || Boolean(contactRoute) || Boolean(cooperationRoute);
+  const isSecondaryPage = isAboutPage || isIntellectualPropertyPage || Boolean(developmentPage) || Boolean(newsRoute) || Boolean(publicationsRoute) || Boolean(contactRoute) || Boolean(cooperationRoute) || Boolean(privacyPolicyRoute);
   const t = copy[language];
   const handleLanguageChange = (nextLanguage) => {
     if (nextLanguage === language) return;
@@ -86,6 +91,8 @@ function App({ initialPath } = {}) {
         ? contactPath(nextLanguage)
         : cooperationRoute
         ? cooperationPath(nextLanguage)
+        : privacyPolicyRoute
+        ? privacyPolicyPath(nextLanguage)
         : developmentPath(route.slug, nextLanguage);
       window.history.pushState({}, '', nextPath);
       setCurrentPath(normalizePath(nextPath));
@@ -122,7 +129,8 @@ function App({ initialPath } = {}) {
     const nextPublicationsRoute = getPublicationsRoute(url.pathname);
     const nextContactRoute = getContactRoute(url.pathname);
     const nextCooperationRoute = getCooperationRoute(url.pathname);
-    if (!nextRoute && !nextNewsRoute && !nextPublicationsRoute && !nextContactRoute && !nextCooperationRoute && !['/', '/en', '/en/'].includes(url.pathname)) return;
+    const nextPrivacyPolicyRoute = getPrivacyPolicyRoute(url.pathname);
+    if (!nextRoute && !nextNewsRoute && !nextPublicationsRoute && !nextContactRoute && !nextCooperationRoute && !nextPrivacyPolicyRoute && !['/', '/en', '/en/'].includes(url.pathname)) return;
     event.preventDefault();
     if (normalizePath(url.pathname) === currentPath) return;
     window.history.pushState({}, '', url.pathname);
@@ -134,6 +142,7 @@ function App({ initialPath } = {}) {
     else if (nextPublicationsRoute) setLanguage(nextPublicationsRoute.language);
     else if (nextContactRoute) setLanguage(nextContactRoute.language);
     else if (nextCooperationRoute) setLanguage(nextCooperationRoute.language);
+    else if (nextPrivacyPolicyRoute) setLanguage(nextPrivacyPolicyRoute);
   };
 
   useEffect(() => {
@@ -175,7 +184,11 @@ function App({ initialPath } = {}) {
             if (nextContactRoute) setLanguage(nextContactRoute.language);
             else {
               const nextCooperationRoute = getCooperationRoute(path);
-              if (nextCooperationRoute) setLanguage(nextCooperationRoute.language);
+            if (nextCooperationRoute) setLanguage(nextCooperationRoute.language);
+            else {
+              const nextPrivacyPolicyRoute = getPrivacyPolicyRoute(path);
+              if (nextPrivacyPolicyRoute) setLanguage(nextPrivacyPolicyRoute);
+            }
             }
           }
         }
@@ -194,8 +207,9 @@ function App({ initialPath } = {}) {
 
   return (
     <div className="site-shell" onClick={handleInternalNavigation}>
-      <Header language={language} onLanguageChange={handleLanguageChange} t={t} links={pageLinks} aboutLinks={language === 'ru' ? ['/about/', '/intellectual-property/'] : ['/en/about/', '/en/intellectual-property/']} developmentLinks={developmentLinks} pressLinks={pressLinks} activeNavIndex={isNotFound ? -1 : newsRoute ? 3 : publicationsRoute ? 4 : contactRoute ? 5 : cooperationRoute ? 6 : developmentPage ? 2 : isAboutPage || isIntellectualPropertyPage ? 1 : 0} />
-      {isNotFound ? <NotFound language={language} /> : developmentPage ? <DevelopmentsLayout language={language} slug={route.slug} title={developmentContent.title} contentLanguage={developmentPage.content[language] ? language : 'ru'}><DevelopmentPage language={language} /></DevelopmentsLayout> : isIntellectualPropertyPage
+      <CookieNotice language={language} />
+      <Header language={language} onLanguageChange={handleLanguageChange} t={t} links={pageLinks} aboutLinks={language === 'ru' ? ['/about/', '/intellectual-property/'] : ['/en/about/', '/en/intellectual-property/']} developmentLinks={developmentLinks} pressLinks={pressLinks} activeNavIndex={isNotFound || privacyPolicyRoute ? -1 : newsRoute ? 3 : publicationsRoute ? 4 : contactRoute ? 5 : cooperationRoute ? 6 : developmentPage ? 2 : isAboutPage || isIntellectualPropertyPage ? 1 : 0} />
+      {privacyPolicyRoute ? <PrivacyPolicy language={language} /> : isNotFound ? <NotFound language={language} /> : developmentPage ? <DevelopmentsLayout language={language} slug={route.slug} title={developmentContent.title} contentLanguage={developmentPage.content[language] ? language : 'ru'}><DevelopmentPage language={language} /></DevelopmentsLayout> : isIntellectualPropertyPage
         ? <IntellectualProperty language={language} />
         : isAboutPage ? <About language={language} /> : newsRoute?.kind === 'article' && newsArticle ? <NewsArticle article={newsArticle} language={language} /> : newsRoute?.kind === 'archive' ? <NewsArchive language={language} archiveState={newsArchiveState[language]} onArchiveStateChange={(state) => setNewsArchiveState((previous) => ({ ...previous, [language]: state }))} /> : publicationsRoute ? <PublicationsPage language={language} /> : contactRoute ? <Contact language={language} /> : cooperationRoute ? <Cooperation language={language} /> : <Home language={language} t={t} links={pageLinks} />}
       <Footer

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { newsData } from './newsData';
+import InterfaceIcon from '../../components/InterfaceIcon';
 import '../../styles/News.css';
 
 const PAGE_SIZE = 10;
@@ -140,7 +141,7 @@ export function NewsArticle({ article, language }) {
     <main className="news-page news-article-page">
       <PageHero title={localized?.title || labels.archiveTitle} />
       <div className="news-container news-article-content">
-        <div className="news-article-toolbar"><a className="news-back" href={newsPath(null, language)} aria-label={labels.back}>‹ <span>{labels.back}</span></a></div>
+        <div className="news-article-toolbar"><a className="news-back" href={newsPath(null, language)} aria-label={labels.back}><InterfaceIcon name="chevron-left" /> <span>{labels.back}</span></a></div>
         {!localized ? <p className="news-empty" role="status">{labels.missingTranslation}</p> : <>
           <DateLabel date={article.date} language={language} />
           <article className="news-article-body">{localized.body.length ? localized.body.map((paragraph, index) => <p key={index}>{linkifyParagraph(paragraph)}</p>) : <p className="news-empty" role="status">{labels.noArticleText}</p>}</article>
@@ -151,7 +152,7 @@ export function NewsArticle({ article, language }) {
               return itemContent && <article className="news-related-card" key={item.slug}>
                 <DateLabel date={item.date} language={language} />
                 <h3><a href={newsPath(item.slug, language)}>{itemContent.title}</a></h3>
-                <a className="news-related-link" href={newsPath(item.slug, language)}>{labels.readMore} <span aria-hidden="true">↗</span></a>
+                <a className="news-related-link" href={newsPath(item.slug, language)}>{labels.readMore} <InterfaceIcon name="arrow-up-right" /></a>
               </article>;
             })}</div>
           </section>

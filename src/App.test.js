@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { Profiler } from 'react';
 import App from './App';
 
@@ -18,6 +18,21 @@ test('homepage language follows the URL and Back restores the previous language'
   });
   expect(document.documentElement.lang).toBe('ru');
   expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute('href', 'https://allopharm.ru/');
+});
+
+test('homepage artwork follows the three text slides as dragonfly, fly, dragonfly', () => {
+  window.history.replaceState({}, '', '/');
+  render(<App />);
+
+  expect(document.querySelectorAll('.slider-dot')).toHaveLength(3);
+  expect(document.querySelector('.molecule-art-fly')).toHaveAttribute('aria-label', 'Стилизованное изображение мухи семейства Calliphoridae');
+
+  fireEvent.click(screen.getByRole('button', { name: 'Слайд 1' }));
+  expect(document.querySelector('.molecule-art-dragonfly')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Следующий слайд' }));
+  expect(document.querySelector('.molecule-art-fly')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Слайд 3' }));
+  expect(document.querySelector('.molecule-art-dragonfly')).toBeInTheDocument();
 });
 
 test('English media link returns to the English homepage and scrolls to its section', () => {
@@ -148,7 +163,15 @@ test('platform links open distinct development pages and privacy is a real link'
   const links = within(platforms).getAllByRole('link');
   expect(new Set(links.map(link => link.getAttribute('href'))).size).toBe(4);
   expect(links.map(link => link.getAttribute('href'))).toEqual(['/allostatins/', '/flip7/', '/inova-c/', '/calliphoridae/']);
-  expect(screen.getByRole('link', { name: 'Политика конфиденциальности' })).toHaveAttribute('href', 'https://allopharm.ru/privacy-policy');
+  expect(screen.getByRole('link', { name: 'Политика конфиденциальности' })).toHaveAttribute('href', '/privacy-policy/');
+});
+
+test('privacy policy opens directly and switches to its English route', () => {
+  render(<App initialPath="/privacy-policy/" />);
+  expect(screen.getByRole('heading', { name: 'Политика конфиденциальности' })).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'EN', exact: true }));
+  expect(window.location.pathname).toBe('/en/privacy-policy/');
+  expect(screen.getByRole('heading', { name: 'Privacy Policy' })).toBeInTheDocument();
 });
 
 test('visible carousel copies retain the original destinations without extra tab stops', () => {
@@ -268,6 +291,19 @@ test.each([
   expect(documentation).toHaveAttribute('target', '_blank');
   fireEvent.click(screen.getByRole('button', { name: 'EN', exact: true }));
   expect(window.location.pathname).toBe('/en/intellectual-property/');
+});
+
+test('hovering a platform label highlights its matching card and connector', async () => {
+  const originalWidth = window.innerWidth;
+  Object.defineProperty(window, 'innerWidth', { configurable: true, value: 1280 });
+  window.history.replaceState({}, '', '/about/');
+  render(<App />);
+  const label = document.querySelector('[data-platform-label="allomedin"]');
+  fireEvent.pointerOver(label);
+  expect(label).toHaveClass('is-active');
+  expect(document.querySelector('[data-platform-card="allomedin"]')).toHaveClass('is-active');
+  await waitFor(() => expect(document.querySelector('[data-connection="allomedin"]')).toHaveClass('is-active'));
+  Object.defineProperty(window, 'innerWidth', { configurable: true, value: originalWidth });
 });
 
 test.each([

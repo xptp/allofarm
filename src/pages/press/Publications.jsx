@@ -1,4 +1,5 @@
 import { publicationsData } from './publicationsData';
+import InterfaceIcon from '../../components/InterfaceIcon';
 import '../../styles/News.css';
 import '../../styles/Publications.css';
 
@@ -36,7 +37,7 @@ export default function PublicationsPage({ language }) {
                   <p className="publication-journal"><em>{item.journal}</em></p>
                 </div>
                 <a className="publication-download" href={publication.pdf} download aria-label={`${labels.download}: ${item.title}`}>
-                  <span aria-hidden="true">↓</span>{labels.download}<small>{labels.pdfLabel}</small>
+                  <InterfaceIcon name="download" />{labels.download}<small>{labels.pdfLabel}</small>
                 </a>
               </article>
             );

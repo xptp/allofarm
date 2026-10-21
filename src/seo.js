@@ -23,6 +23,7 @@ const pages = {
   publications: entry('Наши публикации — Аллофарм', 'Научные публикации компании Аллофарм о пептидах и иммунной системе насекомых. Список работ и полные тексты в PDF.', 'Our publications — Allopharm', 'Scientific publications from Allopharm on peptides and insect immunity. Browse papers and download full texts in PDF.'),
   contact: entry('Контакты — Аллофарм', 'Контакты ООО «Аллофарм» в Санкт-Петербурге: адрес офиса и лабораторий, телефоны и электронная почта.', 'Contacts — Allopharm', 'Contact Allopharm in Saint Petersburg, Russia: office and laboratory address, phone numbers and email.'),
   cooperation: entry('Сотрудничество — Аллофарм', 'Сотрудничество с Аллофарм: исследования, развитие биотехнологических разработок и интеллектуальная собственность. Информация для партнёров.', 'Cooperation — Allopharm', 'Partner with Allopharm in research, biotechnology development and intellectual property. Information for potential partners.'),
+  'privacy-policy': entry('Политика конфиденциальности — Аллофарм', 'Политика конфиденциальности ООО «Аллофарм»: обработка персональных данных и использование файлов cookie.', 'Privacy Policy — Allopharm', 'Allopharm LLC Privacy Policy: personal data processing and the use of cookies.'),
 };
 
 const pathFor = (slug, lang) => slug ? `${lang === 'en' ? '/en' : ''}/${slug}/` : homePath(lang);

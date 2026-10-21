@@ -1,4 +1,5 @@
 import technicalDocumentation from './assets/allomedin-technical-documentation.pdf';
+import InterfaceIcon from '../../components/InterfaceIcon';
 import '../../styles/IntellectualProperty.css';
 
 const content = {
@@ -77,7 +78,7 @@ function IntellectualProperty({ language }) {
               <a className="ip-document" href={technicalDocumentation} target="_blank" rel="noreferrer">
                 <span className="ip-document-icon" aria-hidden="true">PDF</span>
                 <span className="ip-document-copy"><strong>{text.documentationTitle}</strong><small>{text.documentationText}</small></span>
-                <span className="ip-document-action">{text.documentationAction}<i aria-hidden="true">↗</i></span>
+                <span className="ip-document-action">{text.documentationAction}<InterfaceIcon name="arrow-up-right" /></span>
               </a>
             </div>
           </div>

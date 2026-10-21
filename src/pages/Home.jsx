@@ -15,6 +15,7 @@ import '../styles/Home.css';
 import '../styles/SectionThemes.css';
 import { developmentPath } from './developments/navigation';
 import { publicationsPath } from './press/Publications';
+import InterfaceIcon from '../components/InterfaceIcon';
 
 const directionsCopy = {
   ru: {
@@ -104,6 +105,54 @@ const mediaCopy = {
     video: { variant: 'video', brand: 'YOUTUBE', category: 'Company videos', title: 'Allopharm — research videos', text: 'Videos about the company and its research.', action: 'Watch video', href: 'https://www.youtube.com/shorts/tLq9eTrZj50' },
   },
 };
+
+function FlyArtwork({ language }) {
+  const label = language === 'ru' ? 'Стилизованное изображение мухи семейства Calliphoridae' : 'Stylised illustration of a Calliphoridae fly';
+  return <svg className="molecule-art molecule-art-fly" viewBox="0 0 560 410" fill="none" role="img" aria-label={label}>
+    <defs>
+      <radialGradient id="fly-core" cx="0" cy="0" r="1" gradientTransform="matrix(0 148 -166 0 280 190)" gradientUnits="userSpaceOnUse"><stop stopColor="#08BFE4" stopOpacity=".2" /><stop offset="1" stopColor="#08BFE4" stopOpacity="0" /></radialGradient>
+      <linearGradient id="fly-wing" x1="84" y1="101" x2="280" y2="188" gradientUnits="userSpaceOnUse"><stop stopColor="#00D9F4" stopOpacity=".28" /><stop offset="1" stopColor="#087DA5" stopOpacity=".08" /></linearGradient>
+      <filter id="fly-glow"><feGaussianBlur stdDeviation="3" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+    </defs>
+    <circle cx="280" cy="190" r="158" fill="url(#fly-core)" />
+    <g stroke="#167C9E" strokeOpacity=".2" strokeDasharray="2 7"><circle cx="280" cy="190" r="104" /><circle cx="280" cy="190" r="158" /><path d="M26 190h508M280 27v350" /></g>
+    <g stroke="#18BBD8" strokeOpacity=".85" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M250 159 209 132 182 81 166 70 M310 159 351 132 378 81 394 70" />
+      <path d="M244 190 198 205 156 186 128 194 M316 190 362 205 404 186 432 194" />
+      <path d="M250 215 215 268 197 329 175 348 M310 215 345 268 363 329 385 348" />
+      <path d="m182 81-9 3m25 245-10-2m190-246 9 3m-25 245 10-2" strokeWidth="1" />
+    </g>
+    <path d="M250 213C233 235 237 284 254 310Q280 339 306 310C323 284 327 235 310 213Z" fill="#092B3D" stroke="#13C8E8" strokeWidth="1.7" />
+    <g stroke="#20BED8" strokeWidth="1.1">
+      <path d="M243 246Q280 261 317 246 M244 266Q280 281 316 266 M249 287Q280 302 311 287 M261 308Q280 316 299 308" />
+    </g>
+    <g fill="url(#fly-wing)" stroke="#21C9E3" strokeWidth="1.4" strokeLinejoin="round">
+      <path d="M253 164C225 164 183 203 148 253C116 299 110 332 130 338C152 347 189 316 216 274C240 238 252 192 263 172Z" />
+      <path d="M307 164C335 164 377 203 412 253C444 299 450 332 430 338C408 347 371 316 344 274C320 238 308 192 297 172Z" />
+    </g>
+    <g stroke="#36B4CE" strokeOpacity=".65" strokeWidth=".9" strokeLinejoin="round">
+      <path d="M251 179 132 325 183 302 216 247 251 179 M216 247 169 266 183 302 M169 266 142 296 132 325 M234 210 190 222 169 266 M216 247 206 287" />
+      <path d="M309 179 428 325 377 302 344 247 309 179 M344 247 391 266 377 302 M391 266 418 296 428 325 M326 210 370 222 391 266 M344 247 354 287" />
+    </g>
+    <g filter="url(#fly-glow)" stroke="#13D8F2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M247 130C228 149 233 191 248 214Q280 232 312 214C327 191 332 149 313 130Q280 115 247 130Z" fill="#0A3042" strokeWidth="1.8" />
+      <path d="M264 137Q252 171 262 204 M280 133V209 M296 137Q308 171 298 204" stroke="#36A5BF" strokeWidth="1.2" />
+      <path d="M255 216Q280 229 305 216L291 236H269Z" fill="#103A4A" strokeWidth="1.2" />
+      <path d="M239 109C228 95 237 73 253 68Q280 57 307 68C323 73 332 95 321 109Q306 130 280 129Q254 130 239 109Z" fill="#092B3D" strokeWidth="1.6" />
+      <ellipse cx="251" cy="94" rx="15" ry="23" transform="rotate(15 251 94)" fill="#125267" strokeWidth="1.3" />
+      <ellipse cx="309" cy="94" rx="15" ry="23" transform="rotate(-15 309 94)" fill="#125267" strokeWidth="1.3" />
+      <path d="M274 74 269 58 259 53 M286 74 291 58 301 53 M275 119 280 128 285 119" strokeWidth="1.3" />
+    </g>
+    <g stroke="#68DCE9" strokeOpacity=".55" strokeWidth=".7">
+      <path d="m245 80 12 7-15 8 16 7-14 6 M315 80l-12 7 15 8-16 7 14 6" />
+      <path d="m240 148-8-5m6 20-9-2m11 21-9 2m14 17-8 5m83-58 8-5m-6 20 9-2m-11 21 9 2m-14 17 8 5" />
+    </g>
+    <g fill="#A9F7FC" filter="url(#fly-glow)"><circle cx="280" cy="145" r="1.8" /><circle cx="280" cy="173" r="1.5" /><circle cx="280" cy="201" r="1.5" /></g>
+    <circle cx="280" cy="320" r="2.5" fill="#ED5575" filter="url(#fly-glow)" />
+    <g stroke="#1D718B" strokeOpacity=".72" strokeWidth=".8"><path d="M88 44h55l20 22M472 44h-55l-20 22M305 302l37 27" /></g>
+    <g fill="#61CDE0" fontFamily="monospace" fontSize="10" letterSpacing=".8"><text x="26" y="39">BIO-SCAN / 02</text><text x="395" y="39">CALLIPHORIDAE</text></g>
+  </svg>;
+}
 
 function Home({ language, t, links }) {
   const [currentSlide, setCurrentSlide] = useState(1);
@@ -242,8 +291,8 @@ function Home({ language, t, links }) {
               {t.metrics.map(([value, label], index) => <a className="metric-card" href={metricLinks[index]} key={value} aria-label={`${value}: ${label}`}><strong>{value}</strong><span>{label}</span></a>)}
             </div>
             <div className="hero-actions">
-              <a className="button button-primary" href={links[1]}>{t.primary}<span aria-hidden="true">↗</span></a>
-              <a className="button button-secondary" href={links[2]}>{t.secondary}<span aria-hidden="true">→</span></a>
+              <a className="button button-primary" href={links[1]}>{t.primary}<InterfaceIcon name="arrow-up-right" /></a>
+              <a className="button button-secondary" href={links[2]}>{t.secondary}<InterfaceIcon name="arrow-right" /></a>
             </div>
             <div className="hero-footnote"><span className="footnote-rule" /> {t.location}</div>
           </div>
@@ -251,7 +300,7 @@ function Home({ language, t, links }) {
             <div className="visual-stage">
               <div className="artwork-card">
                 <div className="artwork-meta"><span>ALLOPHARM&nbsp; / &nbsp;BIOLOGY</span><span>01 — 04</span></div>
-                <svg className="molecule-art" viewBox="0 0 560 410" fill="none" role="img" aria-label={t.imageAlt}>
+                {currentSlide === 1 ? <FlyArtwork language={language} /> : <svg className="molecule-art molecule-art-dragonfly" viewBox="0 0 560 410" fill="none" role="img" aria-label={language === 'ru' ? 'Стилизованное изображение стрекозы в бирюзовых тонах' : 'Stylised turquoise illustration of a dragonfly'}>
                   <defs>
                     <radialGradient id="core" cx="0" cy="0" r="1" gradientTransform="matrix(0 140 -140 0 280 188)" gradientUnits="userSpaceOnUse"><stop stopColor="#08BFE4" stopOpacity=".19" /><stop offset="1" stopColor="#08BFE4" stopOpacity="0" /></radialGradient>
                     <linearGradient id="wing" x1="35" y1="70" x2="280" y2="210" gradientUnits="userSpaceOnUse"><stop stopColor="#00D9F4" stopOpacity=".34" /><stop offset="1" stopColor="#007DA5" stopOpacity=".12" /></linearGradient>
@@ -276,7 +325,7 @@ function Home({ language, t, links }) {
                   <circle cx="280" cy="321" r="3.2" fill="#ED5575" filter="url(#glow)" />
                   <g stroke="#1D718B" strokeOpacity=".72" strokeWidth=".8"><path d="M89 43h47l25 24M471 43h-48l-25 24M316 331l34 42" /></g>
                   <g fill="#61CDE0" fontFamily="monospace" fontSize="10" letterSpacing=".8"><text x="26" y="39">BIO-SCAN / 01</text><text x="395" y="39">INSECT IMMUNITY</text></g>
-                </svg>
+                </svg>}
                 <div className="artwork-caption"><span className="caption-dot" /><span>{language === 'ru' ? 'Биомиметика Calliphoridae' : 'Calliphoridae biomimetics'}</span><span className="artwork-caption-secondary">{language === 'ru' ? 'Иммунитет насекомых' : 'Insect immunity'}</span></div>
               </div>
               <div className="slider-controls">
@@ -284,8 +333,8 @@ function Home({ language, t, links }) {
                   {Array.from({ length: slideCount }, (_, index) => <button key={index} type="button" className={currentSlide === index ? 'slider-dot active' : 'slider-dot'} aria-label={`${language === 'ru' ? 'Слайд' : 'Slide'} ${index + 1}`} aria-pressed={currentSlide === index} onClick={() => selectSlide(index)} />)}
                 </div>
                 <div className="slider-arrows">
-                  <button type="button" className="slider-arrow" aria-label={language === 'ru' ? 'Предыдущий слайд' : 'Previous slide'} onClick={() => selectSlide(currentSlide - 1)}><span aria-hidden="true">‹</span></button>
-                  <button type="button" className="slider-arrow" aria-label={language === 'ru' ? 'Следующий слайд' : 'Next slide'} onClick={() => selectSlide(currentSlide + 1)}><span aria-hidden="true">›</span></button>
+                  <button type="button" className="slider-arrow" aria-label={language === 'ru' ? 'Предыдущий слайд' : 'Previous slide'} onClick={() => selectSlide(currentSlide - 1)}><InterfaceIcon name="chevron-left" /></button>
+                  <button type="button" className="slider-arrow" aria-label={language === 'ru' ? 'Следующий слайд' : 'Next slide'} onClick={() => selectSlide(currentSlide + 1)}><InterfaceIcon name="chevron-right" /></button>
                 </div>
               </div>
             </div>
@@ -436,7 +485,7 @@ function Home({ language, t, links }) {
                       >
                         <div className="media-logo-panel">
                           {card.brandImage ? <img src={card.brandImage} alt="" /> : <span>{card.brand}</span>}
-                          {card.href && <span className="media-logo-link" aria-hidden="true">↗</span>}
+                          {card.href && <InterfaceIcon name="arrow-up-right" className="media-logo-link" />}
                         </div>
                         <h3>{card.title}</h3>
                         <p>{card.text}</p>
@@ -491,7 +540,7 @@ function Home({ language, t, links }) {
             <div className="media-card-copy">
               <h3>{mediaVideo.title}</h3>
               <p>{mediaVideo.text}</p>
-              <span className="media-card-action">{mediaVideo.action}<span aria-hidden="true">↗</span></span>
+              <span className="media-card-action">{mediaVideo.action}<InterfaceIcon name="arrow-up-right" /></span>
             </div>
             <span className="media-video-play" aria-hidden="true">▶</span>
           </a>

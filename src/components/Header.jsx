@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import headerLogo from '../assets/logo-header.png';
 import englishLogo from '../assets/logo-header-en.svg';
+import InterfaceIcon from './InterfaceIcon';
 import '../styles/Header.css';
 
 function Header({ language, onLanguageChange, t, links, aboutLinks, developmentLinks, pressLinks, activeNavIndex = 0 }) {
@@ -55,7 +56,7 @@ function Header({ language, onLanguageChange, t, links, aboutLinks, developmentL
               };
               return <div className={`header-dropdown${i === activeNavIndex ? ' current' : ''}`} key={label}>
                 <button type="button" className="header-dropdown-toggle" aria-expanded={isOpen} aria-controls={submenuId} onClick={toggle}>
-                  {label}<span className="header-dropdown-indicator" aria-hidden="true">{isOpen ? '−' : '+'}</span>
+                  {label}<InterfaceIcon name="toggle" expanded={isOpen} className="header-dropdown-indicator" />
                 </button>
                 {isOpen && <div className="header-dropdown-submenu" id={submenuId}>
                   {pages.map((page, pageIndex) => submenuLinks[pageIndex]
@@ -64,7 +65,7 @@ function Header({ language, onLanguageChange, t, links, aboutLinks, developmentL
                 </div>}
               </div>;
             }
-            return <a key={label} className={i === activeNavIndex ? 'current' : ''} href={links[i]} onClick={() => { setMenuOpen(false); setAboutMenuOpen(false); setDevelopmentsMenuOpen(false); setPressMenuOpen(false); }}>{label}<span className="nav-arrow" aria-hidden="true">↗</span></a>;
+            return <a key={label} className={i === activeNavIndex ? 'current' : ''} href={links[i]} onClick={() => { setMenuOpen(false); setAboutMenuOpen(false); setDevelopmentsMenuOpen(false); setPressMenuOpen(false); }}>{label}<InterfaceIcon name="arrow-up-right" className="nav-arrow" /></a>;
           })}
         </nav>
       </div>

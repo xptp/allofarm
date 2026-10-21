@@ -1,4 +1,5 @@
 import { localizeDevelopmentLink } from '../pages/developments/navigation';
+import InterfaceIcon from './InterfaceIcon';
 
 export default function DevelopmentContent({ content, language }) {
   return <>
@@ -14,7 +15,7 @@ export default function DevelopmentContent({ content, language }) {
         return <section className="development-fact" key={`${section.title}-${index}`}>
           <span className="development-fact-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
           <div>
-            <h2>{href ? <a href={href} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}>{section.title}<span className="development-link-arrow" aria-hidden="true">↗</span></a> : section.title}</h2>
+            <h2>{href ? <a href={href} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}>{section.title}<InterfaceIcon name="arrow-up-right" className="development-link-arrow" /></a> : section.title}</h2>
             {section.list ? <ul>{section.paragraphs.map(text => <li key={text}>{text.replace(/^[-–]\s*/, '')}</li>)}</ul>
               : section.paragraphs.map(text => <p key={text}>{text}</p>)}
           </div>

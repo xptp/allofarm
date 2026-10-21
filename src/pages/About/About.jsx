@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import '../../styles/About.css';
 import pnasLogo from '../../assets/journal-pnas.jpg';
 import plosOneLogo from '../../assets/journal-plos-one.jpg';
 import jbcLogo from '../../assets/journal-jbc.jpg';
+import { developmentPath } from '../developments/navigation';
+import InterfaceIcon from '../../components/InterfaceIcon';
 
 const aboutCopy = {
   ru: {
@@ -79,6 +81,41 @@ const aboutCopy = {
   },
 };
 
+const platformCards = {
+  ru: [
+    { slug: 'allomedin', title: 'Алломедин, гель', items: ['Хирургия, дерматология, гинекология, геронтология, трансплантология, травматология, стоматология.', 'Герпес, ВПЧ.'] },
+    { slug: 'entomix', title: 'Энтомикс, гель', items: ['Биологическая утилизация органических отходов «Биозавод», эукариотическая система, синтезирующая фармакологически активные вещества.', 'Использование биомассы насекомых в качестве биологически активной кормовой добавки для животных.'] },
+    { slug: 'calliphoridae', title: 'Культивирование', items: ['Технология выращивания биомассы личинок семейства Calliphoridae, поддержание культуры.'] },
+    { slug: 'allostatins', title: 'Аллостатин, пептид', items: ['Лечение и профилактика заболеваний вирусной природы.', 'Лечение онкологических заболеваний.', 'В качестве адъюванта для усиления распознавания слабых антигенов при вакцинации.'] },
+    { slug: 'flip7', title: 'FLIP7, комплекс антимикробных пептидов', items: ['Лечение заболеваний, вызванных бактериальной инфекцией.', 'Разрушение биологических биоплёнок.', 'Новый подход к решению проблемы антибиотикорезистентности.'] },
+    { slug: 'inova-c', title: 'InOVA-C — иммунологически активный адъювант', items: ['Может применяться в составе вакцин.'] },
+  ],
+  en: [
+    { slug: 'allomedin', title: 'Allomedin gel', items: ['Surgery, dermatology, gynaecology, geriatrics, transplantology, traumatology and dentistry.', 'Herpes, HPV.'] },
+    { slug: 'entomix', title: 'Entomix gel', items: ['Biological processing of organic waste: the “Biofactory”, a eukaryotic system synthesising pharmacologically active substances.', 'Use of insect biomass as a biologically active feed supplement for animals.'] },
+    { slug: 'calliphoridae', title: 'Cultivation', items: ['Technology for growing Calliphoridae larval biomass and maintaining the culture.'] },
+    { slug: 'allostatins', title: 'Allostatin peptide', items: ['Treatment and prevention of viral diseases.', 'Treatment of oncological diseases.', 'Use as an adjuvant to enhance the recognition of weak antigens during vaccination.'] },
+    { slug: 'flip7', title: 'FLIP7 antimicrobial peptide complex', items: ['Treatment of diseases caused by bacterial infections.', 'Disruption of biological biofilms.', 'A new approach to addressing antibiotic resistance.'] },
+    { slug: 'inova-c', title: 'InOVA-C — immunologically active adjuvant', items: ['May be used in vaccines.'] },
+  ],
+};
+
+function PlatformCard({ card, active, onActivate, language }) {
+  return <a
+    className={`platform-info-card platform-detail-card${active ? ' is-active' : ''}`}
+    href={developmentPath(card.slug, language)}
+    data-platform-card={card.slug}
+    onFocus={() => onActivate(card.slug)}
+    onBlur={(event) => {
+      const next = event.relatedTarget?.closest?.('[data-platform-label], [data-platform-card]');
+      if (next) onActivate(next.dataset.platformLabel || next.dataset.platformCard);
+      else onActivate(null);
+    }}
+  >
+    <h3>{card.title}</h3><ul>{card.items.map(item => <li key={item}>{item}</li>)}</ul>
+  </a>;
+}
+
 const iconPaths = {
   insect: <><path d="M12 8.5c-2.7 0-4.5 2.1-4.5 5.2 0 2.4 1.8 4.3 4.5 4.3s4.5-1.9 4.5-4.3c0-3.1-1.8-5.2-4.5-5.2Z" /><path d="M9 9 6 6m9 3 3-3M7.5 12H4m16 0h-3.5M8.2 15H4.5m11.3 0h4.2M10 7c0-2-1.3-3-2.8-3M14 7c0-2 1.3-3 2.8-3M12 10v8m-2 2 2-2 2 2" /></>,
   medicine: <><path d="M7 3h10M8 3v5l-4.5 8a3 3 0 0 0 2.6 4.5h11.8a3 3 0 0 0 2.6-4.5L16 8V3" /><path d="M8 8h8m-9.5 6h11" /></>,
@@ -95,6 +132,57 @@ function AboutIcon({ name, className = '' }) {
 
 function About({ language }) {
   const content = aboutCopy[language] || aboutCopy.ru;
+  const platformRef = useRef(null);
+  const markerId = useId().replace(/:/g, '');
+  const [connections, setConnections] = useState([]);
+  const [activePlatform, setActivePlatform] = useState(null);
+  const cards = platformCards[language] || platformCards.ru;
+
+  useEffect(() => {
+    const grid = platformRef.current;
+    let frame;
+    let disposed = false;
+    const measure = () => {
+      if (disposed) return;
+      if (window.innerWidth <= 1100) {
+        setConnections(previous => previous.length ? [] : previous);
+        return;
+      }
+      const box = grid.getBoundingClientRect();
+      const next = cards.map((card, index) => {
+        const label = grid.querySelector(`[data-platform-label="${card.slug}"]`).getBoundingClientRect();
+        const target = grid.querySelector(`[data-platform-card="${card.slug}"]`).getBoundingClientRect();
+        const left = index < 3;
+        const x1 = (left ? label.left : label.right) - box.left;
+        const y1 = label.top + label.height / 2 - box.top;
+        const x2 = (left ? target.right : target.left) - box.left;
+        const y2 = target.top + target.height / 2 - box.top;
+        const direction = left ? -1 : 1;
+        const elbow = Math.min(18, Math.abs(x2 - x1) / 4);
+        const arrowOverlap = 7;
+        const arrowTipX = x2 + direction * arrowOverlap;
+        return { slug: card.slug, d: `M${x1},${y1} H${x1 + direction * elbow} L${x2 - direction * elbow},${y2} H${arrowTipX}` };
+      });
+      setConnections(previous => JSON.stringify(previous) === JSON.stringify(next) ? previous : next);
+    };
+    const schedule = () => {
+      if (disposed) return;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(measure);
+    };
+    const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(schedule) : null;
+    [grid, ...grid.querySelectorAll('[data-platform-label], [data-platform-card]')].forEach(node => observer?.observe(node));
+    window.addEventListener('resize', schedule);
+    document.fonts?.ready.then(schedule);
+    schedule();
+    return () => {
+      disposed = true;
+      observer?.disconnect();
+      window.removeEventListener('resize', schedule);
+      cancelAnimationFrame(frame);
+    };
+  }, [cards]);
+
   const [activeJournal, setActiveJournal] = useState(0);
   const [journalCarouselPaused, setJournalCarouselPaused] = useState(false);
 
@@ -133,30 +221,66 @@ function About({ language }) {
           </header>
 
           <div className="platform-dashboard">
-            <div className="platform-main-grid">
-              <div className="platform-left">
-                <article className="platform-info-card platform-info-cyan">
-                  <span>{content.cultivationLabel}</span><h3>{content.cultivationTitle}</h3><p>{content.cultivationText}</p>
-                </article>
-                <article className="platform-info-card platform-info-muted">
-                  <span>{content.ecologyLabel}</span><h3>{content.ecologyTitle}</h3><p>{content.ecologyText}</p>
-                </article>
-                <div className="platform-fields"><span>{content.applications}</span><div>{content.fields.map((field) => <b key={field}>{field}</b>)}</div></div>
-              </div>
+            <div
+              className="platform-main-grid"
+              ref={platformRef}
+              onPointerOver={(event) => {
+                const item = event.target.closest?.('[data-platform-label], [data-platform-card]');
+                if (item && event.currentTarget.contains(item)) setActivePlatform(item.dataset.platformLabel || item.dataset.platformCard);
+              }}
+              onPointerLeave={() => setActivePlatform(null)}
+            >
+              <svg className="platform-connections" aria-hidden="true" focusable="false">
+                <defs>
+                  <marker id={markerId} viewBox="0 0 8 8" refX="8" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#7ea9b5" /></marker>
+                  <marker id={`${markerId}-active`} viewBox="0 0 8 8" refX="8" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#ce1248" /></marker>
+                </defs>
+                {connections.map(line => <path className={activePlatform === line.slug ? 'is-active' : ''} key={line.slug} data-connection={line.slug} d={line.d} markerEnd={`url(#${activePlatform === line.slug ? `${markerId}-active` : markerId})`} />)}
+              </svg>
+              <div className="platform-left">{cards.slice(0, 3).map(card => <PlatformCard card={card} active={activePlatform === card.slug} onActivate={setActivePlatform} language={language} key={card.slug} />)}</div>
 
               <div className="platform-core-column">
-                <div className="platform-core">
-                  <div className="platform-orbit platform-orbit-one" aria-hidden="true" />
-                  <div className="platform-orbit platform-orbit-two" aria-hidden="true" />
-                  <div className="platform-core-center"><AboutIcon name="insect" /><strong>{content.coreTitle}</strong><span>{content.coreText}</span></div>
-                  {content.nodes.map((node, index) => <span className={`platform-node platform-node-${index + 1}`} key={node}><i />{node}</span>)}
+                <div className="platform-fly-caption"><strong>{content.coreTitle}</strong><span>{content.coreText}</span></div>
+                <div className="platform-fly">
+                  <svg className="platform-fly-drawing" viewBox="0 0 480 550" fill="none" aria-hidden="true" focusable="false">
+                    <g className="fly-legs" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M199 192 139 145 102 64 75 40 M281 192 341 145 378 64 405 40" />
+                      <path d="M187 244 123 258 66 209 29 195 M293 244 357 258 414 209 451 195" />
+                      <path d="M198 314 142 383 119 477 83 510 M282 314 338 383 361 477 397 510" />
+                    </g>
+                    <path className="fly-abdomen" d="M184 259C165 309 173 423 205 465Q240 505 275 465C307 423 315 309 296 259Z" />
+                    <g className="fly-abdomen-lines">
+                      <path d="M180 327Q240 348 300 327 M181 368Q240 389 299 368 M187 410Q240 432 293 410 M202 448Q240 463 278 448" />
+                    </g>
+                    <g className="fly-wings">
+                      <path d="M211 208C169 219 84 343 42 458C17 530 71 528 124 480C194 418 216 297 225 226Z" />
+                      <path d="M269 208C311 219 396 343 438 458C463 530 409 528 356 480C286 418 264 297 255 226Z" />
+                    </g>
+                    <g className="fly-wing-veins">
+                      <path d="M209 235 66 486 137 437 171 342 209 235 M171 342 108 371 137 437 M108 371 75 430 66 486 M271 235 414 486 343 437 309 342 271 235 M309 342 372 371 343 437 M372 371 405 430 414 486" />
+                    </g>
+                    <path className="fly-thorax" d="M240 115C181 115 164 175 179 240L193 282Q240 305 287 282L301 240C316 175 299 115 240 115Z" />
+                    <path className="fly-thorax-line" d="M223 137Q203 204 219 272 M257 137Q277 204 261 272" />
+                    <path className="fly-head" d="M193 119C168 104 174 69 196 58Q240 36 284 58C306 69 312 104 287 119Q240 141 193 119Z" />
+                    <path className="fly-eyes" d="M211 61C183 58 174 87 187 105Q199 118 214 110Z M269 61C297 58 306 87 293 105Q281 118 266 110Z" />
+                    <path className="fly-antennae" d="M230 56 222 30 211 24 M250 56 258 30 269 24" />
+                    <g className="fly-dividers"><path d="M240 141V487 M139 267H341 M88 382H392" /></g>
+                  </svg>
+                  <div className="platform-fly-labels">
+                    {[
+                      ['allomedin', content.nodes[0]], ['allostatins', content.nodes[3]],
+                      ['entomix', content.nodes[2]], ['flip7', content.nodes[4]],
+                      ['calliphoridae', content.cultivationLabel], ['inova-c', content.nodes[1]],
+                    ].map(([slug, label], index) => <a className={`platform-fly-label platform-fly-label-${index + 1}${activePlatform === slug ? ' is-active' : ''}`} href={developmentPath(slug, language)} data-platform-label={slug} onFocus={() => setActivePlatform(slug)} onBlur={(event) => {
+                      const next = event.relatedTarget?.closest?.('[data-platform-label], [data-platform-card]');
+                      if (next) setActivePlatform(next.dataset.platformLabel || next.dataset.platformCard);
+                      else setActivePlatform(null);
+                    }} key={slug}><i aria-hidden="true" />{label}<InterfaceIcon name="arrow-up-right" /></a>)}
+                  </div>
                 </div>
-                <div className="platform-vaccine"><span>＋</span>{content.vaccineNote}</div>
               </div>
 
-              <div className="platform-right">
-                {content.therapeuticAreas.map((area, index) => <article className={`platform-therapy platform-therapy-${index + 1}`} key={area.title}><h3><i />{area.title}</h3><p>{area.text}</p></article>)}
-              </div>
+              <div className="platform-right">{cards.slice(3).map(card => <PlatformCard card={card} active={activePlatform === card.slug} onActivate={setActivePlatform} language={language} key={card.slug} />)}</div>
             </div>
 
             <div className="platform-formulas"><h3>{content.formulasTitle}</h3><div>{content.formulas.map(([label, name, description]) => <article key={name}><span>{label}</span><strong>{name}</strong><small>{description}</small></article>)}</div></div>

@@ -1,5 +1,6 @@
 import footerLogo from '../assets/logo-header.png';
 import englishLogo from '../assets/logo-header-en.svg';
+import InterfaceIcon from './InterfaceIcon';
 import { useState } from 'react';
 import '../styles/Footer.css';
 
@@ -76,7 +77,7 @@ function Footer({ language, t, links, aboutLinks, developmentLinks, pressLinks }
             </a>
             <p>{copy.description}</p>
             <p className="footer-legal">{language === 'ru' ? 'ООО «Аллофарм»' : 'Allopharm LLC'}<br />{language === 'ru' ? 'ОГРН' : 'Registration No.'}: 1047800031663<br />{language === 'ru' ? 'ИНН' : 'Tax ID'}: 7801265876</p>
-            <a className="footer-privacy" href="https://allopharm.ru/privacy-policy">{copy.privacy}</a>
+            <a className="footer-privacy" href={language === 'en' ? '/en/privacy-policy/' : '/privacy-policy/'}>{copy.privacy}</a>
           </section>
 
           <nav className="footer-column" aria-label={copy.navigation}>
@@ -91,7 +92,7 @@ function Footer({ language, t, links, aboutLinks, developmentLinks, pressLinks }
                     aria-label={aboutMenuOpen ? copy.collapseAbout : copy.expandAbout}
                     onClick={() => setAboutMenuOpen((open) => !open)}
                   >
-                    {copy.about}<span aria-hidden="true">{aboutMenuOpen ? '−' : '+'}</span>
+                    {copy.about}<InterfaceIcon name="toggle" expanded={aboutMenuOpen} />
                   </button>
                   {aboutMenuOpen && <div className="footer-about-submenu" id="footer-about-submenu">
                     {copy.aboutPages.map((page, pageIndex) => <a href={aboutLinks[pageIndex]} key={page}>{page}</a>)}
@@ -107,7 +108,7 @@ function Footer({ language, t, links, aboutLinks, developmentLinks, pressLinks }
                       aria-label={developmentsMenuOpen ? copy.collapseDevelopments : copy.expandDevelopments}
                       onClick={() => setDevelopmentsMenuOpen((open) => !open)}
                     >
-                      {copy.developments}<span aria-hidden="true">{developmentsMenuOpen ? '−' : '+'}</span>
+                      {copy.developments}<InterfaceIcon name="toggle" expanded={developmentsMenuOpen} />
                     </button>
                     {developmentsMenuOpen && <div className="footer-about-submenu" id="footer-developments-submenu">
                       {copy.developmentPages.map((page, pageIndex) => <a href={developmentLinks[pageIndex]} key={page}>{page}</a>)}
@@ -123,7 +124,7 @@ function Footer({ language, t, links, aboutLinks, developmentLinks, pressLinks }
                       aria-label={pressMenuOpen ? copy.collapsePress : copy.expandPress}
                       onClick={() => setPressMenuOpen((open) => !open)}
                     >
-                      {label}<span aria-hidden="true">{pressMenuOpen ? '−' : '+'}</span>
+                      {label}<InterfaceIcon name="toggle" expanded={pressMenuOpen} />
                     </button>
                     {pressMenuOpen && <div className="footer-about-submenu" id="footer-press-submenu">
                       {copy.pressPages.map((page, pageIndex) => pressLinks[pageIndex]

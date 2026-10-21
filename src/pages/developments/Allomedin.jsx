@@ -1,6 +1,7 @@
 import DevelopmentContent from '../../components/DevelopmentContent';
 import image0 from '../../assets/development-site-image-1.png';
 import productInformation from '../../assets/allomedin-pro-information.pdf';
+import InterfaceIcon from '../../components/InterfaceIcon';
 
 // Content from https://allopharm.ru/allomedin/ and its English counterpart.
 export const content = {
@@ -110,7 +111,7 @@ export default function Allomedin({ language }) {
     <DevelopmentContent content={content[language] || content.ru} language={language} />
     <div className="allomedin-document-action">
       <a className="allomedin-document-link" href={productInformation} target="_blank" rel="noopener noreferrer">
-        {language === 'ru' ? 'Больше информации' : 'More information'}<span aria-hidden="true">↗</span>
+        {language === 'ru' ? 'Больше информации' : 'More information'}<InterfaceIcon name="arrow-up-right" />
       </a>
     </div>
   </>;
