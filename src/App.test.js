@@ -20,19 +20,19 @@ test('homepage language follows the URL and Back restores the previous language'
   expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute('href', 'https://allopharm.ru/');
 });
 
-test('homepage artwork follows the three text slides as dragonfly, fly, dragonfly', () => {
+test('homepage artwork follows the two text slides as dragonfly and fly', () => {
   window.history.replaceState({}, '', '/');
   render(<App />);
 
-  expect(document.querySelectorAll('.slider-dot')).toHaveLength(3);
+  expect(document.querySelectorAll('.slider-dot')).toHaveLength(2);
   expect(document.querySelector('.molecule-art-fly')).toHaveAttribute('aria-label', 'Стилизованное изображение мухи семейства Calliphoridae');
 
   fireEvent.click(screen.getByRole('button', { name: 'Слайд 1' }));
   expect(document.querySelector('.molecule-art-dragonfly')).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Следующий слайд' }));
   expect(document.querySelector('.molecule-art-fly')).toBeInTheDocument();
-  fireEvent.click(screen.getByRole('button', { name: 'Слайд 3' }));
-  expect(document.querySelector('.molecule-art-dragonfly')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Слайд 2' }));
+  expect(document.querySelector('.molecule-art-fly')).toBeInTheDocument();
 });
 
 test('English media link returns to the English homepage and scrolls to its section', () => {
