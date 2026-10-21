@@ -149,8 +149,8 @@ function FlyArtwork({ language }) {
     </g>
     <g fill="#A9F7FC" filter="url(#fly-glow)"><circle cx="280" cy="145" r="1.8" /><circle cx="280" cy="173" r="1.5" /><circle cx="280" cy="201" r="1.5" /></g>
     <circle cx="280" cy="320" r="2.5" fill="#ED5575" filter="url(#fly-glow)" />
-    <g stroke="#1D718B" strokeOpacity=".72" strokeWidth=".8"><path d="M88 44h55l20 22M472 44h-55l-20 22M305 302l37 27" /></g>
-    <g fill="#61CDE0" fontFamily="monospace" fontSize="10" letterSpacing=".8"><text x="26" y="39">BIO-SCAN / 02</text><text x="395" y="39">CALLIPHORIDAE</text></g>
+    <g stroke="#1D718B" strokeOpacity=".72" strokeWidth=".8"><path d="M88 44h55l20 22" /></g>
+    <g fill="#61CDE0" fontFamily="monospace" fontSize="10" letterSpacing=".8"><text x="26" y="39">BIO-SCAN / 02</text></g>
   </svg>;
 }
 
@@ -304,6 +304,14 @@ function Home({ language, t, links }) {
                   <defs>
                     <radialGradient id="core" cx="0" cy="0" r="1" gradientTransform="matrix(0 140 -140 0 280 188)" gradientUnits="userSpaceOnUse"><stop stopColor="#08BFE4" stopOpacity=".19" /><stop offset="1" stopColor="#08BFE4" stopOpacity="0" /></radialGradient>
                     <linearGradient id="wing" x1="35" y1="70" x2="280" y2="210" gradientUnits="userSpaceOnUse"><stop stopColor="#00D9F4" stopOpacity=".34" /><stop offset="1" stopColor="#007DA5" stopOpacity=".12" /></linearGradient>
+                    <clipPath id="dragonfly-upper-veins">
+                      <path d="M270 119C219 96 111 48 54 70 14 86 40 124 87 140c56 19 128 3 183-12Z" />
+                      <path d="M290 119c51-23 159-71 216-49 40 16 14 54-33 70-56 19-128 3-183-12Z" />
+                    </clipPath>
+                    <clipPath id="dragonfly-lower-veins">
+                      <path d="M270 133c-62 7-154 26-185 60-24 26 15 48 59 43 48-5 94-45 126-87Z" />
+                      <path d="M290 133c62 7 154 26 185 60 24 26-15 48-59 43-48-5-94-45-126-87Z" />
+                    </clipPath>
                     <filter id="glow"><feGaussianBlur stdDeviation="3" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
                   </defs>
                   <circle cx="280" cy="190" r="150" fill="url(#core)" />
@@ -312,21 +320,33 @@ function Home({ language, t, links }) {
                     <path d="M270 119C219 96 111 48 54 70 14 86 40 124 87 140c56 19 128 3 183-12Z" /><path d="M290 119c51-23 159-71 216-49 40 16 14 54-33 70-56 19-128 3-183-12Z" />
                     <path d="M270 133c-62 7-154 26-185 60-24 26 15 48 59 43 48-5 94-45 126-87Z" /><path d="M290 133c62 7 154 26 185 60 24 26-15 48-59 43-48-5-94-45-126-87Z" />
                   </g>
-                  <g stroke="#20B7D3" strokeOpacity=".72" strokeWidth=".8"><path d="M35 78 270 119M53 101l216 18M78 132l192-13M90 72l67 72m-25-83 55 91m-16-88 45 91M525 78l-235 41m217-18-216 18m191 13-192-13m180-47-67 72m25-83-55 91m16-88-45 91" /><path d="m88 188 182-55m-157 92 157-92m-124 99 124-99m202 55-182-55m157 92-157-92m124 99-124-99" /></g>
-                  <g stroke="#20B7D3" strokeOpacity=".65" strokeWidth=".7"><path d="M270 119 87 70m183 49L54 70m236 49 183-49m-183 49 233-49M270 133 85 193m185-60-126 99m126-99 185 60m-185-60 126 99" /></g>
-                  <g filter="url(#glow)" stroke="#13D8F2" strokeWidth="1.6" strokeLinecap="round">
-                    <path d="M271 91 248 42m41 49 23-49" /><circle cx="248" cy="41" r="2.3" fill="#13D8F2" /><circle cx="312" cy="41" r="2.3" fill="#13D8F2" />
-                    <ellipse cx="267" cy="94" rx="7" ry="11" fill="#062237" /><ellipse cx="293" cy="94" rx="7" ry="11" fill="#062237" /><circle cx="267" cy="94" r="3" fill="#17D8F2" /><circle cx="293" cy="94" r="3" fill="#17D8F2" />
-                    <path d="M267 106Q280 101 293 106L289 128Q280 134 271 128Z" fill="#082238" /><path d="M271 132 268 150 292 150 289 132Z" fill="#082238" />
-                    <path d="M269 152 270 173 290 173 291 152Z" fill="#082238" /><path d="M270 175 271 197 289 197 290 175Z" fill="#082238" /><path d="M271 199 272 220 288 220 289 199Z" fill="#082238" /><path d="M272 222 273 244 287 244 288 222Z" fill="#082238" /><path d="M273 246 274 269 286 269 287 246Z" fill="#082238" /><path d="M274 271 276 297 284 297 286 271Z" fill="#082238" /><path d="m276 299 4 22 4-22Z" fill="#082238" />
-                    <path d="M271 132h18M270 152h20M271 175h18M272 199h16M273 222h14M274 246h12M276 271h8" />
+                  <g stroke="#20B7D3" strokeOpacity=".72" strokeWidth=".8" strokeLinecap="round">
+                    <g clipPath="url(#dragonfly-upper-veins)">
+                      <path d="M61 77 267 120 M54 101 267 122 M81 129 267 125" />
+                      <path d="M499 77 293 120 M506 101 293 122 M479 129 293 125" />
+                    </g>
+                    <g clipPath="url(#dragonfly-lower-veins)">
+                      <path d="M94 196 268 138 M111 220 268 143 M151 228 268 148" />
+                      <path d="M466 196 292 138 M449 220 292 143 M409 228 292 148" />
+                    </g>
                   </g>
-                  <g fill="#A9F7FC" filter="url(#glow)"><circle cx="280" cy="116" r="2.2" /><circle cx="280" cy="162" r="1.7" /><circle cx="280" cy="187" r="1.7" /><circle cx="280" cy="211" r="1.7" /><circle cx="280" cy="235" r="1.7" /><circle cx="280" cy="260" r="1.7" /></g>
+                  <g filter="url(#glow)" stroke="#13D8F2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M274 83 270 72 M286 83 290 72" strokeWidth="1.2" />
+                    <path d="M258 94C258 81 269 78 280 81C291 78 302 81 302 94C302 107 291 113 280 112C269 113 258 107 258 94Z" fill="#0A2C3E" />
+                    <ellipse cx="267" cy="94" rx="9" ry="12" transform="rotate(18 267 94)" fill="#0B4053" strokeWidth="1.3" />
+                    <ellipse cx="293" cy="94" rx="9" ry="12" transform="rotate(-18 293 94)" fill="#0B4053" strokeWidth="1.3" />
+                    <path d="M273 106Q280 111 287 106" strokeWidth="1" />
+                    <path d="M270 145C265 158 268 182 270 201L274 270Q275 299 280 321Q285 299 286 270L290 201C292 182 295 158 290 145Z" fill="#082B3D" />
+                    <path d="M268 168Q280 174 292 168 M270 191Q280 197 290 191 M271 215Q280 220 289 215 M272 239Q280 244 288 239 M274 262Q280 267 286 262 M275 285Q280 289 285 285 M277 304Q280 307 283 304" strokeWidth="1" strokeOpacity=".75" />
+                    <path d="M273 111C260 116 260 131 264 142Q268 154 280 157Q292 154 296 142C300 131 300 116 287 111Q280 108 273 111Z" fill="#0B3547" />
+                    <path d="M275 117Q269 132 275 147 M285 117Q291 132 285 147" strokeWidth="1" strokeOpacity=".65" />
+                  </g>
+                  <g fill="#A9F7FC" filter="url(#glow)"><circle cx="264" cy="90" r="1.5" /><circle cx="296" cy="90" r="1.5" /><circle cx="280" cy="130" r="2" /><circle cx="280" cy="182" r="1.3" /><circle cx="280" cy="228" r="1.2" /><circle cx="280" cy="274" r="1" /></g>
                   <circle cx="280" cy="321" r="3.2" fill="#ED5575" filter="url(#glow)" />
-                  <g stroke="#1D718B" strokeOpacity=".72" strokeWidth=".8"><path d="M89 43h47l25 24M471 43h-48l-25 24M316 331l34 42" /></g>
-                  <g fill="#61CDE0" fontFamily="monospace" fontSize="10" letterSpacing=".8"><text x="26" y="39">BIO-SCAN / 01</text><text x="395" y="39">INSECT IMMUNITY</text></g>
+                  <g stroke="#1D718B" strokeOpacity=".72" strokeWidth=".8"><path d="M89 43h47l25 24" /></g>
+                  <g fill="#61CDE0" fontFamily="monospace" fontSize="10" letterSpacing=".8"><text x="26" y="39">BIO-SCAN / 01</text></g>
                 </svg>}
-                <div className="artwork-caption"><span className="caption-dot" /><span>{language === 'ru' ? 'Биомиметика Calliphoridae' : 'Calliphoridae biomimetics'}</span><span className="artwork-caption-secondary">{language === 'ru' ? 'Иммунитет насекомых' : 'Insect immunity'}</span></div>
+                <div className="artwork-caption"><span className="caption-dot" /><span>{language === 'ru' ? `Биомиметика ${currentSlide === 1 ? 'Calliphoridae' : 'Odonata'}` : `${currentSlide === 1 ? 'Calliphoridae' : 'Odonata'} biomimetics`}</span><span className="artwork-caption-secondary">{language === 'ru' ? 'Иммунитет насекомых' : 'Insect immunity'}</span></div>
               </div>
               <div className="slider-controls">
                 <div className="slider-dots" role="group" aria-label={language === 'ru' ? 'Выбрать слайд' : 'Choose a slide'}>
