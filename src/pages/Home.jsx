@@ -7,7 +7,7 @@ import flipImage from '../assets/development-flip.jpg';
 import cultivationImage from '../assets/development-cultivation.jpg';
 import inovaImage from '../assets/development-calliphoridae.jpg';
 import allomedinProImage from '../assets/development-site-image-1.png';
-import entomixPackageImage from '../assets/development-entomix-package.jpg';
+import entomixPackageImage from '../assets/development-entomix-package.png';
 import expertPressLogo from '../assets/press-expert-logo.png';
 import expertPressPdf from '../assets/press-expert.pdf';
 import spbuPressPdf from '../assets/press-spu.pdf';
@@ -56,7 +56,7 @@ const developmentsCopy = {
       { tone: 'blue', image: inovaImage, imageAlt: 'Флаконы и шприц на иллюстрации к разработке InOVA-C', tag: 'Суперантиген насекомых', status: 'Адъювант вакцин', title: 'InOVA-C', subtitle: 'Иммунологически активный адъювант', text: 'Обеспечивает выработку защитных антител к слабым и неиммуногенным антигенам. Применяется в составе вакцин в качестве адъюванта.', footer: 'Метод получения и применения — ноу-хау' },
       { tone: 'amber', image: cultivationImage, imageAlt: 'Лаборатория для культивирования биомассы', tag: 'Технология выращивания', status: 'Calliphoridae', title: 'Культивирование насекомых', subtitle: 'Выращивание биомассы личинок Calliphoridae', text: 'Культивирование проводят на микробиологически чистых органических субстратах. Биомасса может применяться как кормовая добавка для животных или для переработки органических отходов.', footer: 'Технология выращивания биомассы' },
       { tone: 'green', image: allomedinProImage, imageAlt: 'Упаковка и тюбик Алломедин Про', imageFit: 'contain', tag: 'Гидрогель с аллостатином', status: 'Средство для ухода за кожей', title: 'АЛЛОМЕДИН® ПРО', subtitle: 'Прозрачный гидрогель для местного применения', text: 'Восстанавливает и защищает кожу после косметических процедур, при атопии, высыпаниях, сухости, чувствительности и раздражении. Используется для ухода за кожей после воздействия повреждающих факторов.', footer: 'Декларация ЕАЭС № RU Д-RU.PA11.B.15055/25' },
-      { tone: 'rose', image: entomixPackageImage, imageAlt: 'Упаковка гидрогелевого покрытия Энтомикс', imageFit: 'contain', tag: 'Гидрогелевое покрытие', status: 'С комплексом FLIP®7', title: 'ЭНТОМИКС®', subtitle: 'Покрытие для подавления бактериальных биоплёнок', text: 'Содержит комплекс антимикробных пептидов FLIP®7. Применяется при заболеваниях кожи и мягких тканей, осложнённых бактериальной инфекцией.', footer: 'Регистрационное удостоверение № РЗН 2020/12582' },
+      { tone: 'rose', image: entomixPackageImage, imageAlt: 'Упаковка гидрогелевого покрытия Энтомикс', imageFit: 'contain', tag: 'Гидрогелевое покрытие', status: 'С комплексом FLIP®7', title: 'ЭНТОМИКС®', subtitle: 'Покрытие гидрогелевое для подавления развития бактериальных биопленок', text: 'Содержит комплекс антимикробных пептидов FLIP®7. Применяется при заболеваниях кожи и мягких тканей, осложнённых бактериальной инфекцией.', footer: 'Регистрационное удостоверение № РЗН 2020/12582' },
     ],
   },
   en: {
@@ -68,7 +68,7 @@ const developmentsCopy = {
       { tone: 'blue', image: inovaImage, imageAlt: 'Vials and syringe in an illustration for InOVA-C', tag: 'Insect superantigen', status: 'Vaccine adjuvant', title: 'InOVA-C', subtitle: 'Immunologically active adjuvant', text: 'Promotes the production of protective antibodies to weak and non-immunogenic antigens. It is used as an adjuvant in vaccines.', footer: 'Production and use method: know-how' },
       { tone: 'amber', image: cultivationImage, imageAlt: 'Laboratory for biomass cultivation', tag: 'Cultivation technology', status: 'Calliphoridae', title: 'Insect cultivation', subtitle: 'Cultivation of Calliphoridae larval biomass', text: 'Cultivation uses microbiologically clean organic substrates. The biomass may be used as an active animal feed supplement or in the processing of organic waste.', footer: 'Larval biomass cultivation technology' },
       { tone: 'green', image: allomedinProImage, imageAlt: 'Allomedin Pro box and tube', imageFit: 'contain', tag: 'Hydrogel with allostatin', status: 'Skin care product', title: 'ALLOMEDIN® PRO', subtitle: 'Clear topical hydrogel', text: 'Restores and protects skin after cosmetic procedures and in cases of atopy, rashes, dryness, sensitivity and irritation. It is used for skin care after exposure to damaging factors.', footer: 'EAEU declaration No. RU D-RU.PA11.B.15055/25' },
-      { tone: 'rose', image: entomixPackageImage, imageAlt: 'Entomix hydrogel dressing package', imageFit: 'contain', tag: 'Hydrogel dressing', status: 'With FLIP®7 complex', title: 'ENTOMIX®', subtitle: 'Dressing to inhibit bacterial biofilms', text: 'Contains the antimicrobial peptide complex FLIP®7. It is used for skin and soft-tissue conditions complicated by bacterial infection.', footer: 'Registration certificate No. RZN 2020/12582' },
+      { tone: 'rose', image: entomixPackageImage, imageAlt: 'Entomix hydrogel dressing package', imageFit: 'contain', tag: 'Hydrogel dressing', status: 'With FLIP®7 complex', title: 'ENTOMIX®', subtitle: 'Hydrogel dressing to inhibit the development of bacterial biofilms', text: 'Contains the antimicrobial peptide complex FLIP®7. It is used for skin and soft-tissue conditions complicated by bacterial infection.', footer: 'Registration certificate No. RZN 2020/12582' },
     ],
   },
 };
@@ -571,3 +571,4 @@ function Home({ language, t, links }) {
 }
 
 export default Home;
+

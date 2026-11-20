@@ -24,6 +24,7 @@ const pages = {
   contact: entry('Контакты — Аллофарм', 'Контакты ООО «Аллофарм» в Санкт-Петербурге: адрес офиса и лабораторий, телефоны и электронная почта.', 'Contacts — Allopharm', 'Contact Allopharm in Saint Petersburg, Russia: office and laboratory address, phone numbers and email.'),
   cooperation: entry('Сотрудничество — Аллофарм', 'Сотрудничество с Аллофарм: исследования, развитие биотехнологических разработок и интеллектуальная собственность. Информация для партнёров.', 'Cooperation — Allopharm', 'Partner with Allopharm in research, biotechnology development and intellectual property. Information for potential partners.'),
   'privacy-policy': entry('Политика конфиденциальности — Аллофарм', 'Политика конфиденциальности ООО «Аллофарм»: обработка персональных данных и использование файлов cookie.', 'Privacy Policy — Allopharm', 'Allopharm LLC Privacy Policy: personal data processing and the use of cookies.'),
+  'technical-documentation': entry('СОУТ Аллофарм', 'Документы по специальной оценке условий труда ООО «Аллофарм».', 'Allopharm workplace assessment', 'Documents on the special assessment of working conditions at Allopharm LLC.'),
 };
 
 const pathFor = (slug, lang) => slug ? `${lang === 'en' ? '/en' : ''}/${slug}/` : homePath(lang);
@@ -33,6 +34,7 @@ export function getSeo(path) {
   let slug = clean.replace(/^\/en(?=\/|$)/, '').replace(/^\//, '');
   if (slug === 'allostatin') slug = 'allostatins';
   let variants = pages[slug];
+  const hiddenDocumentation = slug === 'technical-documentation';
   if (slug.startsWith('articles/')) {
     const article = newsData.find(item => item.slug === slug.slice(9));
     if (article) variants = Object.fromEntries(['ru', 'en'].filter(lang => article[lang]).map(lang => [lang, {
@@ -49,8 +51,8 @@ export function getSeo(path) {
     title: localized?.title || fallback?.title || (language === 'ru' ? 'Страница не найдена — Аллофарм' : 'Page not found — Allopharm'),
     description: localized?.description || fallback?.description || (language === 'ru' ? 'Запрошенная страница не найдена.' : 'The requested page could not be found.'),
     canonical,
-    noindex: !localized,
-    alternates: variants ? Object.keys(variants).map(lang => ({ language: lang, href: SITE_URL + pathFor(slug, lang) })) : [],
+    noindex: hiddenDocumentation || !localized,
+    alternates: variants && !hiddenDocumentation ? Object.keys(variants).map(lang => ({ language: lang, href: SITE_URL + pathFor(slug, lang) })) : [],
   };
 }
 

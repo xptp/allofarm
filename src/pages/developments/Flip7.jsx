@@ -44,7 +44,7 @@ export const content = {
         "paragraphs": [
           "Смотреть публикации >>"
         ],
-        "href": "http://allopharm.ru/our-publications/"
+        "href": "https://allopharm.ru/publications/"
       },
       {
         "title": "ЭНТОМИКС®",
@@ -145,7 +145,7 @@ export const content = {
       {
         "title": "Publications",
         "paragraphs": [],
-        "href": "http://en.allopharm.ru/our-publications/"
+        "href": "https://allopharm.ru/en/publications/"
       },
       {
         "title": "ENTOMIX®",

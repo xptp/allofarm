@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import About from './pages/About/About';
 import IntellectualProperty from './pages/About/IntellectualProperty';
+import TechnicalDocumentation from './pages/About/TechnicalDocumentation';
 import DevelopmentsLayout from './components/DevelopmentsLayout';
 import { developmentPages } from './pages/developments/pages';
 import { getRoute, normalizePath, developmentPath, developmentMenuSlugs } from './pages/developments/navigation';
@@ -66,6 +67,7 @@ function App({ initialPath } = {}) {
   });
   const isAboutPage = currentPath === '/about' || currentPath === '/en/about';
   const isIntellectualPropertyPage = currentPath === '/intellectual-property' || currentPath === '/en/intellectual-property';
+  const isTechnicalDocumentationPage = currentPath === '/technical-documentation';
   const route = getRoute(currentPath);
   const newsRoute = getNewsRoute(currentPath);
   const publicationsRoute = getPublicationsRoute(currentPath);
@@ -73,7 +75,7 @@ function App({ initialPath } = {}) {
   const cooperationRoute = getCooperationRoute(currentPath);
   const privacyPolicyRoute = getPrivacyPolicyRoute(currentPath);
   const newsArticle = newsRoute?.kind === 'article' ? getNewsBySlug(newsRoute.slug) : null;
-  const isNotFound = currentPath !== '/' && currentPath !== '/en' && !route && !publicationsRoute && !contactRoute && !cooperationRoute && !privacyPolicyRoute && (!newsRoute || (newsRoute.kind === 'article' && !newsArticle));
+  const isNotFound = currentPath !== '/' && currentPath !== '/en' && !route && !publicationsRoute && !contactRoute && !cooperationRoute && !privacyPolicyRoute && !isTechnicalDocumentationPage && (!newsRoute || (newsRoute.kind === 'article' && !newsArticle));
   const developmentPage = route?.development ? developmentPages[route.slug] : null;
   const developmentContent = developmentPage && (developmentPage.content[language] || developmentPage.content.ru);
   const DevelopmentPage = developmentPage?.Component;
@@ -206,10 +208,10 @@ function App({ initialPath } = {}) {
   const pressLinks = [pageLinks[4], publicationsPath(language)];
 
   return (
-    <div className="site-shell" onClick={handleInternalNavigation}>
+    <div className={`site-shell${isTechnicalDocumentationPage ? ' site-shell-documentation' : ''}`} onClick={handleInternalNavigation}>
       <CookieNotice language={language} />
       <Header language={language} onLanguageChange={handleLanguageChange} t={t} links={pageLinks} aboutLinks={language === 'ru' ? ['/about/', '/intellectual-property/'] : ['/en/about/', '/en/intellectual-property/']} developmentLinks={developmentLinks} pressLinks={pressLinks} activeNavIndex={isNotFound || privacyPolicyRoute ? -1 : newsRoute ? 3 : publicationsRoute ? 4 : contactRoute ? 5 : cooperationRoute ? 6 : developmentPage ? 2 : isAboutPage || isIntellectualPropertyPage ? 1 : 0} />
-      {privacyPolicyRoute ? <PrivacyPolicy language={language} /> : isNotFound ? <NotFound language={language} /> : developmentPage ? <DevelopmentsLayout language={language} slug={route.slug} title={developmentContent.title} contentLanguage={developmentPage.content[language] ? language : 'ru'}><DevelopmentPage language={language} /></DevelopmentsLayout> : isIntellectualPropertyPage
+      {isTechnicalDocumentationPage ? <TechnicalDocumentation /> : privacyPolicyRoute ? <PrivacyPolicy language={language} /> : isNotFound ? <NotFound language={language} /> : developmentPage ? <DevelopmentsLayout language={language} slug={route.slug} title={developmentContent.title} contentLanguage={developmentPage.content[language] ? language : 'ru'}><DevelopmentPage language={language} /></DevelopmentsLayout> : isIntellectualPropertyPage
         ? <IntellectualProperty language={language} />
         : isAboutPage ? <About language={language} /> : newsRoute?.kind === 'article' && newsArticle ? <NewsArticle article={newsArticle} language={language} /> : newsRoute?.kind === 'archive' ? <NewsArchive language={language} archiveState={newsArchiveState[language]} onArchiveStateChange={(state) => setNewsArchiveState((previous) => ({ ...previous, [language]: state }))} /> : publicationsRoute ? <PublicationsPage language={language} /> : contactRoute ? <Contact language={language} /> : cooperationRoute ? <Cooperation language={language} /> : <Home language={language} t={t} links={pageLinks} />}
       <Footer

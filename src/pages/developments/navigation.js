@@ -1,5 +1,5 @@
 import allomedin from '../../assets/development-site-image-1.png';
-import entomix from '../../assets/development-entomix-package.jpg';
+import entomix from '../../assets/development-entomix-package.png';
 import allostatin from '../../assets/development-allostatin-cover.jpg';
 import flip from '../../assets/development-flip.jpg';
 import inova from '../../assets/development-calliphoridae.jpg';
@@ -32,8 +32,12 @@ export function localizeDevelopmentLink(href, language) {
   if (!href) return undefined;
   const url = new URL(href.trim(), language === 'en' ? 'https://en.allopharm.ru' : 'https://allopharm.ru');
   if (['allopharm.ru', 'en.allopharm.ru'].includes(url.hostname)) {
+    if (/^\/(?:en\/)?publications\/?$/.test(url.pathname)) {
+      return `${language === 'en' ? '/en' : ''}/publications/`;
+    }
     const route = getRoute(url.pathname);
     if (route?.development) return developmentPath(route.slug, language);
   }
   return url.href;
 }
+

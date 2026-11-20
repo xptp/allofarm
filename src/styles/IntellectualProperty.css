@@ -56,3 +56,6 @@
 @media (prefers-reduced-motion: reduce) {
   .ip-document { transition: none; }
 }
+.site-shell-documentation { min-height: 100vh; display: flex; flex-direction: column; }
+.site-shell-documentation > .ip-page { flex: 1; }
+.site-shell-documentation .ip-content { min-height: 100%; background: var(--surface-light); }

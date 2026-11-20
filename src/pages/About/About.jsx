@@ -83,19 +83,19 @@ const aboutCopy = {
 
 const platformCards = {
   ru: [
-    { slug: 'allomedin', title: 'Алломедин, гель', items: ['Хирургия, дерматология, гинекология, геронтология, трансплантология, травматология, стоматология.', 'Герпес, ВПЧ.'] },
-    { slug: 'entomix', title: 'Энтомикс, гель', items: ['Биологическая утилизация органических отходов «Биозавод», эукариотическая система, синтезирующая фармакологически активные вещества.', 'Использование биомассы насекомых в качестве биологически активной кормовой добавки для животных.'] },
-    { slug: 'calliphoridae', title: 'Культивирование', items: ['Технология выращивания биомассы личинок семейства Calliphoridae, поддержание культуры.'] },
-    { slug: 'allostatins', title: 'Аллостатин, пептид', items: ['Лечение и профилактика заболеваний вирусной природы.', 'Лечение онкологических заболеваний.', 'В качестве адъюванта для усиления распознавания слабых антигенов при вакцинации.'] },
-    { slug: 'flip7', title: 'FLIP7, комплекс антимикробных пептидов', items: ['Лечение заболеваний, вызванных бактериальной инфекцией.', 'Разрушение биологических биоплёнок.', 'Новый подход к решению проблемы антибиотикорезистентности.'] },
+    { slug: 'allomedin', title: 'Алломедин ПРО, гель', items: ['Восстанавливающий гель косметический для ухода за кожей лица и тела.', 'Восстановление и защита кожи, испытавшей стресс во время переохлаждения, излишнего воздействия УФ излучения, резкой смены климата, косметических процедур и других повреждающих факторов. Возвращение коже здорового внешнего вида при атопии, высыпаниях, сухости, чувствительности и раздражении кожи.'] },
+    { slug: 'entomix', title: 'Энтомикс, гель', items: ['Содержит комплекс антимикробных пептидов (FLIP 7).', 'Очищает раны от бактерий.', 'Ускоряет процесс заживления.', 'Снижает частоту инфекционных осложнений.', 'Повышает эффективность лечения антибиотиками.', 'Рекомендован в хирургии.'] },
+    { slug: 'calliphoridae', title: 'Культивирование', items: ['Технология выращивания биомассы личинок семейства Calliphoridae, поддержание культуры.', 'Биологическая утилизация органических отходов «Биозавод», эукариотическая система, синтезирующая фармакологически активные вещества.', 'Использование биомассы насекомых в качестве биологически активной кормовой добавки для животных.'] },
+    { slug: 'allostatins', title: 'Аллостатин, пептид', items: ['Возможные области применения:', 'В составе препаратов с противовирусной и противоопухолевой активностью.', 'В составе средств по уходу за кожей.'] },
+    { slug: 'flip7', title: 'FLIP7, комплекс антимикробных пептидов', items: ['Применение в составе антимикробных препаратов.', 'Разрушение биологических биоплёнок.', 'Новый подход к решению проблемы антибиотикорезистентности.'] },
     { slug: 'inova-c', title: 'InOVA-C — иммунологически активный адъювант', items: ['Может применяться в составе вакцин.'] },
   ],
   en: [
-    { slug: 'allomedin', title: 'Allomedin gel', items: ['Surgery, dermatology, gynaecology, geriatrics, transplantology, traumatology and dentistry.', 'Herpes, HPV.'] },
-    { slug: 'entomix', title: 'Entomix gel', items: ['Biological processing of organic waste: the “Biofactory”, a eukaryotic system synthesising pharmacologically active substances.', 'Use of insect biomass as a biologically active feed supplement for animals.'] },
-    { slug: 'calliphoridae', title: 'Cultivation', items: ['Technology for growing Calliphoridae larval biomass and maintaining the culture.'] },
-    { slug: 'allostatins', title: 'Allostatin peptide', items: ['Treatment and prevention of viral diseases.', 'Treatment of oncological diseases.', 'Use as an adjuvant to enhance the recognition of weak antigens during vaccination.'] },
-    { slug: 'flip7', title: 'FLIP7 antimicrobial peptide complex', items: ['Treatment of diseases caused by bacterial infections.', 'Disruption of biological biofilms.', 'A new approach to addressing antibiotic resistance.'] },
+    { slug: 'allomedin', title: 'Allomedin PRO gel', items: ['Restorative cosmetic gel for face and body skin care.', 'Restores and protects skin affected by stress from hypothermia, excessive UV exposure, sudden climate changes, cosmetic procedures and other damaging factors. Helps restore a healthy appearance to skin affected by atopy, breakouts, dryness, sensitivity and irritation.'] },
+    { slug: 'entomix', title: 'Entomix gel', items: ['Contains a complex of antimicrobial peptides (FLIP 7).', 'Cleans wounds of bacteria.', 'Accelerates the healing process.', 'Reduces the frequency of infectious complications.', 'Improves the effectiveness of antibiotic treatment.', 'Recommended in surgery.'] },
+    { slug: 'calliphoridae', title: 'Cultivation', items: ['Technology for growing Calliphoridae larval biomass and maintaining the culture.', 'Biological processing of organic waste: the “Biofactory”, a eukaryotic system synthesising pharmacologically active substances.', 'Use of insect biomass as a biologically active feed supplement for animals.'] },
+    { slug: 'allostatins', title: 'Allostatin peptide', items: ['Possible applications:', 'As part of preparations with antiviral and antitumour activity.', 'As part of skin care products.'] },
+    { slug: 'flip7', title: 'FLIP7 antimicrobial peptide complex', items: ['Use in antimicrobial preparations.', 'Disruption of biological biofilms.', 'A new approach to addressing antibiotic resistance.'] },
     { slug: 'inova-c', title: 'InOVA-C — immunologically active adjuvant', items: ['May be used in vaccines.'] },
   ],
 };

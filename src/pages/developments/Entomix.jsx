@@ -1,10 +1,10 @@
 import DevelopmentContent from '../../components/DevelopmentContent';
-import image0 from '../../assets/development-entomix-package.jpg';
+import image0 from '../../assets/development-entomix-package.png';
 
 // Content from https://allopharm.ru/entomix/ and its English counterpart.
 export const content = {
   "ru": {
-    "title": "ЭНТОМИКС® — покрытие гидрогелевое для подавления развития бактериальных биопленок",
+    "title": "ЭНТОМИКС® — покрытие гидрогелевое для подавления развития бактериальных биоплёнок",
     "sections": [
       {
         "title": "Основное действующее вещество",
@@ -84,3 +84,4 @@ content.en.images = [{ src: image0, alt: "ENTOMIX®" }];
 export default function Entomix({ language }) {
   return <DevelopmentContent content={content[language] || content.ru} language={language} />;
 }
+

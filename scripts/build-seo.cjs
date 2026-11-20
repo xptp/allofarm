@@ -51,6 +51,7 @@ function renderPage(route, output) {
   fs.writeFileSync(output, html);
 }
 paths.forEach(route => renderPage(route, path.join(build, route.slice(1), 'index.html')));
+renderPage('/technical-documentation/', path.join(build, 'technical-documentation/index.html'));
 // Existing fallback route stays accessible, but is not presented as an English translation.
 renderPage('/en/allostatins/', path.join(build, 'en/allostatins/index.html'));
 renderPage('/not-found/', path.join(build, '404.html'));
